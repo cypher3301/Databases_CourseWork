@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.embeddable.Address;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,13 +21,11 @@ public class Station {
     protected long id;
 
     @NotNull
-    @Column(name = "address")
     protected Address address;
 
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "station")
     protected Collection<Operator> operators = new ArrayList<>();
 
-//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "station")
-//    protected Collection<Invoice> invoices = new ArrayList<>();
+
 }

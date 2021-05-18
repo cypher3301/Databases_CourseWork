@@ -17,7 +17,7 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "invoice_id")
-    protected long id;
+    protected long invoice_id;
 
     @NotNull
     @Column(name = "from_dateTime", nullable = false)
@@ -33,7 +33,8 @@ public class Invoice {
     @ManyToOne(fetch = FetchType.LAZY)
     protected Operator operator;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "invoice")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "invoice_package")
     protected Collection<Package> packages = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,15 +42,5 @@ public class Invoice {
 
     @ManyToOne(fetch = FetchType.LAZY)
     protected Station endStation;
-//
-//    public Invoice(@NotNull Address loadingAddress, @NotNull Address deliveryAddress) {
-//        this.loadingAddress = loadingAddress;
-//        this.deliveryAddress = deliveryAddress;
-//    }
-//
-//    public Invoice(@NotNull Address loadingAddress, @NotNull Timestamp loadingDateAndTime, @NotNull Address deliveryAddress) {
-//        this.loadingAddress = loadingAddress;
-//        this.loadingDateAndTime = loadingDateAndTime;
-//        this.deliveryAddress = deliveryAddress;
-//    }
+
 }

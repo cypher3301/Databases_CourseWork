@@ -1,44 +1,49 @@
 package com.example.demo.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Entity(name = "clients_packages")
 
-//@Table
-//@Embeddable
-//@Immutable
+@Entity(name = "sender_recipient_package")
+@Immutable
+@EqualsAndHashCode
+@ToString
 @NoArgsConstructor
-@Data
+@RequiredArgsConstructor
 public class ClientsPackages {
-//
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected long id;
 
+    @NotNull
+    @NonNull
     @ManyToOne
     @JoinColumn(
-            name = "client_sender_id"
+            name = "client_sender_id",nullable = false
     )
     protected Client sender;
 
+    @NotNull
+    @NonNull
     @ManyToOne
     @JoinColumn(
-            name = "client_recipient_id"
+            name = "client_recipient_id",nullable = false
     )
     protected Client recipient;
 
+    @NotNull
+    @NonNull
     @ManyToOne
     @JoinColumn(
-            name = "package_id"
+            name = "package_id",nullable = false
     )
     protected Package packages;
 
-    public ClientsPackages(Client sender, Client recipient, Package packages) {
-        this.sender = sender;
-        this.recipient = recipient;
-        this.packages = packages;
-    }
 }
+
+
+

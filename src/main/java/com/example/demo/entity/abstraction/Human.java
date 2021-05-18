@@ -1,5 +1,6 @@
-package com.example.demo.entity;
+package com.example.demo.entity.abstraction;
 
+import com.example.demo.entity.embeddable.PhoneNumber;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public abstract class Human {
     @NotNull
-    @Column(name = "firstname", nullable = false)
+    @Column(name = "firstname",  nullable = false)
     protected String firstname;
 
     @NotNull
@@ -23,13 +24,13 @@ public abstract class Human {
     protected String middlename;
 
     @NotNull
-    @Column(name = "lastname", nullable = false)
+    @Column(name = "lastname",   nullable = false)
     protected String lastname;
 
 
     @NotNull
     @AttributeOverride(name = "phone", column = @Column(name = "phone"))
-    @Column(name = "phone", nullable = false)
+    @Column(           name = "phone", nullable = false, length = 12)
     protected PhoneNumber phoneNumber;
 
 

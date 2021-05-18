@@ -2,6 +2,11 @@ package com.example.demo;
 
 import com.example.demo.entity.*;
 import com.example.demo.entity.Package;
+import com.example.demo.entity.embeddable.Address;
+import com.example.demo.entity.embeddable.PhoneNumber;
+import com.example.demo.entity.embeddable.PlaceOfResidence;
+import com.example.demo.entity.status.PackageStatus;
+import com.example.demo.entity.status.WorkShiftStatus;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,10 +17,7 @@ import javax.xml.bind.ValidationException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 @SpringBootTest
 public class Test {
@@ -69,13 +71,13 @@ public class Test {
         return md.digest();
     }
 
-    Station generateStation(){
+    Station generateStation(short postOffice){
         Station station = new Station();
         Address address = new Address();
         address.setRegion("Nukolaivskaya oblast");
         address.setCity("Nukolaiv");
         address.setStreet("Bogoyavlenskiy");
-        address.setPostOfficeNumber((short) 22);
+        address.setPostOfficeNumber(postOffice);
         station.setAddress(address);
         return station;
     }
@@ -247,13 +249,15 @@ public class Test {
 
         return pack;
     }
+
+
 //
 //    Invoice generateInvoice() {
 //
 //        String region = "Nikolaivskaya";
 //        String city = "Nikolaev";
 //        String street = "Soborna";
-//        String postOfficeNumber = "4";
+//        short postOfficeNumber = 4;
 //        Address startAddress = new Address(
 //                region,
 //                city,
@@ -262,7 +266,7 @@ public class Test {
 //
 //        String region1 = "Nikolaivskaya";
 //        String city1 = "Nikolaev";
-//        String postOfficeNumber1 = "4";
+//        short postOfficeNumber1 = 5;
 //        Address finishAddress = new Address(
 //                region1,
 //                city1,
@@ -271,7 +275,7 @@ public class Test {
 //        Timestamp loadDate = new Timestamp(System.nanoTime());
 //
 //        Invoice invoice = new Invoice();
-//        invoice.setLoadingAddress(startAddress);
+//        invoice.setStartingStation();
 //        invoice.setLoadingDateAndTime(loadDate);
 //        invoice.setDeliveryAddress(finishAddress);
 //        return invoice;
@@ -565,7 +569,8 @@ public class Test {
 
     @org.junit.jupiter.api.Test
     void ClientPackage() {
-        Station station = generateStation();
+        Station station = generateStation((short) 3);
+        Station station2 = generateStation((short) 4);
         WorkShift workShift = generateWorkShift();
         Operator operator = generateOperator();
         Client client = generateClient();
@@ -574,17 +579,33 @@ public class Test {
         Package pack2 = generatePackages();
         station.getOperators().add(operator);
         workShift.setOperator(operator);
+        workShift.getPackages().add(pack);
+        workShift.getPackages().add(pack2);
         operator.setStation(station);
         operator.getWorkShifts().add(workShift);
         pack.setOperator(operator);
         pack2.setOperator(operator);
         ClientsPackages clientsPackages1 = new ClientsPackages(client, client2, pack);
         ClientsPackages clientsPackages2 = new ClientsPackages(client, client2, pack2);
+        ClientsPackages clientsPackages3 = new ClientsPackages();
+
+        Courier courier = generateCourier();
+        Invoice invoice = new Invoice();
+        invoice.setStartingStation(station);
+        invoice.setEndStation(station2);
+        invoice.setCourier(courier);
+        invoice.setOperator(operator);
+        invoice.setPackages(Arrays.asList(pack,pack2));
+        invoice.setLoadingDateAndTime(new Timestamp(System.nanoTime()));
+        operator.getInvoices().add(invoice);
+        courier.getInvoice().add(invoice);
+
 
 
         checkSessionFactory();
         Session session = checkSessionOpen();
         session.save(station);
+        session.save(station2);
         session.save(client);
         session.save(client2);
         session.save(operator);
@@ -593,6 +614,8 @@ public class Test {
         session.save(pack2);
         session.save(clientsPackages1);
         session.save(clientsPackages2);
+        session.save(courier);
+        session.save(invoice);
         checkSessionClose(session);
     }
 }

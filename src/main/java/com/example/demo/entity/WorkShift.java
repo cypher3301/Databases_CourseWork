@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.abstraction.Work;
+import com.example.demo.entity.status.WorkShiftStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +17,7 @@ import java.util.Collection;
 @Table(name = "work_shift", catalog = "postOffice", schema = "public")
 @Data
 @NoArgsConstructor
-public class WorkShift implements Work{
+public class WorkShift implements Work {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,21 +38,24 @@ public class WorkShift implements Work{
     protected Operator operator;
 
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "work_shift_packages"
+    )
     protected Collection<Package> packages = new ArrayList<>();
-//
-//    public WorkShift(@NotNull Operator operator, Collection<Package> packagesStartShift) {
-//        this.operator = operator;
-//        this.packages = packagesStartShift;
-//        if(operator!=null){
-//            this.setTime(new Timestamp(System.nanoTime()));
-//        }
-//    }
-//
-//    public WorkShift(@NotNull Operator operator) {
-//        this.operator = operator;
-//        if(operator!=null){
-//            this.setTime(new Timestamp(System.nanoTime()));
-//        }
-//    }
+
+    public WorkShift(@NotNull Operator operator, Collection<Package> packagesStartShift) {
+        this.operator = operator;
+        this.packages = packagesStartShift;
+        if(operator!=null){
+            this.setTime(new Timestamp(System.nanoTime()));
+        }
+    }
+
+    public WorkShift(@NotNull Operator operator) {
+        this.operator = operator;
+        if(operator!=null){
+            this.setTime(new Timestamp(System.nanoTime()));
+        }
+    }
 }
 

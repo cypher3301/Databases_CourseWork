@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.embeddable.Address;
+import com.example.demo.entity.status.PackageStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +11,7 @@ import java.sql.Timestamp;
 
 
 
-@Entity(name = "packages")
+@Entity(name = "package")
 @NoArgsConstructor
 @Data
 @Table(name = "package", catalog = "postOffice", schema = "public")
@@ -18,7 +20,7 @@ public class Package {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "package_id", table = "package")
-    protected long id;
+    protected long package_id;
 
     @NotNull
     @Column(name = "status", table = "package", nullable = false)
@@ -41,12 +43,6 @@ public class Package {
 
 
     @NotNull
-    @AttributeOverrides({
-            @AttributeOverride(name = "region",             column = @Column(name = "region",             table = "package", nullable = false)),
-            @AttributeOverride(name = "city",               column = @Column(name = "city",               table = "package", nullable = false)),
-            @AttributeOverride(name = "street",             column = @Column(name = "street",             table = "package")),
-            @AttributeOverride(name = "postOfficeNumber",   column = @Column(name = "post_office_number", table = "package", nullable = false))
-    })
     protected Address actualAddress;
 
     @NotNull
@@ -56,38 +52,9 @@ public class Package {
 
     @Column(name = "to_dateTime")
     protected Timestamp datetimeReceiptPackage;
-//
-//    @NotNull
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    protected ClientSender clientSender;
-//
-//    @NotNull
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    protected ClientRecipient clientRecipient;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "operator_id", foreignKey = @ForeignKey(name = "person_id_fk"))
     protected Operator operator;
-//
-    @ManyToOne(fetch = FetchType.LAZY)
-    protected Invoice invoice;
-
-//
-//
-//    public Package(double weight, double volume, double insurance, double quantity, Address deliveryAddress, Timestamp datetimeReceiptPackage) {
-//        this.weight = weight;
-//        this.volume = volume;
-//        this.insurance = insurance;
-//        this.quantity = quantity;
-////        this.deliveryAddress = deliveryAddress;
-//        this.datetimeReceiptPackage = datetimeReceiptPackage;
-//    }
-
-
-
-
-
-
-
-
 }

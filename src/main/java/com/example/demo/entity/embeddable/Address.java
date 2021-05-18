@@ -1,11 +1,11 @@
-package com.example.demo.entity;
+package com.example.demo.entity.embeddable;
 
+import com.example.demo.entity.abstraction.Local;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @EqualsAndHashCode(callSuper = true)
@@ -14,12 +14,9 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class Address extends Local {
 
+    @Column(name = "post_office_number", nullable = false)
     protected short postOfficeNumber;
 
-
-    public Address(short postOfficeNumber) {
-        this.postOfficeNumber = postOfficeNumber;
-    }
 
     public Address(String region, String city, String street, short postOfficeNumber) {
         super(region, city, street);
