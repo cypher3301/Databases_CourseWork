@@ -19,27 +19,9 @@ public class Invoice {
     @Column(name = "invoice_id")
     protected long id;
 
-
-    @NotNull
-    @AttributeOverrides({
-            @AttributeOverride(name = "region",             column = @Column(name = "from_region",           table = "invoice", nullable = false)),
-            @AttributeOverride(name = "city",               column = @Column(name = "from_city",             table = "invoice", nullable = false)),
-            @AttributeOverride(name = "street",             column = @Column(name = "from_street",           table = "invoice")),
-            @AttributeOverride(name = "postOfficeNumber",   column = @Column(name = "from_post_office_number", table = "invoice", nullable = false))
-    })
-    protected Address loadingAddress;
     @NotNull
     @Column(name = "from_dateTime", nullable = false)
     protected Timestamp loadingDateAndTime;
-
-    @NotNull
-    @AttributeOverrides({
-            @AttributeOverride(name = "region",             column = @Column(name = "to_region",           table = "invoice", nullable = false)),
-            @AttributeOverride(name = "city",               column = @Column(name = "to_city",             table = "invoice", nullable = false)),
-            @AttributeOverride(name = "street",             column = @Column(name = "to_street",           table = "invoice")),
-            @AttributeOverride(name = "postOfficeNumber",   column = @Column(name = "to_post_office_number", table = "invoice", nullable = false))
-    })
-    protected Address deliveryAddress;
 
     @Column(name = "to_dateTime")
     protected Timestamp deliveryDateAndTime;
@@ -54,14 +36,20 @@ public class Invoice {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "invoice")
     protected Collection<Package> packages = new ArrayList<>();
 
-    public Invoice(@NotNull Address loadingAddress, @NotNull Address deliveryAddress) {
-        this.loadingAddress = loadingAddress;
-        this.deliveryAddress = deliveryAddress;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    protected Station startingStation;
 
-    public Invoice(@NotNull Address loadingAddress, @NotNull Timestamp loadingDateAndTime, @NotNull Address deliveryAddress) {
-        this.loadingAddress = loadingAddress;
-        this.loadingDateAndTime = loadingDateAndTime;
-        this.deliveryAddress = deliveryAddress;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    protected Station endStation;
+//
+//    public Invoice(@NotNull Address loadingAddress, @NotNull Address deliveryAddress) {
+//        this.loadingAddress = loadingAddress;
+//        this.deliveryAddress = deliveryAddress;
+//    }
+//
+//    public Invoice(@NotNull Address loadingAddress, @NotNull Timestamp loadingDateAndTime, @NotNull Address deliveryAddress) {
+//        this.loadingAddress = loadingAddress;
+//        this.loadingDateAndTime = loadingDateAndTime;
+//        this.deliveryAddress = deliveryAddress;
+//    }
 }

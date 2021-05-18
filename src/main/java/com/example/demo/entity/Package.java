@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
+
+
 @Entity(name = "packages")
 @NoArgsConstructor
 @Data
@@ -20,7 +22,8 @@ public class Package {
 
     @NotNull
     @Column(name = "status", table = "package", nullable = false)
-    protected String status;
+    @Enumerated(EnumType.STRING)
+    protected PackageStatus status;
 
     @NotNull
     @Column(name = "weight",    table = "package",nullable = false)
@@ -39,52 +42,52 @@ public class Package {
 
     @NotNull
     @AttributeOverrides({
-            @AttributeOverride(name = "region",             column = @Column(name = "from_region",           table = "package", nullable = false)),
-            @AttributeOverride(name = "city",               column = @Column(name = "from_city",             table = "package", nullable = false)),
-            @AttributeOverride(name = "street",             column = @Column(name = "from_street",           table = "package")),
-            @AttributeOverride(name = "postOfficeNumber",   column = @Column(name = "from_post_office_number", table = "package", nullable = false))
+            @AttributeOverride(name = "region",             column = @Column(name = "region",             table = "package", nullable = false)),
+            @AttributeOverride(name = "city",               column = @Column(name = "city",               table = "package", nullable = false)),
+            @AttributeOverride(name = "street",             column = @Column(name = "street",             table = "package")),
+            @AttributeOverride(name = "postOfficeNumber",   column = @Column(name = "post_office_number", table = "package", nullable = false))
     })
-    protected Address loadingAddress;
-
-    @NotNull
-    @AttributeOverrides({
-            @AttributeOverride(name = "region",             column = @Column(name = "to_region",           table = "package", nullable = false)),
-            @AttributeOverride(name = "city",               column = @Column(name = "to_city",             table = "package", nullable = false)),
-            @AttributeOverride(name = "street",             column = @Column(name = "to_street",           table = "package")),
-            @AttributeOverride(name = "postOfficeNumber",   column = @Column(name = "to_post_office_number", table = "package", nullable = false))
-    })
-    protected Address deliveryAddress;
-
+    protected Address actualAddress;
 
     @NotNull
     @Column(name = "from_dateTime", nullable = false)
-    protected Timestamp loadingDateAndTime;
+    protected Timestamp datetimeSendingPackage;
 
 
     @Column(name = "to_dateTime")
-    protected Timestamp deliveryDateAndTime;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    protected Client client;
+    protected Timestamp datetimeReceiptPackage;
+//
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    protected ClientSender clientSender;
+//
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    protected ClientRecipient clientRecipient;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     protected Operator operator;
-
+//
     @ManyToOne(fetch = FetchType.LAZY)
     protected Invoice invoice;
 
+//
+//
+//    public Package(double weight, double volume, double insurance, double quantity, Address deliveryAddress, Timestamp datetimeReceiptPackage) {
+//        this.weight = weight;
+//        this.volume = volume;
+//        this.insurance = insurance;
+//        this.quantity = quantity;
+////        this.deliveryAddress = deliveryAddress;
+//        this.datetimeReceiptPackage = datetimeReceiptPackage;
+//    }
 
 
-    public Package(double weight, double volume, double insurance, double quantity, Address deliveryAddress, Timestamp deliveryDateAndTime) {
-        this.weight = weight;
-        this.volume = volume;
-        this.insurance = insurance;
-        this.quantity = quantity;
-        this.deliveryAddress = deliveryAddress;
-        this.deliveryDateAndTime = deliveryDateAndTime;
-    }
+
+
+
+
 
 
 }

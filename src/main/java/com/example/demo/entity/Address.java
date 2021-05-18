@@ -1,31 +1,33 @@
 package com.example.demo.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Embeddable;
 
+@EqualsAndHashCode(callSuper = true)
 @Embeddable
 @Data
 @NoArgsConstructor
-public class Address {
+public class Address extends Local {
 
-    protected String region;
-    protected String city;
-    protected String street;
-    protected String postOfficeNumber;
+    protected short postOfficeNumber;
 
 
-    public Address(String region, String city, String street, String postOfficeNumber) {
-        this.region = region;
-        this.city = city;
-        this.street = street;
+    public Address(short postOfficeNumber) {
         this.postOfficeNumber = postOfficeNumber;
     }
 
-    public Address(String region, String city, String postOfficeNumber) {
-        this.region = region;
-        this.city = city;
+    public Address(String region, String city, String street, short postOfficeNumber) {
+        super(region, city, street);
+        this.postOfficeNumber = postOfficeNumber;
+    }
+
+    public Address(String region, String city, short postOfficeNumber) {
+        super(region, city);
         this.postOfficeNumber = postOfficeNumber;
     }
 }

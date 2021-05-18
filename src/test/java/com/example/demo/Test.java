@@ -14,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 
 @SpringBootTest
@@ -68,6 +69,23 @@ public class Test {
         return md.digest();
     }
 
+    Station generateStation(){
+        Station station = new Station();
+        Address address = new Address();
+        address.setRegion("Nukolaivskaya oblast");
+        address.setCity("Nukolaiv");
+        address.setStreet("Bogoyavlenskiy");
+        address.setPostOfficeNumber((short) 22);
+        station.setAddress(address);
+        return station;
+    }
+
+    WorkShift generateWorkShift() {
+        WorkShift workShift = new WorkShift();
+        workShift.setStatus(WorkShiftStatus.STARTED);
+        workShift.setTime(new Timestamp(System.nanoTime()));
+        return workShift;
+    }
 
     Client generateClient() {
         String firstname = "Anton";
@@ -83,7 +101,7 @@ public class Test {
         String region = "Nikolaivskaya";
         String city = "Nikolaev";
         String street = "Soborna";
-        String postOfficeNumber = "3";
+        short postOfficeNumber = 3;
 
         Address address = new Address(
                 region,
@@ -149,7 +167,6 @@ public class Test {
         operator.setPrice(price);
         operator.setLogin(login);
         operator.setPassword(password);
-
         return operator;
     }
 
@@ -200,7 +217,7 @@ public class Test {
 
     Package generatePackages() {
 
-        Status status = Status.WAIT_LOAD;
+        PackageStatus status = PackageStatus.AWAITING_DISPATCH;
 
         double weight = 5.0d;
         double volume = 3.0d;
@@ -210,94 +227,123 @@ public class Test {
         String region = "Nikolaivskaya";
         String city = "Nikolaev";
         String street = "Soborna";
-        String postOfficeNumber = "4";
+        short postOfficeNumber = 4;
         Address startAddress = new Address(
                 region,
                 city,
                 street,
                 postOfficeNumber);
-
-        String region1 = "Nikolaivskaya";
-        String city1 = "Nikolaev";
-        String postOfficeNumber1 = "4";
-        Address finishAddress = new Address(
-                region1,
-                city1,
-                postOfficeNumber1);
 
         Timestamp loadDate = new Timestamp(System.nanoTime());
 
         Package pack = new Package();
-        pack.setStatus(status.toString());
+        pack.setStatus(status);
         pack.setWeight(weight);
         pack.setVolume(volume);
         pack.setInsurance(insurance);
         pack.setQuantity(quantity);
-        pack.setLoadingAddress(startAddress);
-        pack.setDeliveryAddress(finishAddress);
-        pack.setLoadingDateAndTime(loadDate);
-
+        pack.setActualAddress(startAddress);
+        pack.setDatetimeSendingPackage(loadDate);
 
         return pack;
     }
-
-    Invoice generateInvoice() {
-
-        String region = "Nikolaivskaya";
-        String city = "Nikolaev";
-        String street = "Soborna";
-        String postOfficeNumber = "4";
-        Address startAddress = new Address(
-                region,
-                city,
-                street,
-                postOfficeNumber);
-
-        String region1 = "Nikolaivskaya";
-        String city1 = "Nikolaev";
-        String postOfficeNumber1 = "4";
-        Address finishAddress = new Address(
-                region1,
-                city1,
-                postOfficeNumber1);
-
-        Timestamp loadDate = new Timestamp(System.nanoTime());
-
-        Invoice invoice = new Invoice();
-        invoice.setLoadingAddress(startAddress);
-        invoice.setLoadingDateAndTime(loadDate);
-        invoice.setDeliveryAddress(finishAddress);
-        return invoice;
-    }
 //
-//    WorkShift generateWorkShift() {
-//        WorkShift workShift = new WorkShift();
-//        workShift.setStatus(WorkShiftStatus.STARTED);
-//        workShift.setStartShift(new Timestamp(System.nanoTime()));
-//        return workShift;
+//    Invoice generateInvoice() {
+//
+//        String region = "Nikolaivskaya";
+//        String city = "Nikolaev";
+//        String street = "Soborna";
+//        String postOfficeNumber = "4";
+//        Address startAddress = new Address(
+//                region,
+//                city,
+//                street,
+//                postOfficeNumber);
+//
+//        String region1 = "Nikolaivskaya";
+//        String city1 = "Nikolaev";
+//        String postOfficeNumber1 = "4";
+//        Address finishAddress = new Address(
+//                region1,
+//                city1,
+//                postOfficeNumber1);
+//
+//        Timestamp loadDate = new Timestamp(System.nanoTime());
+//
+//        Invoice invoice = new Invoice();
+//        invoice.setLoadingAddress(startAddress);
+//        invoice.setLoadingDateAndTime(loadDate);
+//        invoice.setDeliveryAddress(finishAddress);
+//        return invoice;
+//    }
+////
+////    WorkShift generateWorkShift() {
+////        WorkShift workShift = new WorkShift();
+////        workShift.setStatus(WorkShiftStatus.STARTED);
+////        workShift.setStartShift(new Timestamp(System.nanoTime()));
+////        return workShift;
+////    }
+
+
+//    @org.junit.jupiter.api.Test
+//    public void addClient() {
+//        Client client = generateClient();
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//        session.save(client);
+//        checkSessionClose(session);
+//    }
+//
+
+
+//    @org.junit.jupiter.api.Test
+//    void ClientPackageOperator() {
+//        Client sendingClient = generateClient();
+////        Client recipientClient = generateClient();
+//        Operator operator = generateOperator();
+//        Package pack1 = generatePackages();
+//        Package pack2 = generatePackages();
+//
+//        sendingClient.getPackages().add(pack1);
+//        sendingClient.getPackages().add(pack2);
+////        recipientClient.getPackages().add(pack1);
+////        recipientClient.getPackages().add(pack2);
+//
+//        operator.getPackages().add(pack1);
+//        operator.getPackages().add(pack2);
+//
+//        pack1.setOperator(operator);
+//        pack2.setOperator(operator);
+//        pack1.setClientSender(sendingClient);
+////        pack1.setClientRecipient(recipientClient);;
+//        pack2.setClientSender(sendingClient);
+////        pack2.setClientRecipient(recipientClient);
+//
+//
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//        session.save(sendingClient);
+////        session.save(recipientClient);
+//        session.save(pack1);
+//        session.save(pack2);
+//        session.save(operator);
+//        checkSessionClose(session);
 //    }
 
-
-    @org.junit.jupiter.api.Test
-    public void addClient() {
-        Client client = generateClient();
-        checkSessionFactory();
-        Session session = checkSessionOpen();
-        session.save(client);
-        checkSessionClose(session);
-    }
-
-
-    @org.junit.jupiter.api.Test
-    public void addOperator() {
-        Operator operator = generateOperator();
-        checkSessionFactory();
-        Session session = checkSessionOpen();
-        session.save(operator);
-        checkSessionClose(session);
-
-//        return operator;
-    }
+    //
+//    @org.junit.jupiter.api.Test
+//    public void addOperator() {
+//        Station station = generateStation();
+//        Operator operator = generateOperator();
+//        operator.setStation(station);
+//        station.getOperators().add(operator);
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//        session.save(station);
+//        session.save(operator);
+//        checkSessionClose(session);
+//
+//    }
 
 
     @org.junit.jupiter.api.Test
@@ -310,209 +356,243 @@ public class Test {
     }
 
 
+//    @org.junit.jupiter.api.Test
+//    public void addPackage() {
+////        Operator operator = generateOperator();
+////        WorkShift workShift = new WorkShift(operator);
+////        workShift.setStatus(WorkShiftStatus.STARTED);
+////        operator.getWorkShifts().add(workShift);
+//        Client client = generateClient();
+//        Package pack = generatePackages();
+//        Package pack2 = generatePackages();
+//
+//        client.setPackages(pack,pack2);
+//        operator.setPackages(new ArrayList<>(Arrays.asList(pack, pack2)));
+//        pack.setOperator(operator);
+//        pack.setClient(client);
+//        pack2.setOperator(operator);
+//        pack2.setClient(client);
+//
+//
+//
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//
+//        session.save(operator);
+//        session.save(workShift);
+//        session.save(client);
+//        session.save(pack);
+//        session.save(pack2);
+//        checkSessionClose(session);
+//    }
+//
+//    @org.junit.jupiter.api.Test
+//    public void invoiceStart() {
+//        Operator operator = generateOperator();
+//
+//        WorkShift workShift = new WorkShift(operator);
+//        workShift.setStatus(WorkShiftStatus.STARTED);
+//        operator.getWorkShifts().add(workShift);
+//
+//        Client client = generateClient();
+//        Package pack = generatePackages();
+//        Package pack2 = generatePackages();
+//        client.getPackages().add(pack);
+//        client.getPackages().add(pack2);
+//        operator.getPackages().add(pack);
+//        operator.getPackages().add(pack2);
+//        pack.setOperator(operator);
+//        pack.setClient(client);
+//        pack2.setOperator(operator);
+//        pack2.setClient(client);
+//
+//        Courier courier = generateCourier();
+//        Invoice invoice = generateInvoice();
+//
+//
+//
+//        invoice.setOperator(operator);
+//        invoice.setCourier(courier);
+//        invoice.getPackages().add(pack);
+//        invoice.getPackages().add(pack2);
+//        courier.getInvoice().add(invoice);
+//
+//        WorkShift workShiftFinish = new WorkShift(operator, Arrays.asList(pack,pack2));
+//        workShiftFinish.setStatus(WorkShiftStatus.COMPLETED);
+//        operator.getWorkShifts().add(workShiftFinish);
+//
+//
+//
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//        session.save(operator);
+//        session.save(workShift);
+//        session.save(client);
+//        session.save(pack);
+//        session.save(pack2);
+//        session.save(courier);
+//        session.save(invoice);
+//        session.save(workShiftFinish);
+//        checkSessionClose(session);
+//
+//        assert true;
+//    }
+//
+//    @org.junit.jupiter.api.Test
+//    public void invoiceFinish() {
+//        Operator operator = generateOperator();
+//
+//        WorkShift workShift = new WorkShift(operator);
+//        workShift.setStatus(WorkShiftStatus.STARTED);
+//        operator.getWorkShifts().add(workShift);
+//
+//        Client client = generateClient();
+//        Package pack = generatePackages();
+//        Package pack2 = generatePackages();
+//        client.getPackages().add(pack);
+//        client.getPackages().add(pack2);
+//        operator.getPackages().add(pack);
+//        operator.getPackages().add(pack2);
+//        pack.setOperator(operator);
+//        pack.setClient(client);
+//        pack2.setOperator(operator);
+//        pack2.setClient(client);
+//
+//        Courier courier = generateCourier();
+//        Invoice invoice = generateInvoice();
+//
+//
+//
+//        invoice.setOperator(operator);
+//        invoice.setCourier(courier);
+//        invoice.getPackages().add(pack);
+//        invoice.getPackages().add(pack2);
+//        courier.getInvoice().add(invoice);
+//
+//
+//
+//
+//
+//        WorkShift workShiftFinish = new WorkShift(operator, Arrays.asList(pack,pack2));
+//        workShiftFinish.setStatus(WorkShiftStatus.COMPLETED);
+//        operator.getWorkShifts().add(workShiftFinish);
+//
+//
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//        session.save(operator);
+//        session.save(workShift);
+//        session.save(client);
+//        session.save(pack);
+//        session.save(pack2);
+//        session.save(courier);
+//        session.save(invoice);
+//        checkSessionClose(session);
+//
+//        invoice.setDeliveryDateAndTime(new Timestamp(System.nanoTime()));
+//        Session session2 = checkSessionOpen();
+//        session2.save(invoice);
+//        session2.save(workShiftFinish);
+//        checkSessionClose(session2);
+//
+//        assert true;
+//    }
+//
+//    @org.junit.jupiter.api.Test
+//    void workShiftStart() {
+//        Client client = generateClient();
+//        Operator operator = generateOperator();
+//        Package pack = generatePackages();
+//        Package pack2 = generatePackages();
+//        client.getPackages().add(pack);
+//        client.getPackages().add(pack2);
+//        operator.getPackages().add(pack);
+//        operator.getPackages().add(pack2);
+//        pack.setOperator(operator);
+//        pack.setClient(client);
+//        pack2.setOperator(operator);
+//        pack2.setClient(client);
+//
+//        WorkShift workShift = new WorkShift(operator, Arrays.asList(pack,pack2));
+//        workShift.setStatus(WorkShiftStatus.STARTED);
+//        operator.getWorkShifts().add(workShift);
+//
+//
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//        session.save(client);
+//        session.save(operator);
+//        session.save(pack);
+//        session.save(pack2);
+//        session.save(workShift);
+//        checkSessionClose(session);
+//
+//        assert true;
+//    }
+//
+//    @org.junit.jupiter.api.Test
+//    void workShiftComplete() {
+//        Client client = generateClient();
+//        Operator operator = generateOperator();
+//        Package pack = generatePackages();
+//        Package pack2 = generatePackages();
+//        client.getPackages().add(pack);
+//        client.getPackages().add(pack2);
+//        operator.getPackages().add(pack);
+//        operator.getPackages().add(pack2);
+//        pack.setOperator(operator);
+//        pack.setClient(client);
+//        pack2.setOperator(operator);
+//        pack2.setClient(client);
+//
+//        WorkShift workShift = new WorkShift(operator, Arrays.asList(pack,pack2));
+//        workShift.setStatus(WorkShiftStatus.COMPLETED);
+//        operator.getWorkShifts().add(workShift);
+//
+//
+//        checkSessionFactory();
+//        Session session = checkSessionOpen();
+//        session.save(client);
+//        session.save(operator);
+//        session.save(pack);
+//        session.save(pack2);
+//        session.save(workShift);
+//        checkSessionClose(session);
+//
+//        assert true;
+//    }
+
+
     @org.junit.jupiter.api.Test
-    public void addPackage() {
+    void ClientPackage() {
+        Station station = generateStation();
+        WorkShift workShift = generateWorkShift();
         Operator operator = generateOperator();
-        WorkShift workShift = new WorkShift(operator);
-        workShift.setStatus(WorkShiftStatus.STARTED);
-        operator.getWorkShifts().add(workShift);
         Client client = generateClient();
+        Client client2 = generateClient();
         Package pack = generatePackages();
         Package pack2 = generatePackages();
-
-        client.setPackages(pack,pack2);
-        operator.setPackages(new ArrayList<>(Arrays.asList(pack, pack2)));
+        station.getOperators().add(operator);
+        workShift.setOperator(operator);
+        operator.setStation(station);
+        operator.getWorkShifts().add(workShift);
         pack.setOperator(operator);
-        pack.setClient(client);
         pack2.setOperator(operator);
-        pack2.setClient(client);
-
+        ClientsPackages clientsPackages1 = new ClientsPackages(client, client2, pack);
+        ClientsPackages clientsPackages2 = new ClientsPackages(client, client2, pack2);
 
 
         checkSessionFactory();
         Session session = checkSessionOpen();
-
+        session.save(station);
+        session.save(client);
+        session.save(client2);
         session.save(operator);
         session.save(workShift);
-        session.save(client);
         session.save(pack);
         session.save(pack2);
+        session.save(clientsPackages1);
+        session.save(clientsPackages2);
         checkSessionClose(session);
-    }
-
-    @org.junit.jupiter.api.Test
-    public void invoiceStart() {
-        Operator operator = generateOperator();
-
-        WorkShift workShift = new WorkShift(operator);
-        workShift.setStatus(WorkShiftStatus.STARTED);
-        operator.getWorkShifts().add(workShift);
-
-        Client client = generateClient();
-        Package pack = generatePackages();
-        Package pack2 = generatePackages();
-        client.getPackages().add(pack);
-        client.getPackages().add(pack2);
-        operator.getPackages().add(pack);
-        operator.getPackages().add(pack2);
-        pack.setOperator(operator);
-        pack.setClient(client);
-        pack2.setOperator(operator);
-        pack2.setClient(client);
-
-        Courier courier = generateCourier();
-        Invoice invoice = generateInvoice();
-
-
-
-        invoice.setOperator(operator);
-        invoice.setCourier(courier);
-        invoice.getPackages().add(pack);
-        invoice.getPackages().add(pack2);
-        courier.getInvoice().add(invoice);
-
-        WorkShift workShiftFinish = new WorkShift(operator, Arrays.asList(pack,pack2));
-        workShiftFinish.setStatus(WorkShiftStatus.COMPLETED);
-        operator.getWorkShifts().add(workShiftFinish);
-
-
-
-        checkSessionFactory();
-        Session session = checkSessionOpen();
-        session.save(operator);
-        session.save(workShift);
-        session.save(client);
-        session.save(pack);
-        session.save(pack2);
-        session.save(courier);
-        session.save(invoice);
-        session.save(workShiftFinish);
-        checkSessionClose(session);
-
-        assert true;
-    }
-
-    @org.junit.jupiter.api.Test
-    public void invoiceFinish() {
-        Operator operator = generateOperator();
-
-        WorkShift workShift = new WorkShift(operator);
-        workShift.setStatus(WorkShiftStatus.STARTED);
-        operator.getWorkShifts().add(workShift);
-
-        Client client = generateClient();
-        Package pack = generatePackages();
-        Package pack2 = generatePackages();
-        client.getPackages().add(pack);
-        client.getPackages().add(pack2);
-        operator.getPackages().add(pack);
-        operator.getPackages().add(pack2);
-        pack.setOperator(operator);
-        pack.setClient(client);
-        pack2.setOperator(operator);
-        pack2.setClient(client);
-
-        Courier courier = generateCourier();
-        Invoice invoice = generateInvoice();
-
-
-
-        invoice.setOperator(operator);
-        invoice.setCourier(courier);
-        invoice.getPackages().add(pack);
-        invoice.getPackages().add(pack2);
-        courier.getInvoice().add(invoice);
-
-
-
-
-
-        WorkShift workShiftFinish = new WorkShift(operator, Arrays.asList(pack,pack2));
-        workShiftFinish.setStatus(WorkShiftStatus.COMPLETED);
-        operator.getWorkShifts().add(workShiftFinish);
-
-
-        checkSessionFactory();
-        Session session = checkSessionOpen();
-        session.save(operator);
-        session.save(workShift);
-        session.save(client);
-        session.save(pack);
-        session.save(pack2);
-        session.save(courier);
-        session.save(invoice);
-        checkSessionClose(session);
-
-        invoice.setDeliveryDateAndTime(new Timestamp(System.nanoTime()));
-        Session session2 = checkSessionOpen();
-        session2.save(invoice);
-        session2.save(workShiftFinish);
-        checkSessionClose(session2);
-
-        assert true;
-    }
-
-    @org.junit.jupiter.api.Test
-    void workShiftStart() {
-        Client client = generateClient();
-        Operator operator = generateOperator();
-        Package pack = generatePackages();
-        Package pack2 = generatePackages();
-        client.getPackages().add(pack);
-        client.getPackages().add(pack2);
-        operator.getPackages().add(pack);
-        operator.getPackages().add(pack2);
-        pack.setOperator(operator);
-        pack.setClient(client);
-        pack2.setOperator(operator);
-        pack2.setClient(client);
-
-        WorkShift workShift = new WorkShift(operator, Arrays.asList(pack,pack2));
-        workShift.setStatus(WorkShiftStatus.STARTED);
-        operator.getWorkShifts().add(workShift);
-
-
-        checkSessionFactory();
-        Session session = checkSessionOpen();
-        session.save(client);
-        session.save(operator);
-        session.save(pack);
-        session.save(pack2);
-        session.save(workShift);
-        checkSessionClose(session);
-
-        assert true;
-    }
-
-    @org.junit.jupiter.api.Test
-    void workShiftComplete() {
-        Client client = generateClient();
-        Operator operator = generateOperator();
-        Package pack = generatePackages();
-        Package pack2 = generatePackages();
-        client.getPackages().add(pack);
-        client.getPackages().add(pack2);
-        operator.getPackages().add(pack);
-        operator.getPackages().add(pack2);
-        pack.setOperator(operator);
-        pack.setClient(client);
-        pack2.setOperator(operator);
-        pack2.setClient(client);
-
-        WorkShift workShift = new WorkShift(operator, Arrays.asList(pack,pack2));
-        workShift.setStatus(WorkShiftStatus.COMPLETED);
-        operator.getWorkShifts().add(workShift);
-
-
-        checkSessionFactory();
-        Session session = checkSessionOpen();
-        session.save(client);
-        session.save(operator);
-        session.save(pack);
-        session.save(pack2);
-        session.save(workShift);
-        checkSessionClose(session);
-
-        assert true;
     }
 }

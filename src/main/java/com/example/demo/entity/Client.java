@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 @EqualsAndHashCode(callSuper = true)
@@ -21,7 +20,7 @@ import java.util.Collection;
         @AttributeOverride(name = "lastname",               column = @Column(name = "lastname",       table = "client", nullable = false, length = 12)),
         @AttributeOverride(name = "phoneNumber.phone",      column = @Column(name = "phone_number",   table = "client", nullable = false, length = 12))
 })
-public class Client extends BaseEntity{
+public class Client extends Human {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,32 +29,24 @@ public class Client extends BaseEntity{
 
     @NotNull
     @AttributeOverrides({
-            @AttributeOverride(name = "region",             column = @Column(name = "region",               table = "client", length = 24)),
-            @AttributeOverride(name = "city",               column = @Column(name = "city",                 table = "client", length = 24)),
-            @AttributeOverride(name = "street",             column = @Column(name = "street",               table = "client", length = 24)),
             @AttributeOverride(name = "postOfficeNumber",   column = @Column(name = "post_office_number",   table = "client", length = 3))
     })
     protected Address address;
+//
+//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "client", cascade = CascadeType.ALL)
+//    protected Collection<Package> packages = new ArrayList<>();
+//
+//    public Client(@NotNull Address address, Collection<Package> packages) {
+//        this.address = address;
+//        this.packages = packages;
+//    }
+//
+//    public Client(@NotNull String firstname, @NotNull String middlename, @NotNull String lastname, @NotNull PhoneNumber phoneNumber, @NotNull Address address, Collection<Package> packages) {
+//        super(firstname, middlename, lastname, phoneNumber);
+//        this.address = address;
+//        this.packages = packages;
+//    }
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "client")
-    protected Collection<Package> packages = new ArrayList<>();
-
-    public Client(String firstname, String middlename, String lastname, PhoneNumber phoneNumber, @NotNull Address address) {
-        super(firstname, middlename, lastname, phoneNumber);
-        this.address = address;
-    }
-
-    public Client(String firstname, String middlename, String lastname, PhoneNumber phoneNumber) {
-        super(firstname, middlename, lastname, phoneNumber);
-    }
-
-    public void setPackages(Collection<Package> packages) {
-        this.packages = packages;
-    }
-
-    public void setPackages(Package ... packages){
-        this.packages = Arrays.asList(packages);
-    }
 }
 
 

@@ -20,7 +20,7 @@ public class WorkShift implements Work{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "work_shift_id", table = "work_shift")
-    protected Long id;
+    protected long id;
 
     @NotNull
     @Column(name = "status", length = 10, table = "work_shift")
@@ -35,27 +35,22 @@ public class WorkShift implements Work{
     @ManyToOne(fetch = FetchType.LAZY)
     protected Operator operator;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "work_shift_packages",
-            joinColumns = @JoinColumn(name = "work_shift_id"),
-            inverseJoinColumns = @JoinColumn(name = "packages_id")
-    )
+    @OneToMany(fetch = FetchType.LAZY)
     protected Collection<Package> packages = new ArrayList<>();
-
-    public WorkShift(@NotNull Operator operator, Collection<Package> packagesStartShift) {
-        this.operator = operator;
-        this.packages = packagesStartShift;
-        if(operator!=null){
-            this.setTime(new Timestamp(System.nanoTime()));
-        }
-    }
-
-    public WorkShift(@NotNull Operator operator) {
-        this.operator = operator;
-        if(operator!=null){
-            this.setTime(new Timestamp(System.nanoTime()));
-        }
-    }
+//
+//    public WorkShift(@NotNull Operator operator, Collection<Package> packagesStartShift) {
+//        this.operator = operator;
+//        this.packages = packagesStartShift;
+//        if(operator!=null){
+//            this.setTime(new Timestamp(System.nanoTime()));
+//        }
+//    }
+//
+//    public WorkShift(@NotNull Operator operator) {
+//        this.operator = operator;
+//        if(operator!=null){
+//            this.setTime(new Timestamp(System.nanoTime()));
+//        }
+//    }
 }
 
