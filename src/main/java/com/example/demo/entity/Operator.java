@@ -38,6 +38,7 @@ public class Operator extends Employee {
     protected Collection<WorkShift> workShifts = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "station_id", foreignKey = @ForeignKey(name = "station_id_fk"))
     protected Station station;
 
 }

@@ -8,7 +8,6 @@ import java.util.Objects;
 @Embeddable
 public class PhoneNumber {
 
-    @Column(length = 12)
     protected String phone;
 
     public PhoneNumber(String phone) throws ValidationException {

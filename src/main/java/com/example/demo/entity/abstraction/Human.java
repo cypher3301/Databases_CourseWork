@@ -29,8 +29,12 @@ public abstract class Human {
 
 
     @NotNull
-    @AttributeOverride(name = "phone", column = @Column(name = "phone"))
-    @Column(           name = "phone", nullable = false, length = 12)
+    @AttributeOverride(
+            name = "phone",
+            column =     @Column(
+                    name = "phone",
+                    nullable = false,
+                    length = 12))
     protected PhoneNumber phoneNumber;
 
 

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 
-
 @Entity(name = "work_shift")
 @Table(name = "work_shift", catalog = "postOffice", schema = "public")
 @Data
@@ -35,6 +34,7 @@ public class WorkShift implements Work {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "operator_id", foreignKey = @ForeignKey(name = "fk_work_shift_operator_id"))
     protected Operator operator;
 
     @OneToMany(fetch = FetchType.LAZY)
@@ -46,14 +46,14 @@ public class WorkShift implements Work {
     public WorkShift(@NotNull Operator operator, Collection<Package> packagesStartShift) {
         this.operator = operator;
         this.packages = packagesStartShift;
-        if(operator!=null){
+        if (operator != null) {
             this.setTime(new Timestamp(System.nanoTime()));
         }
     }
 
     public WorkShift(@NotNull Operator operator) {
         this.operator = operator;
-        if(operator!=null){
+        if (operator != null) {
             this.setTime(new Timestamp(System.nanoTime()));
         }
     }

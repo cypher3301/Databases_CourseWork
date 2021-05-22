@@ -4,6 +4,7 @@ import com.example.demo.entity.embeddable.Address;
 import com.example.demo.entity.status.PackageStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,12 +16,14 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Data
 @Table(name = "package", catalog = "postOffice", schema = "public")
+@Check(constraints = "from_dateTime<to_dateTime")
 public class Package {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "package_id", table = "package")
     protected long package_id;
+
 
     @NotNull
     @Column(name = "status", table = "package", nullable = false)
@@ -55,6 +58,6 @@ public class Package {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "operator_id", foreignKey = @ForeignKey(name = "person_id_fk"))
+    @JoinColumn(name = "operator_id", foreignKey = @ForeignKey(name = "fk_package_operator_id"))
     protected Operator operator;
 }
