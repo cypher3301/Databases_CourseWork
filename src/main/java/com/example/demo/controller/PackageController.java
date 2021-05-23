@@ -4,6 +4,7 @@ import com.example.demo.dto.ClientDto;
 import com.example.demo.dto.OperatorDto;
 import com.example.demo.dto.PackageDto;
 import com.example.demo.entity.Client;
+import com.example.demo.entity.ClientsPackages;
 import com.example.demo.entity.Package;
 import com.example.demo.service.Service;
 import com.sun.xml.bind.v2.runtime.reflect.Lister;
@@ -24,25 +25,27 @@ import java.util.List;
 public class PackageController {
     private final Service service;
 
-    @PostMapping("/regPack")
-    public PackageDto arrangeClientPackageByOperator(
-            @RequestBody Data data
-    ) {
-        PackageDto packageDto = null;
-        try {
-            packageDto = service.registerPackage(data.sender,data.recipient,data.pack);
-        } catch (ValidationException e) {
-            System.out.println("/regPack service registerPackage");
-            e.printStackTrace();
-        }
-        return packageDto;
+//    @PostMapping("/createPack")
+//    public Long arrangeClientPackageByOperator(@RequestBody PackageDto packageDto) {
+//        return service.savePackage(service.savePackage(packageDto)).getId();
+//    }
+
+    @PostMapping("/createClient")
+    public Long registerClient(@RequestBody ClientDto clientDto){
+        log.info("Handling save client: " + clientDto);
+        return service.saveClient(clientDto).getId();
     }
 
-    public static class Data{
-        public ClientDto sender;
-        public ClientDto recipient;
-        public PackageDto pack;
+    @PostMapping("/createPackage")
+    public Long registerPackage(@RequestBody PackageDto packageDto){
+        log.info("Handling save client: " + packageDto);
+        return service.savePackage(packageDto).getId();
     }
+
+//    @PostMapping("/regPack")
+//    public ClientsPackages registerPackage(@RequestBody ClientsPackages clientsPackages){
+//        return service.
+//    }
 
     @GetMapping("/findAllOperators")
     public List<OperatorDto> findAllOperators() {
