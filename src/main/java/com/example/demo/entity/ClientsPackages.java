@@ -9,8 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity(name = "sender_recipient_package")
 @Immutable
-@EqualsAndHashCode
-@ToString
+@Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 public class ClientsPackages {
