@@ -21,7 +21,7 @@ public class ClientsPackages {
 
     @NotNull
     @NonNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
             name = "client_sender_id",nullable = false
     )
@@ -29,7 +29,7 @@ public class ClientsPackages {
 
     @NotNull
     @NonNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
             name = "client_recipient_id",nullable = false
     )
@@ -37,7 +37,7 @@ public class ClientsPackages {
 
     @NotNull
     @NonNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(
             name = "package_id",nullable = false
     )

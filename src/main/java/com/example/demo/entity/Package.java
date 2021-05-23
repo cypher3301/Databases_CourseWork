@@ -16,13 +16,13 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Data
 @Table(name = "package", catalog = "postOffice", schema = "public")
-@Check(constraints = "from_dateTime<to_dateTime")
+@Check(constraints = "from_datetime<to_datetime")
 public class Package {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "package_id", table = "package")
-    protected long package_id;
+    protected long id;
 
 
     @NotNull
@@ -49,11 +49,11 @@ public class Package {
     protected Address actualAddress;
 
     @NotNull
-    @Column(name = "from_dateTime", nullable = false)
+    @Column(name = "from_datetime", nullable = false)
     protected Timestamp datetimeSendingPackage;
 
 
-    @Column(name = "to_dateTime")
+    @Column(name = "to_datetime")
     protected Timestamp datetimeReceiptPackage;
 
     @NotNull

@@ -27,5 +27,7 @@ public class Station {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "station")
     protected Collection<Operator> operators = new ArrayList<>();
 
-
+    public Station(Address address) {
+        this.address = address;
+    }
 }
