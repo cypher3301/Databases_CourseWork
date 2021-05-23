@@ -23,6 +23,7 @@ public class PackageDto {
     private String status;
     private double volume;
     private double weight;
-    private Timestamp from_datetime;
-    private Timestamp to_datetime;
+    private Timestamp fromDatetime;
+    private Timestamp toDatetime;
+    private long operatorId;
 }
