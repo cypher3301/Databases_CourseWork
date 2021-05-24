@@ -1,13 +1,16 @@
 package com.example.demo.service;
 
 import com.example.demo.converter.Convert;
+import com.example.demo.data.ClientsPackagesId;
 import com.example.demo.dto.ClientDto;
+import com.example.demo.dto.ClientsPackagesDto;
 import com.example.demo.dto.OperatorDto;
 import com.example.demo.dto.PackageDto;
 import com.example.demo.entity.Client;
 import com.example.demo.entity.ClientsPackages;
 import com.example.demo.entity.Operator;
 import com.example.demo.entity.Package;
+import com.example.demo.entity.status.PackageStatus;
 import com.example.demo.repository.ClientPackagesRepository;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.repository.OperatorRepository;
@@ -16,7 +19,9 @@ import lombok.AllArgsConstructor;
 
 import javax.xml.bind.ValidationException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
@@ -48,9 +53,15 @@ public class ImplService implements Service {
 
     @Override
     public PackageDto savePackage(PackageDto packageDto) {
-        Package pack = packageRepository.save(convert.fromPackageDtoToPackage(packageDto));
+        packageDto.setStatus(PackageStatus.AWAITING_DISPATCH.name());
+        packageDto.setFromDatetime(new Timestamp(System.nanoTime()));
+        Package pack =convert.fromPackageDtoToPackage(packageDto);
+        Optional<Operator> optionalOperator = operatorRepository.findById(packageDto.getOperatorId());
+        assert optionalOperator.isPresent();
+//        pack.setOperator(optionalOperator.get());
+        Package save = packageRepository.save(pack);
         //validation
-        return convert.fromPackageToPackageDto(pack);
+        return convert.fromPackageToPackageDto(save);
     }
 
     @Override
@@ -67,7 +78,28 @@ public class ImplService implements Service {
         return convert.fromOperatorToOperatorDto(operator);
     }
 
-
+    @Override
+    public ClientsPackagesDto saveClientsPackages(ClientsPackagesId clientsPackagesId) {
+        ClientDto sender = convert.fromClientToClientDto(clientRepository.findById(clientsPackagesId.getSenderId()).get());
+        ClientDto recipient =convert.fromClientToClientDto(clientRepository.findById(clientsPackagesId.getRecipientId()).get());
+        PackageDto pack = convert.fromPackageToPackageDto(packageRepository.findById(clientsPackagesId.getPackageId()).get());
+        ClientsPackages clientsPackages = null;
+        try {
+            clientsPackages = new ClientsPackages(
+                    convert.fromClientDtoToClient(sender),
+                    convert.fromClientDtoToClient(recipient),
+                    convert.fromPackageDtoToPackage(pack));
+        } catch (ValidationException e) {
+            e.printStackTrace();
+        }
+        assert clientsPackages != null;
+        ClientsPackages save =
+                clientPackagesRepository
+                        .save(
+                                clientsPackages
+                        );
+        return convert.fromClientPackagesToClientPackagesDto(save);
+    }
 
 
     ///////////////delete objects
@@ -104,14 +136,4 @@ public class ImplService implements Service {
 
     ///////////////other
 
-    @Override
-    public PackageDto registerPackage(ClientDto sender, ClientDto recipient, PackageDto pack) throws ValidationException {
-        ClientsPackages clientsPackages = new ClientsPackages(
-                convert.fromClientDtoToClient(sender),
-                convert.fromClientDtoToClient(recipient),
-                convert.fromPackageDtoToPackage(pack)
-        );
-        clientPackagesRepository.save(clientsPackages);
-        return pack;
-    }
 }
