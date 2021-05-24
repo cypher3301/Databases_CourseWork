@@ -2,8 +2,7 @@ package com.example.demo.entity;
 
 import com.example.demo.entity.embeddable.Address;
 import com.example.demo.entity.status.PackageStatus;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Check;
 
 import javax.persistence.*;
@@ -14,7 +13,9 @@ import java.sql.Timestamp;
 
 @Entity(name = "package")
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
+@EqualsAndHashCode
 @Table(name = "package", catalog = "postOffice", schema = "public")
 @Check(constraints = "from_datetime<to_datetime")
 public class Package {
@@ -56,8 +57,24 @@ public class Package {
     @Column(name = "to_datetime")
     protected Timestamp datetimeReceiptPackage;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "operator_id", foreignKey = @ForeignKey(name = "fk_package_operator_id"))
-    protected Operator operator;
+//    @NotNull
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+//    @JoinColumn(name = "operator_id", foreignKey = @ForeignKey(name = "fk_package_operator_id"))
+//    protected Long operator_id;
+
+    @Override
+    public String toString() {
+        return "Package{" +
+                "id=" + id +
+                ", status=" + status +
+                ", weight=" + weight +
+                ", volume=" + volume +
+                ", insurance=" + insurance +
+                ", quantity=" + quantity +
+                ", actualAddress=" + actualAddress +
+                ", datetimeSendingPackage=" + datetimeSendingPackage +
+                ", datetimeReceiptPackage=" + datetimeReceiptPackage +
+//                ", operator=" + operator.getId() +
+                '}';
+    }
 }
