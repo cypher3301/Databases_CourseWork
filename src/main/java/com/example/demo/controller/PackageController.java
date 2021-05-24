@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.data.ClientsPackagesId;
 import com.example.demo.dto.ClientDto;
+import com.example.demo.dto.ClientsPackagesDto;
 import com.example.demo.dto.OperatorDto;
 import com.example.demo.dto.PackageDto;
 import com.example.demo.entity.Client;
@@ -25,10 +27,6 @@ import java.util.List;
 public class PackageController {
     private final Service service;
 
-//    @PostMapping("/createPack")
-//    public Long arrangeClientPackageByOperator(@RequestBody PackageDto packageDto) {
-//        return service.savePackage(service.savePackage(packageDto)).getId();
-//    }
 
     @PostMapping("/createClient")
     public Long registerClient(@RequestBody ClientDto clientDto){
@@ -38,14 +36,16 @@ public class PackageController {
 
     @PostMapping("/createPackage")
     public Long registerPackage(@RequestBody PackageDto packageDto){
-        log.info("Handling save client: " + packageDto);
+        log.info("Handling save package: " + packageDto);
         return service.savePackage(packageDto).getId();
     }
 
-//    @PostMapping("/regPack")
-//    public ClientsPackages registerPackage(@RequestBody ClientsPackages clientsPackages){
-//        return service.
-//    }
+    @PostMapping("/regPack")
+    public ClientsPackagesDto registerPackage(@RequestBody ClientsPackagesId clientsPackages){
+        ClientsPackagesDto clientsPackagesDto = service.saveClientsPackages(clientsPackages);
+        log.info("Handling save clients-packages: "+clientsPackagesDto);
+        return clientsPackagesDto;
+    }
 
     @GetMapping("/findAllOperators")
     public List<OperatorDto> findAllOperators() {
