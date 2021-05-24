@@ -1,12 +1,11 @@
 package com.example.demo.converter;
 
 import com.example.demo.dto.ClientDto;
+import com.example.demo.dto.ClientsPackagesDto;
 import com.example.demo.dto.OperatorDto;
 import com.example.demo.dto.PackageDto;
-import com.example.demo.entity.Client;
-import com.example.demo.entity.Operator;
+import com.example.demo.entity.*;
 import com.example.demo.entity.Package;
-import com.example.demo.entity.Station;
 import com.example.demo.entity.embeddable.Address;
 import com.example.demo.entity.embeddable.PhoneNumber;
 import com.example.demo.entity.status.PackageStatus;
@@ -85,8 +84,8 @@ public class Convert {
         pack.setVolume(dto.getVolume());
         pack.setWeight(dto.getWeight());
         pack.setStatus(PackageStatus.getCurrentStatus(dto.getStatus()));
-        pack.setDatetimeSendingPackage(dto.getFrom_datetime());
-        pack.setDatetimeReceiptPackage(dto.getTo_datetime());
+        pack.setDatetimeSendingPackage(dto.getFromDatetime());
+        pack.setDatetimeReceiptPackage(dto.getToDatetime());
         return pack;
     }
 
@@ -102,8 +101,27 @@ public class Convert {
                 .status(pack.getStatus().name())
                 .volume(pack.getVolume())
                 .weight(pack.getWeight())
-                .from_datetime(pack.getDatetimeSendingPackage())
-                .to_datetime(pack.getDatetimeReceiptPackage())
+                .fromDatetime(pack.getDatetimeSendingPackage())
+                .toDatetime(pack.getDatetimeReceiptPackage())
                 .build();
     }
-}
+
+    public ClientsPackages fromClientPackagesDtoToClientPackages(ClientsPackagesDto dto){
+        ClientsPackages clientPackages = new ClientsPackages();
+        clientPackages.setSender(dto.getClientSender());
+        clientPackages.setRecipient(dto.getClientRecipient());
+        clientPackages.setPackages(dto.getPack());
+        return clientPackages;
+    }
+
+    public ClientsPackagesDto fromClientPackagesToClientPackagesDto(ClientsPackages dto){
+        return ClientsPackagesDto.builder()
+                .clientSender(dto.getSender())
+                .clientRecipient(dto.getRecipient())
+                .pack(dto.getPackages())
+                .build();
+    }
+
+
+
+    }
