@@ -28,7 +28,10 @@ public class Operator extends Employee {
     @Column(name="password", table = "operator")
     private byte[] password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "operator")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "operator_packages"
+    )
     protected Collection<Package> packages = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "operator")
