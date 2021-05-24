@@ -3,8 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+    <script rel="script" src="assets/scripts/findAll.js"></script>
 </head>
 <body>
-Hello
+<div class="wrapper">
+    <header class="header">
+        <section class="logo"></section>
+        <section class="show-any">
+            <select name="show" id="show-any" class="show-all__objects" onchange="changeTable()">
+                <option value="packages" >Отобразить посылки</option>
+                <option value="clients" >Отобразить клиентов</option>
+                <option value="operators">Отобразить операторов</option>
+            </select>
+        </section>
+<!--        <button class="" onclick="showAllClients()">Отобразить клиентов</button>-->
+    </header>
+    <main class="main">
+        <section class="operations">
+            <button class="operations__register-package"><a href="registerPackage.html">Создать накладную</a></button>
+        </section>
+        <section class="section-table">
+            <table class="section-table__objects" id="table-objects"></table>
+        </section>
+    </main>
+    <footer class="footer"></footer>
+</div>
+<script>showAllPackages()</script>
 </body>
 </html>
