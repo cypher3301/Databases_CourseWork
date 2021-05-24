@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.status.InvoiceStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Check;
@@ -22,11 +23,11 @@ public class Invoice {
     protected long invoice_id;
 
     @NotNull
-    @Column(name = "from_dateTime", nullable = false)
-    protected Timestamp loadingDateAndTime;
+    @Column(name = "datetime", nullable = false)
+    protected Timestamp dateAndTime;
 
-    @Column(name = "to_dateTime")
-    protected Timestamp deliveryDateAndTime;
+    @Column(name = "status")
+    protected InvoiceStatus status;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "invoice_package")
