@@ -23,7 +23,7 @@ function showAllClients() {
                 id = client.id;
                 console.log(client);
                 html = html +
-                    '    <tr><td>' + client.id + '</td>\n' +
+                    '    <tr id="client-' + client.id + '"><td>' + client.id + '</td>\n' +
                     '        <td>' + client.firstname + '</td>\n' +
                     '        <td>' + client.middlename + '</td>\n' +
                     '        <td>' + client.lastname + '</td>' +
@@ -38,12 +38,12 @@ function showAllClients() {
             document.getElementById("table-objects").innerHTML = html;
         }
     };
-    xhttp.open("GET","http://localhost:8080/package/findAllClients", true);
+    xhttp.open("GET", "http://192.168.0.120:8080/package/findAllClients", true);
     xhttp.send();
 }
 
 
-function showAllClients() {
+function showAllPackages() {
 
     var tableState = '<tr>\n' +
         '        <th>Package id</th>\n' +
@@ -71,7 +71,7 @@ function showAllClients() {
                 id = pack.id;
                 console.log(pack);
                 html = html +
-                    '    <tr><td>' + pack.id + '</td>\n' +
+                    '    <tr id="package-' + pack.id + '" ><td>' + pack.id + '</td>\n' +
                     '        <td>' + pack.region + '</td>\n' +
                     '        <td>' + pack.city + '</td>\n' +
                     '        <td>' + pack.street + '</td>' +
@@ -82,14 +82,19 @@ function showAllClients() {
                     '        <td>' + pack.volume + '</td>' +
                     '        <td>' + pack.weight + '</td>' +
                     '        <td>' + pack.fromDatetime + '</td>' +
-                    '        <td>' + pack.toDatetime + '</td>' +
-                    '        <td><button onclick="finishInvoice(' + pack.id + ')">Зкрыть накладную</button>' +
-                    '        <button onclick="reverseInvoice(' + pack.id + ')">Отправить обратно</button></td></tr>';
+                    '        <td>' + pack.toDatetime + '</td>';
+                if (pack.toDatetime === null) {
+                    html = html +
+                        '<td><button onclick="closePackage(' + pack.id + ')">Зкрыть накладную</button>' +
+                        '        <button onclick="reverseInvoice(' + pack.id + ')">Отправить обратно</button></td></tr>';
+                }
             }
+
+
             document.getElementById("table-objects").innerHTML = html;
         }
     };
-    xhttp.open("GET","http://localhost:8080/package/findAllPackages", true);
+    xhttp.open("GET", "http://192.168.0.120:8080/package/findAllPackages", true);
     xhttp.send();
 }
 
@@ -126,17 +131,20 @@ function showAllOperators() {
             document.getElementById("table-objects").innerHTML = html;
         }
     };
-    xhttp.open("GET","http://localhost:8080/package/findAllOperators", true);
+    xhttp.open("GET", "http://192.168.0.120:8080/package/findAllOperators", true);
     xhttp.send();
 }
 
 function changeTable() {
     var selectBox = document.getElementById("show-any");
     var value = selectBox.options[selectBox.selectedIndex].value;
-    if(value==="operators"){
+    if (value === "operators") {
         showAllOperators();
-    }else if(value==="clients"){
+    } else if (value === "clients") {
         showAllClients();
-    }
+    } else
         showAllPackages();
 }
+
+
+

@@ -5,8 +5,10 @@
     <title>Title</title>
     <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
     <script rel="script" src="assets/scripts/findAll.js"></script>
+    <script rel="script" src="assets/scripts/chooseObject.js"></script>
 </head>
 <body>
+<script>showAllPackages()</script>
 <div class="wrapper">
     <header class="header">
         <section class="logo"></section>
@@ -22,6 +24,9 @@
     <main class="main">
         <section class="operations">
             <button class="operations__register-package"><a href="registerPackage.html">Создать накладную</a></button>
+            <button class="operations__register-package"><a href="invoicePackage.html">Накладная курьера</a></button>
+            <button class="operations__register-package"><a href="sessionPackage.html">Смена</a></button>
+
         </section>
         <section class="section-table">
             <table class="section-table__objects" id="table-objects"></table>
@@ -29,6 +34,5 @@
     </main>
     <footer class="footer"></footer>
 </div>
-<script>showAllPackages()</script>
 </body>
 </html>

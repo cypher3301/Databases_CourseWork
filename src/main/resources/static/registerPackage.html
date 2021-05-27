@@ -3,8 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="assets/css/registerPackages.css" type="text/css"/>
+    <script rel="script" src="assets/scripts/inputData.js"></script>
 </head>
 <body>
+<div class="wrapper">
+    <header class="header">
+        <section class="logo"></section>
+        <section class="show-any">
+            <select name="show" id="show-any" class="show-all__objects" onchange="changeTable()">
+                <option value="packages">Отобразить посылки</option>
+                <option value="clients">Отобразить клиентов</option>
+                <option value="operators">Отобразить операторов</option>
+            </select>
+        </section>
+        <!--        <button class="" onclick="showAllClients()">Отобразить клиентов</button>-->
+    </header>
+    <main class="main">
+        <section class="data-clients">
+            <section class="client-sender">
+                <h3>Отправитель</h3>
+                <form action="#" method="post">
+                    <label>
+                        Имя:
+                        <input type="text" id="sender-username" name="username" placeholder="Введите имя отправителя"/>
+                    </label>
+                    <label>
+                        Очество:
+                        <input type="text" id="sender-middlename" name="middlename" placeholder="Введите очество отправителя"/>
+                    </label>
+                    <label>
+                        Фамилия:
+                        <input type="text" id="sender-lastname" name="lastname" placeholder="Введите фамилию отправителя"/>
+                    </label>
+                    <label>
+                        Номер телефона:
+                        <input type="tel" id="sender-phone" name="phone" placeholder="Введите номер телефона отправителя"/>
+                    </label>
+                    <label>
+                        Регион:
+                        <input type="text" id="sender-region" name="region" value="Nikolaivskaya oblast" disabled/>
+                    </label>
+                    <label>
+                        Город:
+                        <input type="text" id="sender-city" name="city" value="Nikolaiv" disabled/>
+                    </label>
+                    <label>
+                        Улица(Необязательно):
+                        <input type="text" id="sender-street" name="street" value="Mala morskaya 48/2" disabled/>
+                    </label>
+                    <label>
+                        Номер отделения:
+                        <input type="number" id="sender-postOfficeNumber" name="postOfficeNumber" value="22" disabled/>
+                    </label>
 
+                </form>
+<!--                <button onclick="addClientSender()">Отправитель</button>-->
+            </section>
+            <hr/>
+            <section class="client-recipient">
+                <h3>Получатель</h3>
+
+                <form action="#" method="post">
+                    <label>
+                        Имя:
+                        <input type="text" id="resipient-username" name="username" placeholder="Введите имя получателя"/>
+                    </label>
+                    <label>
+                        Очество:
+                        <input type="text" id="resipient-middlename" name="middlename" placeholder="Введите очество получателя"/>
+                    </label>
+                    <label>
+                        Фамилия:
+                        <input type="text" id="resipient-lastname" name="lastname" placeholder="Введите фамилию получателя"/>
+                    </label>
+                    <label>
+                        Номер телефона:
+                        <input type="tel" id="resipient-phone" name="phone" placeholder="Введите номер телефона получателя"/>
+                    </label>
+                    <label>
+                        Регион:
+                        <input type="text" id="resipient-region" name="region" placeholder="Введите регион получателя"/>
+                    </label>
+                    <label>
+                        Город:
+                        <input type="text" id="resipient-city" name="city" placeholder="Введите город получателя"/>
+                    </label>
+                    <label>
+                        Улица(Необязательно):
+                        <input type="text" id="resipient-street" name="street" placeholder="Введите улицу получателя"/>
+                    </label>
+                    <label>
+                        Номер отделения:
+                        <input type="number" id="resipient-postOfficeNumber" name="postOfficeNumber" placeholder="Введите номер отделения получателя"/>
+                    </label>
+
+                </form>
+<!--                <button onclick="addClientRecipient()">Получатель</button>-->
+
+            </section>
+        </section>
+        <section class="data-package">
+            <h3>Параметры посылки</h3>
+            <form action="#">
+                <label>
+                    Вес:
+                    <input type="number" step="0.1" id="package-wight" name="wight" placeholder="Введите вес посылки"/>
+                </label>
+                <label>
+                    Обьём:
+                    <input type="number" step="0.1" id="package-volume" name="volume" placeholder="Введите обьём посылки"/>
+                </label>
+                <label>
+                    Калличество:
+                    <input type="number" max="10" id="package-quantity" name="volume" value="1" placeholder="Введите калличество посылок"/>
+                </label>
+                <label>
+                    Страховка:
+                    <input type="number" min="200" value="200" id="package-insurance" name="volume" placeholder="Введите страховку посылок"/>
+                </label>
+            </form>
+<!--            <button onclick="addClientPackage()">Посылка</button>-->
+
+            <hr/>
+
+            <div class="control-buttons">
+                <button class="cancel"><a href="index.html">Отменить и вернуться назад</a></button>
+                <button class="submit" onclick="register()">Сформировать накладную</button>
+            </div>
+
+        </section>
+        <section class="submit-data">
+            <div class="invoice-text"></div>
+            <div class="invoice-data"></div>
+        </section>
+        <section hidden class="client-recipient-package">
+            <input id="sender-hidden" value="null" type="number" hidden>
+            <input id="recipient-hidden" value="null" type="number" hidden>
+            <input id="package-hidden" value="null" type="number" hidden>
+
+        </section>
+    </main>
+    <footer class="footer"></footer>
+</div>
+
+<!--<script>var a = addClientRecipient();-->
+<!--</script>-->
 </body>
 </html>
