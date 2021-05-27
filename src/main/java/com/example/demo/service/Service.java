@@ -5,6 +5,7 @@ import com.example.demo.dto.ClientDto;
 import com.example.demo.dto.ClientsPackagesDto;
 import com.example.demo.dto.OperatorDto;
 import com.example.demo.dto.PackageDto;
+import com.example.demo.entity.Client;
 import com.example.demo.entity.Package;
 
 import javax.xml.bind.ValidationException;
@@ -16,6 +17,7 @@ public interface Service {
     OperatorDto saveOperator(OperatorDto operatorDto);
     ClientsPackagesDto saveClientsPackages(ClientsPackagesId clientsPackagesId);
 
+    ClientDto findClientById(Long id);
 
 
 
@@ -23,4 +25,5 @@ public interface Service {
     List<OperatorDto> findAllOperators();
     List<ClientDto> findAllClients();
 
+    PackageDto closePackage(Long id);
 }

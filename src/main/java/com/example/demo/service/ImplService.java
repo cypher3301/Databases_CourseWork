@@ -102,11 +102,28 @@ public class ImplService implements Service {
     }
 
 
+
+
+
+
     ///////////////delete objects
 
 
 
-    //////////////////find all
+    //////////////////find
+
+
+    @Override
+    public ClientDto findClientById(Long id) {
+        if (id!=null){
+            Client client = clientRepository.findClientById(id);
+            if (client!=null){
+                return convert.fromClientToClientDto(client);
+            }
+        }
+        return null;
+    }
+
     @Override
     public List<PackageDto> findAllPackages() {
         return packageRepository
@@ -131,9 +148,20 @@ public class ImplService implements Service {
                 .map(convert::fromClientToClientDto).collect(Collectors.toList());
     }
 
-    ////////////////find any
+
 
 
     ///////////////other
+
+    @Override
+    public PackageDto closePackage(Long id) {
+        Optional<Package> byId = packageRepository.findById(id);
+        if (byId.isPresent()) {
+            byId.get().setDatetimeReceiptPackage(new Timestamp(System.nanoTime()));
+            Package save = packageRepository.save(byId.get());
+            return convert.fromPackageToPackageDto(save);
+        }
+        return null;
+    }
 
 }
