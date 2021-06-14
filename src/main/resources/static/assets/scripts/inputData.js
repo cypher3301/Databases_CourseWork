@@ -31,7 +31,7 @@ function registerInvoice() {
 
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://192.168.0.120:8080/package/regPack");
+    xmlhttp.open("POST", "http://localhost:8080/package/regPack");
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(JSON.stringify({
         senderId: send_id,
@@ -67,7 +67,7 @@ success: function addClientPackage() {
     var postOfficeNumber = document.getElementById("sender-postOfficeNumber").value;
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://192.168.0.120:8080/package/createPackage");
+    xmlhttp.open("POST", "http://localhost:8080/package/createPackage");
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(JSON.stringify({
         insurance: wight,
@@ -110,7 +110,7 @@ success: function addClientSender() {
     var postOfficeNumber = document.getElementById("sender-postOfficeNumber").value;
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://192.168.0.120:8080/package/createClientSender");
+    xmlhttp.open("POST", "http://localhost:8080/package/createClientSender");
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(JSON.stringify({
         firstname: username,
@@ -153,7 +153,7 @@ success: function addClientRecipient() {
     var postOfficeNumber = document.getElementById("resipient-postOfficeNumber").value;
 
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "http://192.168.0.120:8080/package/createClientRecipient");
+    xmlhttp.open("POST", "http://localhost:8080/package/createClientRecipient");
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(JSON.stringify({
         firstname: username,

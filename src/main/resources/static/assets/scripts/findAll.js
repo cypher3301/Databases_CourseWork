@@ -38,7 +38,7 @@ function showAllClients() {
             document.getElementById("table-objects").innerHTML = html;
         }
     };
-    xhttp.open("GET", "http://192.168.0.120:8080/package/findAllClients", true);
+    xhttp.open("GET", "http://localhost:8080/package/findAllClients", true);
     xhttp.send();
 }
 
@@ -94,7 +94,7 @@ function showAllPackages() {
             document.getElementById("table-objects").innerHTML = html;
         }
     };
-    xhttp.open("GET", "http://192.168.0.120:8080/package/findAllPackages", true);
+    xhttp.open("GET", "http://localhost:8080/package/findAllPackages", true);
     xhttp.send();
 }
 
@@ -131,7 +131,7 @@ function showAllOperators() {
             document.getElementById("table-objects").innerHTML = html;
         }
     };
-    xhttp.open("GET", "http://192.168.0.120:8080/package/findAllOperators", true);
+    xhttp.open("GET", "http://localhost:8080/package/findAllOperators", true);
     xhttp.send();
 }
 
