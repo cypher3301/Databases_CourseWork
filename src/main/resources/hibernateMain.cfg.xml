@@ -15,7 +15,7 @@
         <property name="hibernate.format_sql">true</property>
 
         <!-- DB schema will be updated if needed -->
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <mapping class="com.example.demo.entity.WorkShift"/>
         <mapping class="com.example.demo.entity.Client"/>
         <mapping class="com.example.demo.entity.ClientsPackages"/>
