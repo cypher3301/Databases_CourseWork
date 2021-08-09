@@ -1,7 +1,6 @@
-package com.example.demo.repository;
+package com.example.demo.dao.repository;
 
-import com.example.demo.dto.ClientDto;
-import com.example.demo.entity.Client;
+import com.example.demo.dao.entity.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ClientRepository extends JpaRepository<Client, Long> {

@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package com.example.demo.dao.repository;
 
-import com.example.demo.entity.Operator;
+import com.example.demo.dao.entity.Operator;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OperatorRepository extends JpaRepository<Operator, Long> {

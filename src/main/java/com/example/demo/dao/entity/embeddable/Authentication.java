@@ -1,0 +1,41 @@
+package com.example.demo.dao.entity.embeddable;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import java.util.Arrays;
+
+@Embeddable
+@NoArgsConstructor
+@Getter
+@Setter
+public class Authentication {
+
+    @Column(name = "login", length = 8)
+    protected String login;
+
+    @Column(name = "password")
+    private byte[] password;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Authentication)) return false;
+
+        Authentication that = (Authentication) o;
+
+        if (getLogin() != null ? !getLogin().equals(that.getLogin()) : that.getLogin() != null) return false;
+        return Arrays.equals(getPassword(), that.getPassword());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getLogin() != null ? getLogin().hashCode() : 0;
+        result = 31 * result + Arrays.hashCode(getPassword());
+        return result;
+    }
+}

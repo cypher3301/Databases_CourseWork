@@ -1,6 +1,5 @@
-package com.example.demo.entity.embeddable;
+package com.example.demo.dao.entity.embeddable;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.xml.bind.ValidationException;
 import java.util.Objects;
