@@ -1,9 +1,6 @@
 package com.example.demo.dao.entity;
 
-import com.example.demo.dao.entity.ancestor.Employee;
-import com.example.demo.dao.entity.ancestor.Person;
 import com.example.demo.dao.entity.embeddable.Address;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +22,7 @@ public class Station {
     private long id;
 
     @NotNull
+    @Embedded
     private Address address;
 
     @Column(name = "number", nullable = false)

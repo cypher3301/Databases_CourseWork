@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
@@ -13,18 +12,12 @@ import javax.persistence.Embeddable;
 @Setter
 public class Address {
 
-//    @Column(name = "region", nullable = false, length = 24)
     private String region;
-//    @Column(name = "city",   nullable = false, length = 24)
     private String city;
-//    @Column(name = "street",                   length = 24)
     protected String street;
 
-//    @Column(name = "building", nullable = false, length = 24)
     private String building;
-//    @Column(name = "campus",   nullable = false, length = 24)
     private String campus;
-//    @Column(name = "apartment",                   length = 24)
     private String apartment;
 
 

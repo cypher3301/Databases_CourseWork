@@ -1,7 +1,6 @@
 package com.example.demo.dao.entity;
 
 import com.example.demo.dao.entity.status.WaybillType;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity(name = "waybill")
 @Table(name = "waybill", catalog = "postOffice", schema = "public")
@@ -25,7 +25,8 @@ public class Waybill {
 
     @NotNull
     @Column(name = "datetime", nullable = false)
-    protected Timestamp dateAndTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date dateAndTime;
 
     @Column(name = "type")
     protected WaybillType type;

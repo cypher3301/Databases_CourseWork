@@ -7,7 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
+@Entity(name = "clientAccount")
+@Table(name = "client_account", catalog = "postOffice", schema = "public")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -28,6 +29,13 @@ public class ClientAccount {
     @OneToOne
     @JoinColumn(name = "client_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "account_client"))
     private Client client;
+
+    public ClientAccount(long id, String email, @NotNull byte[] password, Client client) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.client = client;
+    }
 
     public ClientAccount(String email, @NotNull byte[] password, Client client) {
         this.email = email;

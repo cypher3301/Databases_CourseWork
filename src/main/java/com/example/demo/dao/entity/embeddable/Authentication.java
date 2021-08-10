@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.util.Arrays;
 
@@ -14,10 +13,8 @@ import java.util.Arrays;
 @Setter
 public class Authentication {
 
-    @Column(name = "login", length = 8)
     protected String login;
 
-    @Column(name = "password")
     private byte[] password;
 
 

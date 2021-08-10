@@ -1,7 +1,6 @@
 package com.example.demo.dao.entity;
 
 import com.example.demo.dao.entity.ancestor.Employee;
-import com.example.demo.dao.entity.ancestor.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

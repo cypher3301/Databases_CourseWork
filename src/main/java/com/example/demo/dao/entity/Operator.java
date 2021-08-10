@@ -1,14 +1,12 @@
 package com.example.demo.dao.entity;
 
 import com.example.demo.dao.entity.ancestor.Employee;
-import com.example.demo.dao.entity.embeddable.Address;
 import com.example.demo.dao.entity.embeddable.Authentication;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity(name = "operator")
@@ -21,38 +19,8 @@ import java.util.Collection;
 @Setter
 public class Operator extends Employee {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "id")
-//    protected Long id;
-//
-//
-//    @NotNull
-//    @Column(name = "firstname", nullable = false)
-//    private String firstname;
-//
-//    @NotNull
-//    @Column(name = "patronymic", nullable = false)
-//    private String patronymic;
-//
-//    @NotNull
-//    @Column(name = "surname", nullable = false)
-//    private String surname;
-//
-//    @NotNull
-//    @Column(name = "phone", nullable = false)
-//    private String phone;
-//
-//    @NotNull
-//    @Column(name = "email")
-//    private String email;
-//
-//    @Column(name = "price_card_number", length = 16)
-//    protected long priceCardNumber;
-//
-//    private Address address;
 
-
+    @Embedded
     private Authentication authentication;
 
 
@@ -79,7 +47,7 @@ public class Operator extends Employee {
 
 
 
-    /**
+    /*
      * Equals and HashCode override in Employee basic class
      * */
 }

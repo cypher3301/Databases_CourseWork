@@ -1,7 +1,6 @@
 package com.example.demo.dao.entity;
 
 import com.example.demo.dao.entity.status.WorkShiftType;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 
 
 @Entity(name = "work_shift")
@@ -31,7 +31,8 @@ public class WorkShift {
 
     @NotNull
     @Column(name = "time", nullable = false)
-    protected Timestamp time;
+    @Temporal(TemporalType.TIMESTAMP)
+    protected Date time;
 
 
 
