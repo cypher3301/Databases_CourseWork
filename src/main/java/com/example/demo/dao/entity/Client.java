@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 
 
@@ -19,12 +21,15 @@ public class Client extends Person {
 
 
 
+
     @OneToMany(mappedBy = "clientSender")
     private Collection<Invoice> sends;
 
     @OneToMany(mappedBy = "clientRecipient")
     private Collection<Invoice> recipes;
 
+    @NotNull( message = "Client stations cannot be null")
+    @Size(    message = "Maximum 5 stations", min = 1, max = 5)
     @OneToMany
     private Collection<Station> stations;
 
