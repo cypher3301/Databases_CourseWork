@@ -1,41 +1,57 @@
 package com.example.demo.dao.entity.ancestor;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 @MappedSuperclass
-//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
-//@EqualsAndHashCode(exclude = {"id","patronymic"})
 @Getter
 @Setter
 public abstract class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    protected long id;
 
-    @NotNull
-    @Column(name = "firstname",nullable = false)
-    private String firstname;
+    @Column(name = "firstname",nullable = false, length = 20)
+    @NotBlank(       message = "Person name is illegal or empty")
+    @Min(value = 2,  message = "Name must be more than 2 characters")
+    @Max(value = 20, message = "Name must be less than 20 characters")
+    protected String firstname;
 
-    @NotNull
-    @Column(name = "patronymic",nullable = false)
-    private String patronymic;
+    @Column(name = "patronymic",nullable = false, length = 20)
+    @NotBlank(       message = "Person patronymic is illegal or empty")
+    @Min(value = 2,  message = "Patronymic must be more than 2 characters")
+    @Max(value = 20, message = "Patronymic must be less than 20 characters")
+    protected String patronymic;
 
-    @NotNull
-    @Column(name = "surname",nullable = false)
-    private String surname;
+    @Column(name = "surname",nullable = false, length = 20)
+    @NotBlank(       message = "Person surname is illegal or empty")
+    @Min(value = 2,  message = "Surname must be more than 2 characters")
+    @Max(value = 20, message = "Surname must be less than 20 characters")
+    protected String surname;
 
-    @NotNull
-    @Column(name = "phone",nullable = false)
-    private String phone;
+    @Column(name = "phone",nullable = false, length = 16)
+    @Digits(   message = "Person illegal phone", integer = 16, fraction = 0)
+    @NotBlank( message = "Person phone is illegal or empty")
+    @Pattern(  message = "Person phon number is illegal",
+            regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
+                    + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
+                    + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$")
+    protected String phone;
 
+
+    public Person(Long id, String firstname, String patronymic, String surname, String phone) {
+        this.id = id;
+        this.firstname = firstname;
+        this.patronymic = patronymic;
+        this.surname = surname;
+        this.phone = phone;
+    }
 
     public Person(String firstname, String patronymic, String surname, String phone) {
         this.firstname = firstname;
