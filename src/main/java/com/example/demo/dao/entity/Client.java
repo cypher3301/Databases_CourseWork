@@ -19,9 +19,6 @@ import java.util.Collection;
 public class Client extends Person {
 
 
-
-
-
     @OneToMany(mappedBy = "clientSender")
     private Collection<Invoice> sends;
 
@@ -32,7 +29,6 @@ public class Client extends Person {
     @Size(    message = "Maximum 5 stations", min = 1, max = 5)
     @OneToMany
     private Collection<Station> stations;
-
 
 
     /*

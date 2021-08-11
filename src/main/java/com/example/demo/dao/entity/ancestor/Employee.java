@@ -17,7 +17,6 @@ import javax.validation.constraints.*;
 @Setter
 public abstract class Employee extends Person {
 
-
     @Column(name = "email", nullable = false, unique = true)
     @NotBlank(      message = "Employee email is illegal or empty")
     @Min(value = 5, message = "Email is too less")
@@ -53,6 +52,25 @@ public abstract class Employee extends Person {
     @ManyToOne
     @JoinColumn(name = "position_id", referencedColumnName = "name", foreignKey = @ForeignKey(name = "employee_position"))
     protected Position position;
+
+
+    public Employee(Long id, String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position) {
+        super(id, firstname, patronymic, surname, phone);
+        this.email = email;
+        this.priceCardNumber = priceCardNumber;
+        this.address = address;
+        this.identificationCode = identificationCode;
+        this.position = position;
+    }
+
+    public Employee(String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position) {
+        super(firstname, patronymic, surname, phone);
+        this.email = email;
+        this.priceCardNumber = priceCardNumber;
+        this.address = address;
+        this.identificationCode = identificationCode;
+        this.position = position;
+    }
 
 
     @Override

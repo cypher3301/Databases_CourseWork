@@ -7,7 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
 
@@ -24,30 +25,33 @@ public class WorkShift {
     @Column(name = "id")
     protected long id;
 
-    @NotNull
-    @Column(name = "type", length = 10)
+    @Column(name = "type", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "WorkShift type cannot be null")
     protected WorkShiftType type;
 
-    @NotNull
-    @Column(name = "time", nullable = false)
+    @Column(name = "datetime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date time;
+    @PastOrPresent(message = "WorkShift datetime must be past or current time")
+    @NotNull(message = "WorkShift datetime cannot be null")
+    protected Date datetime;
 
 
-
-    @ManyToOne
-    @JoinColumn(name = "operator_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "work_shifts_operator"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "work_shifts_operator"))
+    @NotNull(message = "WorkShift operator cannot be null")
     private Operator operator;
 
-
-    @ManyToOne
-    @JoinColumn(name = "station_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "work_shifts_station"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "station_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "work_shifts_station"))
+    @NotNull(message = "WorkShift station cannot be null")
     private Station station;
 
-
     @OneToMany
+    @Size(message = "WorkShift invoices must be greater or equal 0")
+    @NotNull(message = "WorkShift invoices cannot be null")
     private Collection<Invoice> invoices;
+
 
     @Override
     public boolean equals(Object o) {
@@ -57,7 +61,7 @@ public class WorkShift {
         WorkShift workShift = (WorkShift) o;
 
         if (getType() != workShift.getType()) return false;
-        if (getTime() != null ? !getTime().equals(workShift.getTime()) : workShift.getTime() != null) return false;
+        if (getDatetime() != null ? !getDatetime().equals(workShift.getDatetime()) : workShift.getDatetime() != null) return false;
         if (getOperator() != null ? !getOperator().equals(workShift.getOperator()) : workShift.getOperator() != null)
             return false;
         if (getStation() != null ? !getStation().equals(workShift.getStation()) : workShift.getStation() != null)
@@ -68,7 +72,7 @@ public class WorkShift {
     @Override
     public int hashCode() {
         int result = getType() != null ? getType().hashCode() : 0;
-        result = 31 * result + (getTime() != null ? getTime().hashCode() : 0);
+        result = 31 * result + (getDatetime() != null ? getDatetime().hashCode() : 0);
         result = 31 * result + (getOperator() != null ? getOperator().hashCode() : 0);
         result = 31 * result + (getStation() != null ? getStation().hashCode() : 0);
         result = 31 * result + getInvoices().hashCode();

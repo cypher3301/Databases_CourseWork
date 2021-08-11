@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,44 +16,55 @@ import java.util.Date;
 @Getter
 @Setter
 public class Waybill {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     protected long id;
 
-    @NotNull
     @Column(name = "datetime", nullable = false)
+    @NotNull(message = "Waybill datetime cannot be null")
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateAndTime;
 
-    @Column(name = "type")
+    @Column(name = "type", length = 12, nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    @NotNull(message = "Waybill type cannot be null")
     protected WaybillType type;
 
-    @Column(name = "quantity")
-    @Min(1)
+    @Column(name = "quantity", nullable = false, length = 16192)
+    @PositiveOrZero(    message = "Waybill quantity cannot be less 0")
+    @Digits(            message = "Waybill from 0 to 5 digits before dot", integer = 5, fraction = 0)
+    @Min(value = 0,     message = "Waybill quantity minimum 0")
+    @Max(value = 16192, message = "Waybill quantity minimum 16192")
     private int quantity;
 
 
     @OneToMany
+    @Size(message = "Waybill can have 0 items", max = 16192)
+    @NotNull(message = "Waybill cannot be null")
     private Collection<Invoice> invoices;
 
-    @ManyToOne
-    @JoinColumn(name = "operator_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_operator"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_operator"))
+    @NotNull(message = "Waybill operator cannot be null")
     private Operator operator;
 
-
-    @ManyToOne
-    @JoinColumn(name = "driver_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_driver"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "driver_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_driver"))
+    @NotNull(message = "Waybill driver cannot be null")
     private Driver driver;
 
     @ManyToOne
     @JoinColumn(name = "station_sender_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_station_sender"))
+    @NotNull(message = "Waybill station sender cannot be null")
     private Station stationSender;
-
 
     @ManyToOne
     @JoinColumn(name = "station_recipient_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_station_recipient"))
+    @NotNull(message = "Waybill station recipient cannot be null")
     private Station stationRecipient;
+
 
     @Override
     public boolean equals(Object o) {
@@ -87,21 +96,6 @@ public class Waybill {
         result = 31 * result + (getStationSender() != null ? getStationSender().hashCode() : 0);
         result = 31 * result + (getStationRecipient() != null ? getStationRecipient().hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Waybill{" +
-                "id=" + id +
-                ", dateAndTime=" + dateAndTime +
-                ", type=" + type +
-                ", quantity=" + quantity +
-                ", invoices=" + invoices +
-                ", operator=" + operator +
-                ", driver=" + driver +
-                ", stationSender=" + stationSender +
-                ", stationRecipient=" + stationRecipient +
-                '}';
     }
 }
 

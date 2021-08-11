@@ -1,9 +1,13 @@
 package com.example.demo.dao.entity;
 
-import lombok.*;
+import com.example.demo.dao.entity.status.InvoiceType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Date;
 
@@ -20,46 +24,55 @@ public class Invoice {
     @Column(name = "id")
     protected long id;
 
-
-    @NotNull
     @Column(name = "quantity",  nullable = false)
+    @ColumnDefault( value = "1")
+    @DecimalMin( message = "Invoice quantity is less than required",  value = "1")
+    @DecimalMax( message = "Invoice quantity is more than necessary", value = "255")
+    @Digits(     message = "Invoice quantity can be up to 255", integer = 3, fraction = 0 )
+    @Positive(   message = "Invoice must have quantity greater than or equal 1")
     protected double quantity;
 
+    @Column(name = "type",     nullable = false, length = 128)
+    @NotNull(message = "Invoice type cannot be null")
+    protected InvoiceType type;
 
-    @NotNull
-    @Column(name = "type",  nullable = false)
-    protected String type;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @NotNull
     @Column(name = "datetime", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotNull(       message = "Invoice datetime cannot be null")
+    @PastOrPresent( message = "Invoice datetime must be past or current time")
     private Date datetime;
 
 
-
-    @OneToOne
-    @JoinColumn(name = "station_recipient_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "invoice_station"))
+    @OneToOne(optional = false)
+    @JoinColumn(name = "station_recipient_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoice_station"))
+    @NotNull(message = "Invoice recipient station cannot be null")
     private Station stationRecipient;
 
-
+    //cascade
     @OneToMany(mappedBy = "invoice")
+    @Size(    message = "Invoice can have from 1 to 255 packages", min = 1, max = 255)
+    @NotNull( message = "Invoice must have greater than or equal 1 package")
     private Collection<Package> packages;
 
+    //cascade
     @OneToMany(mappedBy = "invoice")
+    @Size(    message = "Invoice datetime must be greater than 0", min = 1, max = 60)
+    @NotNull( message = "Invoice timeline cannot be null")
     private Collection<InvoiceTimeline> timeline;
 
-
-
-    @ManyToOne
-    @JoinColumn(name = "operator_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "invoices_operator"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "operator_id",  nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoices_operator"))
+    @NotNull(message = "Invoice operator cannot be null")
     private Operator operator;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "invoices_client_sender"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "sender_id",    nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoices_client_sender"))
+    @NotNull(message = "Invoice client sender cannot be null")
     private Client clientSender;
 
-    @ManyToOne
-    @JoinColumn(name = "recipient_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "invoices_client_recipient"))
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "recipient_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoices_client_recipient"))
+    @NotNull(message = "Invoice client recipient cannot be null")
     private Client clientRecipient;
 
 

@@ -21,12 +21,13 @@ public class Station {
     @Column(name = "id")
     private long id;
 
-    @NotNull
     @Embedded
+    @NotNull(message = "Station address cannot be null")
     private Address address;
 
     @Column(name = "number", nullable = false)
     private short number;
+
 
     @OneToMany(mappedBy = "station")
     private Collection<Operator> employees;
@@ -34,6 +35,7 @@ public class Station {
     @OneToMany(mappedBy = "station")
     private Collection<WorkShift> workShifts;
 
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

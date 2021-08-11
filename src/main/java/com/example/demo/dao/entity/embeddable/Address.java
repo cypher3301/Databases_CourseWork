@@ -12,13 +12,13 @@ import javax.persistence.Embeddable;
 @Setter
 public class Address {
 
-    private String region;
-    private String city;
+    protected String region;
+    protected String city;
     protected String street;
 
-    private String building;
-    private String campus;
-    private String apartment;
+    protected String building;
+    protected String campus;
+    protected String apartment;
 
 
     @Override

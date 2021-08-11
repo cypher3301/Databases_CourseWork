@@ -32,19 +32,20 @@ public class Car {
 
     @Column(name = "transported_volume", nullable = false)
     @ColumnDefault(value = "9")
-    @DecimalMin(value = "1",           message = "transported volume is less than required")
-    @DecimalMax(value = "50",          message = "transported volume is more than necessary")
-    @Digits(integer = 2, fraction = 3, message = "Car volume can have to 50 ")
-    @Positive(                         message = "Car could have volume more than 1")
+    @DecimalMin(value = "1",           message = "Car transported volume is less than required")
+    @DecimalMax(value = "50",          message = "Car transported volume is more than necessary")
+    @Digits(integer = 2, fraction = 3, message = "Car volume can be up to 50 ")
+    @Positive(                         message = "Car must have volume greater than 1")
     private double transportedVolume;
 
     @Column(name = "transported_weight", nullable = false)
     @ColumnDefault(value = "50")
-    @DecimalMin(value = "20",          message = "transported weight is less than required")
-    @DecimalMax(value = "3000",        message = "transported weight is more than necessary")
-    @Digits(integer = 4, fraction = 3, message = "Car volume can have to 50 " )
-    @Positive(                         message = "Car could have volume more than 1")
+    @DecimalMin(value = "20",          message = "Car transported weight is less than required")
+    @DecimalMax(value = "3000",        message = "Car transported weight is more than necessary")
+    @Digits(integer = 4, fraction = 3, message = "Car volume can be up to 50 " )
+    @Positive(                         message = "Car must have weight greater than 1")
     private double transportedWeight;
+
 
     public Car(long id, String carNumber, String mark, double transportedVolume, double transportedWeight) {
         this.id = id;
@@ -60,6 +61,7 @@ public class Car {
         this.transportedVolume = transportedVolume;
         this.transportedWeight = transportedWeight;
     }
+
 
     @Override
     public boolean equals(Object o) {

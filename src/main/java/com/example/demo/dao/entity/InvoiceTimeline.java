@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @Entity
@@ -14,25 +16,34 @@ import java.util.Date;
 @Getter
 @Setter
 public class InvoiceTimeline {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "datetime")
+    @Temporal(TemporalType.TIMESTAMP)
+    @PastOrPresent( message = "Invoice timeline only present time")
+    @NotNull(       message = "Invoice datetime cannot be null")
     private Date datetime;
 
+    @Column(name = "status", nullable = false ,length = 24)
     @Enumerated(EnumType.STRING)
+    @NotNull(       message = "Invoice timeline status cannot be null")
     private TimelineStatus status;
+
 
     @ManyToOne
     @JoinColumn(name = "invoice_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "timeline_invoice"))
+    @NotNull(       message = "Invoice timeline cannot be null invoice")
     private Invoice invoice;
 
     @OneToOne
     @JoinColumn(name = "actual_station_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "timeline_station"))
+    @NotNull(       message = "Invoice timeline cannot have null actual station")
     private Station actualStation;
+
 
     @Override
     public boolean equals(Object o) {

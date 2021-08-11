@@ -21,7 +21,6 @@ public class ClientAccount {
     @Column(name = "id")
     private long id;
 
-
     @Column(name = "email", nullable = false, unique = true)
     @NotBlank(      message = "Employee email is illegal or empty")
     @Min(value = 5, message = "Email is too less")
@@ -29,15 +28,16 @@ public class ClientAccount {
             regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     private String email;
 
-
     @Column(name = "password", nullable = false)
     @NotNull(message = "Client account password cannot be empty")
     private byte[] password;
+
 
     @OneToOne
     @JoinColumn(name = "client_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "account_client"))
     @NotNull(message = "Account cannot have client is null")
     private Client client;
+
 
     public ClientAccount(String email, @NotNull(message = "Client account password cannot be empty") byte[] password, Client client) {
         this.email = email;
@@ -45,6 +45,7 @@ public class ClientAccount {
         this.client = client;
         this.id=client.getId();
     }
+
 
     @Override
     public boolean equals(Object o) {

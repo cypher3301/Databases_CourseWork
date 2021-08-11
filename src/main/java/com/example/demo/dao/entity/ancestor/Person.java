@@ -12,6 +12,7 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 public abstract class Person {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -59,6 +60,7 @@ public abstract class Person {
         this.surname = surname;
         this.phone = phone;
     }
+
 
     @Override
     public boolean equals(Object o) {

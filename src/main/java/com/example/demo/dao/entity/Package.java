@@ -1,11 +1,13 @@
 package com.example.demo.dao.entity;
 
+import com.example.demo.dao.convertor.PackageTypeArrayOfEnumToStringConvertor;
+import com.example.demo.dao.entity.status.PackageType;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
+import java.util.Arrays;
 
 
 @Entity(name = "package")
@@ -20,28 +22,40 @@ public class Package {
     @Column(name = "id")
     protected long id;
 
-
-
-
-    @NotNull
-    @Column(name = "weight",    nullable = false)
+    @Column(name = "weight_kg",    nullable = false)
+    @DecimalMin(value = "0",           message = "Package weight is less than required")
+    @DecimalMax(value = "3000",        message = "Package weight is more than necessary")
+    @Positive(                         message = "Package must have weight greater than 0")
     private double weight;
-    @NotNull
-    @Column(name = "volume",    nullable = false)
+
+    @Column(name = "volume_m3",    nullable = false)
+    @DecimalMin(value = "0",           message = "Package volume is less than required")
+    @DecimalMax(value = "50",          message = "Package volume is more than necessary")
+    @Positive(                         message = "Package must have volume greater than 0")
     private double volume;
-    @NotNull
-    @Column(name = "insurance", nullable = false)
-    @Min(200)
-    @Max(100000)
+
+    @Column(name = "insurance_uah", nullable = false)
+    @ColumnDefault(value = "200")
+    @DecimalMin(value = "200",         message = "Package insurance is less than required")
+    @DecimalMax(value = "100000",      message = "Package insurance is more than necessary")
+    @Positive(                         message = "Package insurance cannot be less 0")
     private double insurance;
-    @NotNull
-    private String type;
+
+    //index
+//    @Type(type = "com.example.demo.dao.convertor.InvoiceTypeArrayOfEnumToStringConvertor")
+    @Convert(converter = PackageTypeArrayOfEnumToStringConvertor.class)
+    @Column(name = "type", nullable = false, length = 16)
+    @NotBlank(message = "Package type is null or empty")
+    private PackageType[] type;
 
 
     @ManyToOne
     @JoinColumn(name = "invoice_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "package_invoice"))
+    @NotNull(message = "Package invoice cannot be null")
     private Invoice invoice;
 
+
+    //Regenerate equals and hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,7 +66,7 @@ public class Package {
         if (Double.compare(aPackage.getWeight(), getWeight()) != 0) return false;
         if (Double.compare(aPackage.getVolume(), getVolume()) != 0) return false;
         if (Double.compare(aPackage.getInsurance(), getInsurance()) != 0) return false;
-        if (!getType().equals(aPackage.getType())) return false;
+        if (!Arrays.equals(getType(), aPackage.getType())) return false;
         return getInvoice() != null ? getInvoice().equals(aPackage.getInvoice()) : aPackage.getInvoice() == null;
     }
 
@@ -66,7 +80,7 @@ public class Package {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(getInsurance());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + getType().hashCode();
+        result = 31 * result + Arrays.hashCode(getType());
         result = 31 * result + (getInvoice() != null ? getInvoice().hashCode() : 0);
         return result;
     }
