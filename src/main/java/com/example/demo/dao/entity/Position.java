@@ -12,7 +12,9 @@ import javax.validation.constraints.*;
 import java.util.Collection;
 
 @Entity(name = "position")
-@Table(name = "position", catalog = "postOffice", schema = "public")
+@Table(name = "position", catalog = "postOffice", schema = "public", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_position_name", columnNames = "name")
+})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -26,7 +28,7 @@ public class Position {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name",  nullable = false)
     @NotBlank(message = "Position name cannot be null or empty")
     private String name;
 

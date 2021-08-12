@@ -50,7 +50,8 @@ public class Package {
 
 
     @ManyToOne
-    @JoinColumn(name = "invoice_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "package_invoice"))
+    @JoinColumn(name = "invoice_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "package_invoice"))
     @NotNull(message = "Package invoice cannot be null")
     private Invoice invoice;
 

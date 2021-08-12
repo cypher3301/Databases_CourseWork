@@ -10,19 +10,16 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity(name = "car")
-@Table(name = "car", catalog = "postOffice", schema = "public")
+@Table(name = "car", catalog = "postOffice", schema = "public", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_car_number",columnNames = "car_number")})
 @NoArgsConstructor
 @Getter
 @Setter
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
-
     @NaturalId
-    @Column(name = "car_number", unique = true, length = 10)
+    @Column(name = "car_number", length = 10)
     @NotBlank(message = "Car number cannot be null or empty")
     private String carNumber;
 
@@ -30,7 +27,7 @@ public class Car {
     private String mark;
 
 
-    @Column(name = "transported_volume", nullable = false)
+    @Column(name = "transported_volume_m3", nullable = false)
     @ColumnDefault(value = "9")
     @DecimalMin(value = "1",           message = "Car transported volume is less than required")
     @DecimalMax(value = "50",          message = "Car transported volume is more than necessary")
@@ -38,7 +35,7 @@ public class Car {
     @Positive(                         message = "Car must have volume greater than 1")
     private double transportedVolume;
 
-    @Column(name = "transported_weight", nullable = false)
+    @Column(name = "transported_weight_kg", nullable = false)
     @ColumnDefault(value = "50")
     @DecimalMin(value = "20",          message = "Car transported weight is less than required")
     @DecimalMax(value = "3000",        message = "Car transported weight is more than necessary")
@@ -46,14 +43,6 @@ public class Car {
     @Positive(                         message = "Car must have weight greater than 1")
     private double transportedWeight;
 
-
-    public Car(long id, String carNumber, String mark, double transportedVolume, double transportedWeight) {
-        this.id = id;
-        this.carNumber = carNumber;
-        this.mark = mark;
-        this.transportedVolume = transportedVolume;
-        this.transportedWeight = transportedWeight;
-    }
 
     public Car(String carNumber, String mark, double transportedVolume, double transportedWeight) {
         this.carNumber = carNumber;

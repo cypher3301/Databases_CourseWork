@@ -35,12 +35,14 @@ public class InvoiceTimeline {
 
 
     @ManyToOne
-    @JoinColumn(name = "invoice_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "timeline_invoice"))
+    @JoinColumn(name = "invoice_id",referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "timeline_invoice"))
     @NotNull(       message = "Invoice timeline cannot be null invoice")
     private Invoice invoice;
 
     @OneToOne
-    @JoinColumn(name = "actual_station_id",referencedColumnName = "id",foreignKey = @ForeignKey(name = "timeline_station"))
+    @JoinColumn(name = "actual_station_id",referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "timeline_station"))
     @NotNull(       message = "Invoice timeline cannot have null actual station")
     private Station actualStation;
 

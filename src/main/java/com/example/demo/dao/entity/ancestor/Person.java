@@ -7,42 +7,60 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+import static com.example.demo.dao.entity.ancestor.Util.regExpPhone;
+
 @MappedSuperclass
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class Person {
+public abstract class Person implements BaseEntity{
+
+    private static final int minValuePersonName = 2;
+    private static final int maxValuePersonName = 20;
+    private static final int lengthPhone = 16;
+
+    private static final String className = "Person ";
+    private static final String columnId = "id";
+    private static final String columnFirstname = "firstname";
+    private static final String columnPatronymic = "patronymic";
+    private static final String columnSurname = "surname";
+    private static final String columnPhone = "phone";
+    private static final boolean nullableFalse = false;
+
+    private static final String messageIsIllegalOrEmpty = " is illegal or empty ";
+    private static final String messageMustBeMoreThan = " must be more than ";
+    private static final String messageMustBeLessThan = " must be more than ";
+    private static final String messageCharacters = " characters ";
+
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    protected long id;
+    @GeneratedValue(strategy = GenerationType.AUTO /*, generator = "IdOrGenerated"*/)
+//    @GenericGenerator(name = "IdOrGenerated", strategy = "com.example.demo.dao.entity.generators.UseIdOrGenerate")
+    @Column(name = columnId)
+    protected Long id;
 
-    @Column(name = "firstname",nullable = false, length = 20)
-    @NotBlank(       message = "Person name is illegal or empty")
-    @Min(value = 2,  message = "Name must be more than 2 characters")
-    @Max(value = 20, message = "Name must be less than 20 characters")
+    @Column(name = columnFirstname, nullable = nullableFalse, length = maxValuePersonName)
+    @NotBlank(message = className + columnFirstname + messageIsIllegalOrEmpty)
+    @Min(value = minValuePersonName, message = className + columnFirstname + messageMustBeMoreThan + minValuePersonName + messageCharacters)
+    @Max(value = maxValuePersonName, message = className + columnFirstname + messageMustBeLessThan + maxValuePersonName + messageCharacters)
     protected String firstname;
 
-    @Column(name = "patronymic",nullable = false, length = 20)
-    @NotBlank(       message = "Person patronymic is illegal or empty")
-    @Min(value = 2,  message = "Patronymic must be more than 2 characters")
-    @Max(value = 20, message = "Patronymic must be less than 20 characters")
+    @Column(name = columnPatronymic, nullable = nullableFalse, length = maxValuePersonName)
+    @NotBlank(message = className + columnPatronymic + messageIsIllegalOrEmpty)
+    @Min(value = minValuePersonName, message = className + columnPatronymic + messageMustBeMoreThan + minValuePersonName + messageCharacters)
+    @Max(value = maxValuePersonName, message = className + columnPatronymic + messageMustBeLessThan + maxValuePersonName + messageCharacters)
     protected String patronymic;
 
-    @Column(name = "surname",nullable = false, length = 20)
-    @NotBlank(       message = "Person surname is illegal or empty")
-    @Min(value = 2,  message = "Surname must be more than 2 characters")
-    @Max(value = 20, message = "Surname must be less than 20 characters")
+    @Column(name = columnSurname, nullable = nullableFalse, length = maxValuePersonName)
+    @NotBlank(message = className + columnSurname + messageIsIllegalOrEmpty)
+    @Min(value = minValuePersonName, message = className + columnSurname + messageMustBeMoreThan + minValuePersonName + messageCharacters)
+    @Max(value = maxValuePersonName, message = className + columnSurname + messageMustBeLessThan + maxValuePersonName + messageCharacters)
     protected String surname;
 
-    @Column(name = "phone",nullable = false, length = 16)
-    @Digits(   message = "Person illegal phone", integer = 16, fraction = 0)
-    @NotBlank( message = "Person phone is illegal or empty")
-    @Pattern(  message = "Person phon number is illegal",
-            regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
-                    + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
-                    + "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$")
+    @Column(name = columnPhone, nullable = nullableFalse, unique = true, length = lengthPhone)
+    @NotBlank(message = className + columnPhone + messageIsIllegalOrEmpty)
+    @Digits(message = className + columnPhone + " illegal", integer = lengthPhone, fraction = 0)
+    @Pattern(message = className + columnPhone + " number is illegal", regexp = regExpPhone)
     protected String phone;
 
 

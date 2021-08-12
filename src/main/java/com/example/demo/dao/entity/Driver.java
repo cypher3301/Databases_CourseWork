@@ -11,7 +11,9 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity(name = "driver")
-@Table(name = "driver", catalog = "postOffice", schema = "public")
+@Table(name = "driver", catalog = "postOffice", schema = "public", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_driver_car_number", columnNames = "car_number")
+})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -19,7 +21,8 @@ public class Driver extends Employee {
 
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "car_id", nullable = false, referencedColumnName = "car_number", foreignKey = @ForeignKey(name = "driver_car"))
+    @JoinColumn(name = "car_number", nullable = false, referencedColumnName = "car_number",
+            foreignKey = @ForeignKey(name = "driver_car"))
     @NotNull(message = "Driver car cannot be null")
     private Car car;
 

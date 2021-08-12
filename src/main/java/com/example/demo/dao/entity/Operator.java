@@ -11,13 +11,22 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity(name = "operator")
-@Table(name = "operator", catalog = "postOffice", schema = "public")
+@Table(name = "operator", catalog = "postOffice", schema = "public",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "uk_operator_login", columnNames = "login")
+        })
 @NoArgsConstructor
 @Getter
 @Setter
 public class Operator extends Employee {
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "login",
+                    column = @Column(name = "login", length = 12, nullable = false)),
+            @AttributeOverride(name = "password",
+                    column = @Column(name = "password", length = 12, nullable = false))
+    })
     private Authentication authentication;
 
 
@@ -31,7 +40,8 @@ public class Operator extends Employee {
     private Collection<WorkShift> workShifts;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "station_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "operators_station"))
+    @JoinColumn(name = "station_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "operators_station"))
     @NotNull(message = "Operator station cannot be null")
     private Station station;
 
