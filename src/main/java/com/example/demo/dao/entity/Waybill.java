@@ -17,6 +17,8 @@ import java.util.Date;
 @Setter
 public class Waybill {
 
+    private static final int invoicesQuantity = 16192;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -27,41 +29,53 @@ public class Waybill {
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateAndTime;
 
-    @Column(name = "type", length = 12, nullable = false)
+    @Column(name = "type", nullable = false, length = 12)
     @Enumerated(value = EnumType.STRING)
     @NotNull(message = "Waybill type cannot be null")
     protected WaybillType type;
 
-    @Column(name = "quantity", nullable = false, length = 16192)
+    @Column(name = "quantity", nullable = false, length = invoicesQuantity)
     @PositiveOrZero(    message = "Waybill quantity cannot be less 0")
     @Digits(            message = "Waybill from 0 to 5 digits before dot", integer = 5, fraction = 0)
     @Min(value = 0,     message = "Waybill quantity minimum 0")
-    @Max(value = 16192, message = "Waybill quantity minimum 16192")
+    @Max(value = invoicesQuantity, message = "Waybill quantity minimum invoicesQuantity")
     private int quantity;
 
 
     @OneToMany
-    @Size(message = "Waybill can have 0 items", max = 16192)
+    @Size(message = "Waybill can have 0 items", max = invoicesQuantity)
     @NotNull(message = "Waybill cannot be null")
+    @JoinTable(name = "waybill_invoices",
+            joinColumns = {
+                    @JoinColumn(name = "waybill_id", referencedColumnName = "id",
+                            foreignKey = @ForeignKey(name = "fk_waybill_invoices_waybill_id"))},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "invoices_id", referencedColumnName = "id",
+                            foreignKey = @ForeignKey(name = "fk_waybill_invoices_invoices_id"))},
+            uniqueConstraints = @UniqueConstraint(name = "uk_waybill_invoices_id", columnNames = "invoices_id"))
     private Collection<Invoice> invoices;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_operator"))
+    @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "waybills_operator"))
     @NotNull(message = "Waybill operator cannot be null")
     private Operator operator;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "driver_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_driver"))
+    @JoinColumn(name = "driver_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "waybills_driver"))
     @NotNull(message = "Waybill driver cannot be null")
     private Driver driver;
 
     @ManyToOne
-    @JoinColumn(name = "station_sender_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_station_sender"))
+    @JoinColumn(name = "station_sender_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "waybills_station_sender"))
     @NotNull(message = "Waybill station sender cannot be null")
     private Station stationSender;
 
     @ManyToOne
-    @JoinColumn(name = "station_recipient_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "waybills_station_recipient"))
+    @JoinColumn(name = "station_recipient_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "waybills_station_recipient"))
     @NotNull(message = "Waybill station recipient cannot be null")
     private Station stationRecipient;
 

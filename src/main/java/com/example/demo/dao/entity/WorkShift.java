@@ -38,18 +38,28 @@ public class WorkShift {
 
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "work_shifts_operator"))
+    @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "work_shifts_operator"))
     @NotNull(message = "WorkShift operator cannot be null")
     private Operator operator;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "station_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "work_shifts_station"))
+    @JoinColumn(name = "station_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "work_shifts_station"))
     @NotNull(message = "WorkShift station cannot be null")
     private Station station;
 
     @OneToMany
     @Size(message = "WorkShift invoices must be greater or equal 0")
     @NotNull(message = "WorkShift invoices cannot be null")
+    @JoinTable(name = "work_shift_invoices",
+            joinColumns = {
+                    @JoinColumn(name = "work_shift_id", referencedColumnName = "id",
+                            foreignKey = @ForeignKey(name = "fk_work_shift_invoices_work_shift_id"))},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "invoices_id", referencedColumnName = "id",
+                            foreignKey = @ForeignKey(name = "fk_work_shift_invoices_work_invoices_id"))},
+            uniqueConstraints = @UniqueConstraint(name = "uk_work_shift_invoices_id", columnNames = "invoices_id"))
     private Collection<Invoice> invoices;
 
 
