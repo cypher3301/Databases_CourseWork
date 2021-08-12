@@ -1,17 +1,19 @@
 package com.example.demo.dao.entity;
 
-import com.example.demo.dao.convertor.PackageTypeArrayOfEnumToStringConvertor;
 import com.example.demo.dao.entity.status.PackageType;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Arrays;
 
 
 @Entity(name = "package")
-@Table(name = "package", catalog = "postOffice", schema = "public")
+@Table(name = "package", catalog = "postOffice", schema = "public", indexes = {
+        @Index(name = "insurance_uah", columnList = "insurance_uah")
+})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -41,13 +43,6 @@ public class Package {
     @Positive(                         message = "Package insurance cannot be less 0")
     private double insurance;
 
-    //index
-//    @Type(type = "com.example.demo.dao.convertor.InvoiceTypeArrayOfEnumToStringConvertor")
-    @Convert(converter = PackageTypeArrayOfEnumToStringConvertor.class)
-    @Column(name = "type", nullable = false, length = 16)
-    @NotBlank(message = "Package type is null or empty")
-    private PackageType[] type;
-
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "invoice_id", referencedColumnName = "id",
@@ -61,17 +56,15 @@ public class Package {
         this.weight = weight;
         this.volume = volume;
         this.insurance = insurance;
-        this.type = type;
     }
 
     public Package(double weight, double volume, double insurance, @NotBlank(message = "Package type is null or empty") PackageType[] type) {
         this.weight = weight;
         this.volume = volume;
         this.insurance = insurance;
-        this.type = type;
     }
 
-    //Regenerate equals and hashCode
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,7 +75,6 @@ public class Package {
         if (Double.compare(aPackage.getWeight(), getWeight()) != 0) return false;
         if (Double.compare(aPackage.getVolume(), getVolume()) != 0) return false;
         if (Double.compare(aPackage.getInsurance(), getInsurance()) != 0) return false;
-        if (!Arrays.equals(getType(), aPackage.getType())) return false;
         return getInvoice() != null ? getInvoice().equals(aPackage.getInvoice()) : aPackage.getInvoice() == null;
     }
 
@@ -96,7 +88,6 @@ public class Package {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(getInsurance());
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + Arrays.hashCode(getType());
         result = 31 * result + (getInvoice() != null ? getInvoice().hashCode() : 0);
         return result;
     }

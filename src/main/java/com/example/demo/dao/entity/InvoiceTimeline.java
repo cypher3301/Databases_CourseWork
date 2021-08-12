@@ -11,7 +11,10 @@ import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @Entity
-@Table(name = "invoice_timeline", catalog = "postOffice", schema = "public")
+@Table(name = "invoice_timeline", catalog = "postOffice", schema = "public", indexes = {
+        @Index(name = "status", columnList = "status"),
+        @Index(name = "datetime", columnList = "datetime"),
+})
 @NoArgsConstructor
 @Getter
 @Setter

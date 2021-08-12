@@ -14,8 +14,10 @@ import java.util.Collection;
 @Entity(name = "operator")
 @Table(name = "operator", catalog = "postOffice", schema = "public",
         uniqueConstraints = {
-                @UniqueConstraint(name = "uk_operator_login", columnNames = "login")
-        })
+                @UniqueConstraint(name = "uk_operator_login", columnNames = "login")},
+        indexes = {
+            @Index(name = "login", columnList = "login")
+})
 @NoArgsConstructor
 @Getter
 @Setter

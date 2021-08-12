@@ -13,7 +13,9 @@ import static com.example.demo.dao.entity.ancestor.Util.regExpEmail;
 
 
 @Entity(name = "employee")
-@Table(name = "employee", catalog = "postOffice", schema = "public")
+@Table(name = "employee", catalog = "postOffice", schema = "public", indexes = {
+        @Index(name = "city", columnList = "city")
+})
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @Getter

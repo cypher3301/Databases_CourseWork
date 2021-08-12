@@ -10,7 +10,12 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity(name = "station")
-@Table(name = "station", schema = "public", catalog = "postOffice")
+@Table(name = "station", schema = "public", catalog = "postOffice",
+        indexes = {@Index(name = "city", columnList = "city")},
+        uniqueConstraints = {
+        @UniqueConstraint(name = "region_city_street_building",
+                columnNames = {"region","city","street","building"})
+})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -23,7 +28,14 @@ public class Station {
 
     @Embedded
     @NotNull(message = "Station address cannot be null")
-    private Address address;
+    @AttributeOverrides({
+            @AttributeOverride(name = "region",    column = @Column(name = "region",    length = 24, nullable = false)),
+            @AttributeOverride(name = "city",      column = @Column(name = "city",      length = 24, nullable = false)),
+            @AttributeOverride(name = "street",    column = @Column(name = "street",    length = 24                  )),
+            @AttributeOverride(name = "building",  column = @Column(name = "building",  length = 4,  nullable = false)),
+            @AttributeOverride(name = "campus",    column = @Column(name = "campus",    length = 4                   )),
+            @AttributeOverride(name = "apartment", column = @Column(name = "apartment", length = 4                   )),
+    })    private Address address;
 
     @Column(name = "number", nullable = false)
     private short number;

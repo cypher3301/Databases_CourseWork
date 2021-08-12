@@ -11,7 +11,11 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity(name = "waybill")
-@Table(name = "waybill", catalog = "postOffice", schema = "public")
+@Table(name = "waybill", catalog = "postOffice", schema = "public", indexes = {
+        @Index(name = "type", columnList = "type"),
+        @Index(name = "datetime", columnList = "datetime"),
+        @Index(name = "quantity", columnList = "quantity")
+})
 @NoArgsConstructor
 @Getter
 @Setter
