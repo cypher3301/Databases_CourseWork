@@ -43,10 +43,6 @@ public class Invoice {
     private Date datetime;
 
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "station_recipient_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoice_station"))
-    @NotNull(message = "Invoice recipient station cannot be null")
-    private Station stationRecipient;
 
     //cascade
     @OneToMany(mappedBy = "invoice")
@@ -61,20 +57,28 @@ public class Invoice {
     private Collection<InvoiceTimeline> timeline;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "operator_id",  nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoices_operator"))
+    @JoinColumn(name = "operator_id",  nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "invoices_operator"))
     @NotNull(message = "Invoice operator cannot be null")
     private Operator operator;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "sender_id",    nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoices_client_sender"))
+    @JoinColumn(name = "sender_id",    nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "invoices_client_sender"))
     @NotNull(message = "Invoice client sender cannot be null")
     private Client clientSender;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "recipient_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "invoices_client_recipient"))
+    @JoinColumn(name = "recipient_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "invoices_client_recipient"))
     @NotNull(message = "Invoice client recipient cannot be null")
     private Client clientRecipient;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "station_recipient_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "invoice_station"))
+    @NotNull(message = "Invoice recipient station cannot be null")
+    private Station stationRecipient;
 
     @Override
     public boolean equals(Object o) {
