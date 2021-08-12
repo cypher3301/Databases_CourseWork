@@ -22,7 +22,7 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    protected long id;
+    private long id;
 
     @Column(name = "quantity",  nullable = false)
     @ColumnDefault( value = "1")
@@ -30,11 +30,11 @@ public class Invoice {
     @DecimalMax( message = "Invoice quantity is more than necessary", value = "255")
     @Digits(     message = "Invoice quantity can be up to 255", integer = 3, fraction = 0 )
     @Positive(   message = "Invoice must have quantity greater than or equal 1")
-    protected double quantity;
+    private double quantity;
 
     @Column(name = "type",     nullable = false, length = 128)
     @NotNull(message = "Invoice type cannot be null")
-    protected InvoiceType type;
+    private InvoiceType type;
 
     @Column(name = "datetime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -43,15 +43,12 @@ public class Invoice {
     private Date datetime;
 
 
-
-    //cascade
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
     @Size(    message = "Invoice can have from 1 to 255 packages", min = 1, max = 255)
     @NotNull( message = "Invoice must have greater than or equal 1 package")
     private Collection<Package> packages;
 
-    //cascade
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
     @Size(    message = "Invoice datetime must be greater than 0", min = 1, max = 60)
     @NotNull( message = "Invoice timeline cannot be null")
     private Collection<InvoiceTimeline> timeline;
@@ -62,23 +59,43 @@ public class Invoice {
     @NotNull(message = "Invoice operator cannot be null")
     private Operator operator;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "sender_id",    nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "invoices_client_sender"))
     @NotNull(message = "Invoice client sender cannot be null")
     private Client clientSender;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "recipient_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "invoices_client_recipient"))
     @NotNull(message = "Invoice client recipient cannot be null")
     private Client clientRecipient;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "station_recipient_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "invoice_station"))
     @NotNull(message = "Invoice recipient station cannot be null")
     private Station stationRecipient;
+
+
+    public Invoice(long id, double quantity, InvoiceType type, Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
+        this.id = id;
+        this.quantity = quantity;
+        this.type = type;
+        this.operator = operator;
+        this.clientSender = clientSender;
+        this.clientRecipient = clientRecipient;
+        this.stationRecipient = stationRecipient;
+    }
+
+    public Invoice(double quantity, InvoiceType type, Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
+        this.quantity = quantity;
+        this.type = type;
+        this.operator = operator;
+        this.clientSender = clientSender;
+        this.clientRecipient = clientRecipient;
+        this.stationRecipient = stationRecipient;
+    }
 
     @Override
     public boolean equals(Object o) {

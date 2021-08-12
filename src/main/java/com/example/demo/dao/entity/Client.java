@@ -25,8 +25,7 @@ public class Client extends Person {
     @OneToMany(mappedBy = "clientRecipient")
     private Collection<Invoice> recipes;
 
-    @NotNull(message = "Client stations cannot be null")
-    @Size(message = "Maximum 5 stations", min = 1, max = 5)
+
     @OneToMany
     @JoinTable(name = "client_stations",
             joinColumns = {
@@ -36,7 +35,18 @@ public class Client extends Person {
                     @JoinColumn(name = "stations_id", referencedColumnName = "id",
                             foreignKey = @ForeignKey(name = "fk_client_stations_station_id"))},
             uniqueConstraints = @UniqueConstraint(name = "uk_client_stations_id", columnNames = "stations_id"))
+    @NotNull(message = "Client stations cannot be null")
+    @Size(message = "Maximum 5 stations", min = 1, max = 5)
     private Collection<Station> stations;
+
+
+    public Client(Long id, String firstname, String patronymic, String surname, String phone) {
+        super(id, firstname, patronymic, surname, phone);
+    }
+
+    public Client(String firstname, String patronymic, String surname, String phone) {
+        super(firstname, patronymic, surname, phone);
+    }
 
 
     /*

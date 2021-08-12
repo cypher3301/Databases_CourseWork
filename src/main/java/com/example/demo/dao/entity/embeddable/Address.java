@@ -21,6 +21,21 @@ public class Address {
     protected String apartment;
 
 
+    public Address(String region, String city, String street, String building, String campus, String apartment) {
+        this.region = region;
+        this.city = city;
+        this.street = street;
+        this.building = building;
+        this.campus = campus;
+        this.apartment = apartment;
+    }
+
+    public Address(String region, String city, String building) {
+        this.region = region;
+        this.city = city;
+        this.building = building;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -30,7 +45,7 @@ public class Address {
 
         if (getRegion() != null ? !getRegion().equals(address.getRegion()) : address.getRegion() != null) return false;
         if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) return false;
-        if (getStreet() != null ? !getStreet().equals(address.getStreet()) : address.getStreet() != null) return false;
+        if (!getStreet().equals(address.getStreet())) return false;
         if (getBuilding() != null ? !getBuilding().equals(address.getBuilding()) : address.getBuilding() != null)
             return false;
         if (!getCampus().equals(address.getCampus())) return false;
@@ -41,7 +56,7 @@ public class Address {
     public int hashCode() {
         int result = getRegion() != null ? getRegion().hashCode() : 0;
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
-        result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
+        result = 31 * result + getStreet().hashCode();
         result = 31 * result + (getBuilding() != null ? getBuilding().hashCode() : 0);
         result = 31 * result + getCampus().hashCode();
         result = 31 * result + getApartment().hashCode();

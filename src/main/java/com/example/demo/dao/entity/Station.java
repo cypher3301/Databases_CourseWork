@@ -35,13 +35,22 @@ public class Station {
     @OneToMany(mappedBy = "station")
     private Collection<WorkShift> workShifts;
 
-
     @OneToMany(mappedBy = "stationRecipient")
     private Collection<Invoice> invoices;
 
 
+    public Station(long id, Address address, short number) {
+        this.id = id;
+        this.address = address;
+        this.number = number;
+    }
 
-    
+    public Station(Address address, short number) {
+        this.address = address;
+        this.number = number;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -34,7 +34,7 @@ public class InvoiceTimeline {
     private TimelineStatus status;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "invoice_id",referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "timeline_invoice"))
     @NotNull(       message = "Invoice timeline cannot be null invoice")
@@ -46,6 +46,17 @@ public class InvoiceTimeline {
     @NotNull(       message = "Invoice timeline cannot have null actual station")
     private Station actualStation;
 
+
+    public InvoiceTimeline(long id, TimelineStatus status, Station actualStation) {
+        this.id = id;
+        this.status = status;
+        this.actualStation = actualStation;
+    }
+
+    public InvoiceTimeline(TimelineStatus status, Station actualStation) {
+        this.status = status;
+        this.actualStation = actualStation;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -22,22 +22,22 @@ public class Waybill {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    protected long id;
+    private long id;
 
     @Column(name = "datetime", nullable = false)
     @NotNull(message = "Waybill datetime cannot be null")
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date dateAndTime;
+    private Date dateAndTime;
 
     @Column(name = "type", nullable = false, length = 12)
     @Enumerated(value = EnumType.STRING)
     @NotNull(message = "Waybill type cannot be null")
-    protected WaybillType type;
+    private WaybillType type;
 
     @Column(name = "quantity", nullable = false, length = invoicesQuantity)
-    @PositiveOrZero(    message = "Waybill quantity cannot be less 0")
-    @Digits(            message = "Waybill from 0 to 5 digits before dot", integer = 5, fraction = 0)
-    @Min(value = 0,     message = "Waybill quantity minimum 0")
+    @PositiveOrZero(message = "Waybill quantity cannot be less 0")
+    @Digits(message = "Waybill from 0 to 5 digits before dot", integer = 5, fraction = 0)
+    @Min(value = 0, message = "Waybill quantity minimum 0")
     @Max(value = invoicesQuantity, message = "Waybill quantity minimum invoicesQuantity")
     private int quantity;
 
@@ -55,13 +55,13 @@ public class Waybill {
             uniqueConstraints = @UniqueConstraint(name = "uk_waybill_invoices_id", columnNames = "invoices_id"))
     private Collection<Invoice> invoices;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "waybills_operator"))
     @NotNull(message = "Waybill operator cannot be null")
     private Operator operator;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "driver_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "waybills_driver"))
     @NotNull(message = "Waybill driver cannot be null")
@@ -79,6 +79,23 @@ public class Waybill {
     @NotNull(message = "Waybill station recipient cannot be null")
     private Station stationRecipient;
 
+
+    public Waybill(long id, WaybillType type, Operator operator, Driver driver, Station stationSender, Station stationRecipient) {
+        this.id = id;
+        this.type = type;
+        this.operator = operator;
+        this.driver = driver;
+        this.stationSender = stationSender;
+        this.stationRecipient = stationRecipient;
+    }
+
+    public Waybill(WaybillType type, Operator operator, Driver driver, Station stationSender, Station stationRecipient) {
+        this.type = type;
+        this.operator = operator;
+        this.driver = driver;
+        this.stationSender = stationSender;
+        this.stationRecipient = stationRecipient;
+    }
 
     @Override
     public boolean equals(Object o) {

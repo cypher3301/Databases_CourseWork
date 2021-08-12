@@ -55,7 +55,7 @@ public abstract class Employee extends Person {
     protected String identificationCode;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "position_id", referencedColumnName = "name", foreignKey = @ForeignKey(name = "employee_position"))
     @NotNull(message = "Employee position cannot be null")
     protected Position position;

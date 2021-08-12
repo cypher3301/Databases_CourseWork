@@ -48,6 +48,18 @@ public class Position {
     private Collection<Employee> employees;
 
 
+    public Position(Long id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+    public Position(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

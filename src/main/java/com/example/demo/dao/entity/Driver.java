@@ -1,6 +1,7 @@
 package com.example.demo.dao.entity;
 
 import com.example.demo.dao.entity.ancestor.Employee;
+import com.example.demo.dao.entity.embeddable.Address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,7 @@ import java.util.Collection;
 public class Driver extends Employee {
 
 
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "car_number", nullable = false, referencedColumnName = "car_number",
             foreignKey = @ForeignKey(name = "driver_car"))
     @NotNull(message = "Driver car cannot be null")
@@ -30,6 +31,16 @@ public class Driver extends Employee {
     @Size(    message = "Driver waybills must be greater or equal 0")
     @NotNull( message = "Driver waybills cannot be null")
     private Collection<Waybill> waybills;
+
+    public Driver(Long id, String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Car car) {
+        super(id, firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
+        this.car = car;
+    }
+
+    public Driver(String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Car car) {
+        super(firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
+        this.car = car;
+    }
 
 
     /*

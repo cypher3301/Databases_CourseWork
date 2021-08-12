@@ -49,12 +49,27 @@ public class Package {
     private PackageType[] type;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "invoice_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "package_invoice"))
     @NotNull(message = "Package invoice cannot be null")
     private Invoice invoice;
 
+
+    public Package(long id, double weight, double volume, double insurance, @NotBlank(message = "Package type is null or empty") PackageType[] type) {
+        this.id = id;
+        this.weight = weight;
+        this.volume = volume;
+        this.insurance = insurance;
+        this.type = type;
+    }
+
+    public Package(double weight, double volume, double insurance, @NotBlank(message = "Package type is null or empty") PackageType[] type) {
+        this.weight = weight;
+        this.volume = volume;
+        this.insurance = insurance;
+        this.type = type;
+    }
 
     //Regenerate equals and hashCode
     @Override

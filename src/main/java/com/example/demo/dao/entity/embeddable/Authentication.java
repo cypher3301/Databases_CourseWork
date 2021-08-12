@@ -18,6 +18,11 @@ public class Authentication {
     private byte[] password;
 
 
+    public Authentication(String login, byte[] password) {
+        this.login = login;
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -37,7 +37,7 @@ public class ClientAccount {
     private byte[] password;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "client_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "account_client"))
     @NotNull(message = "Account cannot have client is null")

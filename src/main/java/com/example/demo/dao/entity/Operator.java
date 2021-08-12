@@ -1,6 +1,7 @@
 package com.example.demo.dao.entity;
 
 import com.example.demo.dao.entity.ancestor.Employee;
+import com.example.demo.dao.entity.embeddable.Address;
 import com.example.demo.dao.entity.embeddable.Authentication;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,12 +40,23 @@ public class Operator extends Employee {
     @OneToMany(mappedBy = "operator")
     private Collection<WorkShift> workShifts;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "station_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "operators_station"))
     @NotNull(message = "Operator station cannot be null")
     private Station station;
 
+    public Operator(Long id, String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Authentication authentication, Station station) {
+        super(id, firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
+        this.authentication = authentication;
+        this.station = station;
+    }
+
+    public Operator(String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Authentication authentication, Station station) {
+        super(firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
+        this.authentication = authentication;
+        this.station = station;
+    }
 
     /*
      * Equals and HashCode override in Employee basic class

@@ -23,27 +23,27 @@ public class WorkShift {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    protected long id;
+    private long id;
 
     @Column(name = "type", nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     @NotNull(message = "WorkShift type cannot be null")
-    protected WorkShiftType type;
+    private WorkShiftType type;
 
     @Column(name = "datetime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @PastOrPresent(message = "WorkShift datetime must be past or current time")
     @NotNull(message = "WorkShift datetime cannot be null")
-    protected Date datetime;
+    private Date datetime;
 
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "operator_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "work_shifts_operator"))
     @NotNull(message = "WorkShift operator cannot be null")
     private Operator operator;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
     @JoinColumn(name = "station_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "work_shifts_station"))
     @NotNull(message = "WorkShift station cannot be null")
@@ -62,6 +62,19 @@ public class WorkShift {
             uniqueConstraints = @UniqueConstraint(name = "uk_work_shift_invoices_id", columnNames = "invoices_id"))
     private Collection<Invoice> invoices;
 
+
+    public WorkShift(long id, WorkShiftType type, Operator operator, Station station) {
+        this.id = id;
+        this.type = type;
+        this.operator = operator;
+        this.station = station;
+    }
+
+    public WorkShift(WorkShiftType type, Operator operator, Station station) {
+        this.type = type;
+        this.operator = operator;
+        this.station = station;
+    }
 
     @Override
     public boolean equals(Object o) {
