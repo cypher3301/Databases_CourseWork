@@ -1,6 +1,8 @@
 package com.example.demo.dao.entity;
 
+import com.example.demo.dao.convertor.PackageTypeArrayOfEnumToStringConvertor;
 import com.example.demo.dao.entity.status.InvoiceType;
+import com.example.demo.dao.entity.status.PackageType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,12 +10,16 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
 
 @Entity(name = "invoice")
-@Table(name = "invoice", catalog = "postOffice", schema = "public")
+@Table(name = "invoice", catalog = "postOffice", schema = "public", indexes = {
+        @Index(name = "type", columnList = "type"),
+        @Index(name = "datetime", columnList = "datetime")
+})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -32,9 +38,15 @@ public class Invoice {
     @Positive(   message = "Invoice must have quantity greater than or equal 1")
     private double quantity;
 
-    @Column(name = "type",     nullable = false, length = 128)
+    @Column(name = "delivery_type",     nullable = false, length = 128)
     @NotNull(message = "Invoice type cannot be null")
-    private InvoiceType type;
+    private InvoiceType deliveryType;
+
+//    @Type(type = "com.example.demo.dao.convertor.InvoiceTypeArrayOfEnumToStringConvertor")
+    @Convert(converter = PackageTypeArrayOfEnumToStringConvertor.class)
+    @Column(name = "type", nullable = false, length = 16)
+    @NotBlank(message = "Package type is null or empty")
+    private PackageType[] type;
 
     @Column(name = "datetime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -78,7 +90,8 @@ public class Invoice {
     private Station stationRecipient;
 
 
-    public Invoice(long id, double quantity, InvoiceType type, Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
+    public Invoice(long id, double quantity, @NotBlank(message = "Package type is null or empty") PackageType[] type,
+                   Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
         this.id = id;
         this.quantity = quantity;
         this.type = type;
@@ -88,7 +101,8 @@ public class Invoice {
         this.stationRecipient = stationRecipient;
     }
 
-    public Invoice(double quantity, InvoiceType type, Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
+    public Invoice(double quantity, @NotBlank(message = "Package type is null or empty") PackageType[] type,
+                   Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
         this.quantity = quantity;
         this.type = type;
         this.operator = operator;
@@ -96,6 +110,7 @@ public class Invoice {
         this.clientRecipient = clientRecipient;
         this.stationRecipient = stationRecipient;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -105,10 +120,10 @@ public class Invoice {
         Invoice invoice = (Invoice) o;
 
         if (Double.compare(invoice.getQuantity(), getQuantity()) != 0) return false;
-        if (getType() != null ? !getType().equals(invoice.getType()) : invoice.getType() != null) return false;
+        if (getDeliveryType() != invoice.getDeliveryType()) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        if (!Arrays.equals(getType(), invoice.getType())) return false;
         if (getDatetime() != null ? !getDatetime().equals(invoice.getDatetime()) : invoice.getDatetime() != null)
-            return false;
-        if (getStationRecipient() != null ? !getStationRecipient().equals(invoice.getStationRecipient()) : invoice.getStationRecipient() != null)
             return false;
         if (getPackages() != null ? !getPackages().equals(invoice.getPackages()) : invoice.getPackages() != null)
             return false;
@@ -116,7 +131,9 @@ public class Invoice {
             return false;
         if (getClientSender() != null ? !getClientSender().equals(invoice.getClientSender()) : invoice.getClientSender() != null)
             return false;
-        return getClientRecipient() != null ? getClientRecipient().equals(invoice.getClientRecipient()) : invoice.getClientRecipient() == null;
+        if (getClientRecipient() != null ? !getClientRecipient().equals(invoice.getClientRecipient()) : invoice.getClientRecipient() != null)
+            return false;
+        return getStationRecipient() != null ? getStationRecipient().equals(invoice.getStationRecipient()) : invoice.getStationRecipient() == null;
     }
 
     @Override
@@ -125,13 +142,14 @@ public class Invoice {
         long temp;
         temp = Double.doubleToLongBits(getQuantity());
         result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
+        result = 31 * result + (getDeliveryType() != null ? getDeliveryType().hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(getType());
         result = 31 * result + (getDatetime() != null ? getDatetime().hashCode() : 0);
-        result = 31 * result + (getStationRecipient() != null ? getStationRecipient().hashCode() : 0);
         result = 31 * result + (getPackages() != null ? getPackages().hashCode() : 0);
         result = 31 * result + (getOperator() != null ? getOperator().hashCode() : 0);
         result = 31 * result + (getClientSender() != null ? getClientSender().hashCode() : 0);
         result = 31 * result + (getClientRecipient() != null ? getClientRecipient().hashCode() : 0);
+        result = 31 * result + (getStationRecipient() != null ? getStationRecipient().hashCode() : 0);
         return result;
     }
 }
