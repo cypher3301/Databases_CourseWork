@@ -84,7 +84,8 @@ public class WorkShift {
         WorkShift workShift = (WorkShift) o;
 
         if (getType() != workShift.getType()) return false;
-        if (getDatetime() != null ? !getDatetime().equals(workShift.getDatetime()) : workShift.getDatetime() != null) return false;
+        if (getDatetime() != null ? !getDatetime().equals(workShift.getDatetime()) : workShift.getDatetime() != null)
+            return false;
         if (getOperator() != null ? !getOperator().equals(workShift.getOperator()) : workShift.getOperator() != null)
             return false;
         if (getStation() != null ? !getStation().equals(workShift.getStation()) : workShift.getStation() != null)

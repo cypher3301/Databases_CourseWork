@@ -11,11 +11,12 @@ import java.util.Collection;
 
 @Entity(name = "station")
 @Table(name = "station", schema = "public", catalog = "postOffice",
-        indexes = {@Index(name = "city", columnList = "city")},
-        uniqueConstraints = {
-        @UniqueConstraint(name = "region_city_street_building",
-                columnNames = {"region","city","street","building"})
-})
+        indexes = @Index(name = "city", columnList = "city"),
+        uniqueConstraints = @UniqueConstraint(name = "region_city_street_building",
+                columnNames = {
+                        "region", "city", "street", "building"
+                })
+)
 @NoArgsConstructor
 @Getter
 @Setter

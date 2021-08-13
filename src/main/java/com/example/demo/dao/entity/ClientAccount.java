@@ -15,9 +15,9 @@ import static com.example.demo.dao.entity.ancestor.Util.regExpEmail;
 
 
 @Entity(name = "clientAccount")
-@Table(name = "client_account", catalog = "postOffice", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_client_account_email", columnNames = "email")
-})
+@Table(name = "client_account", catalog = "postOffice", schema = "public",
+        uniqueConstraints = @UniqueConstraint(name = "uk_client_account_email", columnNames = "email")
+)
 @NoArgsConstructor
 @Getter
 @Setter

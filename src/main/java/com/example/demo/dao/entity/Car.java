@@ -10,8 +10,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity(name = "car")
-@Table(name = "car", catalog = "postOffice", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_car_number",columnNames = "car_number")})
+@Table(name = "car", catalog = "postOffice", schema = "public",
+        uniqueConstraints = @UniqueConstraint(name = "uk_car_number",columnNames = "car_number"))
 @NoArgsConstructor
 @Getter
 @Setter

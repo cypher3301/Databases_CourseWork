@@ -17,8 +17,8 @@ import java.util.Date;
 
 @Entity(name = "invoice")
 @Table(name = "invoice", catalog = "postOffice", schema = "public", indexes = {
-        @Index(name = "type", columnList = "type"),
-        @Index(name = "datetime", columnList = "datetime")
+        @Index(name = "invoice_type", columnList = "type"),
+        @Index(name = "invoice_datetime", columnList = "datetime")
 })
 @NoArgsConstructor
 @Getter

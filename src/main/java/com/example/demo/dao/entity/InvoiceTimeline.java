@@ -12,8 +12,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "invoice_timeline", catalog = "postOffice", schema = "public", indexes = {
-        @Index(name = "status", columnList = "status"),
-        @Index(name = "datetime", columnList = "datetime"),
+        @Index(name = "invoice_timeline_status", columnList = "status"),
+        @Index(name = "invoice_timeline_datetime", columnList = "datetime"),
 })
 @NoArgsConstructor
 @Getter
@@ -27,26 +27,26 @@ public class InvoiceTimeline {
 
     @Column(name = "datetime")
     @Temporal(TemporalType.TIMESTAMP)
-    @PastOrPresent( message = "Invoice timeline only present time")
-    @NotNull(       message = "Invoice datetime cannot be null")
+    @PastOrPresent(message = "Invoice timeline only present time")
+    @NotNull(message = "Invoice datetime cannot be null")
     private Date datetime;
 
-    @Column(name = "status", nullable = false ,length = 24)
+    @Column(name = "status", nullable = false, length = 24)
     @Enumerated(EnumType.STRING)
-    @NotNull(       message = "Invoice timeline status cannot be null")
+    @NotNull(message = "Invoice timeline status cannot be null")
     private TimelineStatus status;
 
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "invoice_id",referencedColumnName = "id",
+    @JoinColumn(name = "invoice_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "timeline_invoice"))
-    @NotNull(       message = "Invoice timeline cannot be null invoice")
+    @NotNull(message = "Invoice timeline cannot be null invoice")
     private Invoice invoice;
 
     @OneToOne
-    @JoinColumn(name = "actual_station_id",referencedColumnName = "id",
+    @JoinColumn(name = "actual_station_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "timeline_station"))
-    @NotNull(       message = "Invoice timeline cannot have null actual station")
+    @NotNull(message = "Invoice timeline cannot have null actual station")
     private Station actualStation;
 
 

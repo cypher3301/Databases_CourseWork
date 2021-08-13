@@ -13,7 +13,10 @@ import java.util.Collection;
 
 @Entity(name = "driver")
 @Table(name = "driver", catalog = "postOffice", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_driver_car_number", columnNames = "car_number")
+        @UniqueConstraint(name = "uk_driver_car_number", columnNames = "car_number"),
+        @UniqueConstraint(name = "uk_driver_email", columnNames = "email"),
+        @UniqueConstraint(name = "uk_driver_identification_code", columnNames = "identification_code"),
+        @UniqueConstraint(name = "uk_driver_price_card_number", columnNames = "price_card_number")
 })
 @NoArgsConstructor
 @Getter
@@ -28,8 +31,8 @@ public class Driver extends Employee {
     private Car car;
 
     @OneToMany(mappedBy = "driver")
-    @Size(    message = "Driver waybills must be greater or equal 0")
-    @NotNull( message = "Driver waybills cannot be null")
+    @Size(message = "Driver waybills must be greater or equal 0")
+    @NotNull(message = "Driver waybills cannot be null")
     private Collection<Waybill> waybills;
 
     public Driver(Long id, String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Car car) {

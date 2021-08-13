@@ -12,7 +12,9 @@ import java.util.Collection;
 
 
 @Entity(name = "client")
-@Table(name = "client", catalog = "postOffice", schema = "public")
+@Table(name = "client", catalog = "postOffice", schema = "public",
+        uniqueConstraints = @UniqueConstraint(name = "uk_client_phone", columnNames = "phone")
+)
 @NoArgsConstructor
 @Getter
 @Setter

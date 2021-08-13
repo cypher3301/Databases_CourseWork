@@ -12,9 +12,9 @@ import java.util.Date;
 
 @Entity(name = "waybill")
 @Table(name = "waybill", catalog = "postOffice", schema = "public", indexes = {
-        @Index(name = "type", columnList = "type"),
-        @Index(name = "datetime", columnList = "datetime"),
-        @Index(name = "quantity", columnList = "quantity")
+        @Index(name = "waybill_type", columnList = "type"),
+        @Index(name = "waybill_datetime", columnList = "datetime"),
+        @Index(name = "waybill_quantity", columnList = "quantity")
 })
 @NoArgsConstructor
 @Getter

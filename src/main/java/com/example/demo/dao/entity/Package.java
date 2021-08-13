@@ -11,9 +11,9 @@ import javax.validation.constraints.*;
 
 
 @Entity(name = "package")
-@Table(name = "package", catalog = "postOffice", schema = "public", indexes = {
-        @Index(name = "insurance_uah", columnList = "insurance_uah")
-})
+@Table(name = "package", catalog = "postOffice", schema = "public",
+        indexes = @Index(name = "insurance_uah", columnList = "insurance_uah")
+)
 @NoArgsConstructor
 @Getter
 @Setter

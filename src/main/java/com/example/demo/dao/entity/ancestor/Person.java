@@ -57,7 +57,7 @@ public abstract class Person implements BaseEntity{
     @Max(value = maxValuePersonName, message = className + columnSurname + messageMustBeLessThan + maxValuePersonName + messageCharacters)
     protected String surname;
 
-    @Column(name = columnPhone, nullable = nullableFalse, unique = true, length = lengthPhone)
+    @Column(name = columnPhone, nullable = nullableFalse, length = lengthPhone)
     @NotBlank(message = className + columnPhone + messageIsIllegalOrEmpty)
     @Digits(message = className + columnPhone + " illegal", integer = lengthPhone, fraction = 0)
     @Pattern(message = className + columnPhone + " number is illegal", regexp = regExpPhone)

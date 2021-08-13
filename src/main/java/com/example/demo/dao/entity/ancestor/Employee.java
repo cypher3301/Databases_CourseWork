@@ -14,7 +14,8 @@ import static com.example.demo.dao.entity.ancestor.Util.regExpEmail;
 
 @Entity(name = "employee")
 @Table(name = "employee", catalog = "postOffice", schema = "public", indexes = {
-        @Index(name = "city", columnList = "city")
+        @Index(name = "_city", columnList = "city"),
+        @Index(name = "_phone", columnList = "phone")
 })
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
@@ -26,14 +27,14 @@ public abstract class Employee extends Person {
     private static final boolean uniqueTrue = true;
 
 
-    @Column(name = "email", nullable = nullableFalse, unique = uniqueTrue)
+    @Column(name = "email", nullable = nullableFalse)
     @NotBlank(      message = "Employee email is illegal or empty")
     @Min(value = 5, message = "Email is too less")
     @Email(         message = "Email is not valid",
             regexp = regExpEmail)
     protected String email;
 
-    @Column(name = "price_card_number", nullable = nullableFalse, unique = uniqueTrue, length = 16)
+    @Column(name = "price_card_number", nullable = nullableFalse, length = 16)
     @Digits(    message = "Price card number only digits", integer = 16, fraction = 0)
     @NotBlank(  message = "Employee  price card number is illegal or empty")
     protected String priceCardNumber;
@@ -50,11 +51,13 @@ public abstract class Employee extends Person {
     })
     protected Address address;
 
+    @Column(name = "identification_code", nullable = nullableFalse, length = 10)
     @NotBlank(  message = "Employee identification code is is illegal or empty")
     @Digits(    message = "Identification code only digits", integer = 10, fraction = 0)
-    @Column(name = "identification_code", nullable = nullableFalse, unique = uniqueTrue, length = 10)
     @Min(10)
     protected String identificationCode;
+
+    //date of birthday
 
 
     @ManyToOne(cascade = CascadeType.MERGE)

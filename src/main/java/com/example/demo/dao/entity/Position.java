@@ -12,9 +12,9 @@ import javax.validation.constraints.*;
 import java.util.Collection;
 
 @Entity(name = "position")
-@Table(name = "position", catalog = "postOffice", schema = "public", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_position_name", columnNames = "name")
-})
+@Table(name = "position", catalog = "postOffice", schema = "public",
+        uniqueConstraints = @UniqueConstraint(name = "uk_position_name", columnNames = "name")
+)
 @NoArgsConstructor
 @Getter
 @Setter
