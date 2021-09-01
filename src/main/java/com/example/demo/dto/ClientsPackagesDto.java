@@ -22,4 +22,12 @@ public class ClientsPackagesDto {
         this.clientSender = clientSender;
         this.clientRecipient = clientRecipient;
     }
+
+    public Client getClientSender() {
+        return clientSender;
+    }
+
+    public Client getClientRecipient() {
+        return clientRecipient;
+    }
 }
