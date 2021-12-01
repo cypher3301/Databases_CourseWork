@@ -11,7 +11,7 @@ import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @Entity
-@Table(name = "invoice_timeline", catalog = "postOffice", schema = "public", indexes = {
+@Table(name = "invoice_timeline",  schema = "public", indexes = {
         @Index(name = "invoice_timeline_status", columnList = "status"),
         @Index(name = "invoice_timeline_datetime", columnList = "datetime"),
 })

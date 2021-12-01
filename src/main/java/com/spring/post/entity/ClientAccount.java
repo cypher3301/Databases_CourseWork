@@ -15,7 +15,7 @@ import static com.spring.post.entity.ancestor.Util.regExpEmail;
 
 
 @Entity(name = "clientAccount")
-@Table(name = "client_account", catalog = "postOffice", schema = "public",
+@Table(name = "client_account",  schema = "public",
         uniqueConstraints = @UniqueConstraint(name = "uk_client_account_email", columnNames = "email")
 )
 @NoArgsConstructor

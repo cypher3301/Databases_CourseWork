@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity(name = "driver")
-@Table(name = "driver", catalog = "postOffice", schema = "public", uniqueConstraints = {
+@Table(name = "driver",  schema = "public", uniqueConstraints = {
         @UniqueConstraint(name = "uk_driver_car_number", columnNames = "car_number"),
         @UniqueConstraint(name = "uk_driver_email", columnNames = "email"),
         @UniqueConstraint(name = "uk_driver_identification_code", columnNames = "identification_code"),
