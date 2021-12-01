@@ -33,9 +33,6 @@ public class GeneratePerson extends Generator{
         return "+380" + generateNumber(9);
     }
 
-    public Long generateId() {
-        return Math.abs(new Random().nextLong());
-    }
 
 
 }

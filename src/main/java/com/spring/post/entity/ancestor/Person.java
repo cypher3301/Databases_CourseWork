@@ -14,7 +14,7 @@ import static com.spring.post.entity.ancestor.Util.regExpPhone;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class Person implements BaseEntity{
+public abstract class Person implements BaseEntity {
 
     private static final int minValuePersonName = 2;
     private static final int maxValuePersonName = 20;

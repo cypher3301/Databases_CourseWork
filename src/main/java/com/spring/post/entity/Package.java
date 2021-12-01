@@ -11,7 +11,7 @@ import javax.validation.constraints.*;
 
 
 @Entity(name = "package")
-@Table(name = "package", catalog = "postOffice", schema = "public",
+@Table(name = "package",  schema = "public",
         indexes = @Index(name = "insurance_uah", columnList = "insurance_uah")
 )
 @NoArgsConstructor
@@ -42,6 +42,13 @@ public class Package {
     @DecimalMax(value = "100000",      message = "Package insurance is more than necessary")
     @Positive(                         message = "Package insurance cannot be less 0")
     private double insurance;
+
+    @Column(name = "number", nullable = false)
+    @ColumnDefault(value = "1")
+    @DecimalMin(value = "1",         message = "Package number is less than required")
+    @DecimalMax(value = "255",      message = "Package number is more than necessary")
+    @Positive(                         message = "Package number cannot be less 0")
+    private int number;
 
 
     @ManyToOne(cascade = CascadeType.MERGE)

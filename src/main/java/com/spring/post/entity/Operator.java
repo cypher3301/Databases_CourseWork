@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity(name = "operator")
-@Table(name = "operator", catalog = "postOffice", schema = "public",
+@Table(name = "operator", schema = "public",
         uniqueConstraints = @UniqueConstraint(name = "uk_operator_login", columnNames = "login")
 )
 @NoArgsConstructor
@@ -74,3 +74,4 @@ public class Operator extends Employee {
                 '}';
     }
 }
+

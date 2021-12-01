@@ -14,6 +14,8 @@ public class GenerateEmployee extends GeneratePerson {
 //    private static final List<String> apartments;
 
 
+
+
     static {
         regions = Arrays.asList("Одесская", "Днепропетровская", "Черниговская", "Харьковская", "Житомирская", "Полтавская", "Херсонская", "Киевская", "Запорожская", "Луганская", "Донецкая", "Винницкая", "АР Крым", "Кировоградская", "Николаевская", "Сумская", "Львовская", "Черкасская", "Хмельницкая", "Волынская", "Ровенская", "Ивано-Франковская", "Тернопольская", "Закарпатская", "Черновицкая", "Севастополь", "Киев");
         cities = Arrays.asList("Днепр","Донецк","Запорожье","Львов","Кривой Рог","Севастополь","Николаев","Мариуполь");
@@ -21,6 +23,9 @@ public class GenerateEmployee extends GeneratePerson {
 //        buildings = Arrays.asList();
         campuses = Arrays.asList("A", "B", "C",  "D", "E", "F", null );
 //        apartments = Arrays.asList();
+    }
+
+    public GenerateEmployee() {
     }
 
     protected String generatePriceCardNumber() {

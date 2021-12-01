@@ -10,8 +10,12 @@ interface OperatorRepository : JpaRepository<Operator, Long> {
 
 //    @Query(nativeQuery = true, value = "select * from public.operator o where login=:login and password=:password")
 //    fun findOperatorByLoginAndPassword(login: String, password: Array<Byte>): Operator
-//
-//    @Query(nativeQuery = true, value = "select exists(select 1 from public.operator where login=:login)")
-//    fun existsOperatorByLogin(login: String): Boolean
+
+    @Query(nativeQuery = true, value = "select exists(select 1 from public.operator where login=:login)")
+    fun existsOperatorByLogin(login: String): Boolean
+
+    fun findOperatorByLogin(login: String): Operator
+
+
 
 }

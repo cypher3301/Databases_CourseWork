@@ -13,11 +13,11 @@ import static com.spring.post.entity.ancestor.Util.regExpEmail;
 
 
 @Entity(name = "employee")
-@Table(name = "employee", catalog = "postOffice", schema = "public", indexes = {
+@Table(schema = "public", indexes = {
         @Index(name = "_city", columnList = "city"),
         @Index(name = "_phone", columnList = "phone")
 })
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance
 @NoArgsConstructor
 @Getter
 @Setter
@@ -104,4 +104,21 @@ public abstract class Employee extends Person {
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "email='" + email + '\'' +
+                ", priceCardNumber='" + priceCardNumber + '\'' +
+                ", address=" + address +
+                ", identificationCode='" + identificationCode + '\'' +
+                ", position=" + position +
+                ", id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
+
+

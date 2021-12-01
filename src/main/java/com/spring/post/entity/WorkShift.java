@@ -14,7 +14,7 @@ import java.util.Date;
 
 
 @Entity(name = "work_shift")
-@Table(name = "work_shift", catalog = "postOffice", schema = "public")
+@Table(name = "work_shift",  schema = "public")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -84,24 +84,32 @@ public class WorkShift {
         WorkShift workShift = (WorkShift) o;
 
         if (getType() != workShift.getType()) return false;
-        if (getDatetime() != null ? !getDatetime().equals(workShift.getDatetime()) : workShift.getDatetime() != null)
-            return false;
-        if (getOperator() != null ? !getOperator().equals(workShift.getOperator()) : workShift.getOperator() != null)
-            return false;
-        if (getStation() != null ? !getStation().equals(workShift.getStation()) : workShift.getStation() != null)
-            return false;
-        return getInvoices().equals(workShift.getInvoices());
+        if (!getDatetime().equals(workShift.getDatetime())) return false;
+        if (!getOperator().equals(workShift.getOperator())) return false;
+        if (!getStation().equals(workShift.getStation())) return false;
+        return getInvoices() != null ? getInvoices().equals(workShift.getInvoices()) : workShift.getInvoices() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getType() != null ? getType().hashCode() : 0;
-        result = 31 * result + (getDatetime() != null ? getDatetime().hashCode() : 0);
-        result = 31 * result + (getOperator() != null ? getOperator().hashCode() : 0);
-        result = 31 * result + (getStation() != null ? getStation().hashCode() : 0);
-        result = 31 * result + getInvoices().hashCode();
+        int result = getType().hashCode();
+        result = 31 * result + getDatetime().hashCode();
+        result = 31 * result + getOperator().hashCode();
+        result = 31 * result + getStation().hashCode();
+        result = 31 * result + (getInvoices() != null ? getInvoices().hashCode() : 0);
         return result;
     }
 
+    @Override
+    public String toString() {
+        return "WorkShift{" +
+                "id=" + id +
+                ", type=" + type +
+                ", datetime=" + datetime +
+                ", operator=" + operator +
+                ", station=" + station +
+                ", invoices=" + invoices +
+                '}';
+    }
 }
 

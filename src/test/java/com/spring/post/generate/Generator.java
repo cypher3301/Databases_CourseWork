@@ -1,8 +1,9 @@
 package com.spring.post.generate;
 
 import com.spring.post.entity.Car;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 public class Generator {
@@ -54,6 +55,18 @@ public class Generator {
         }
         return String.valueOf(randValue);
     }
+
+    protected Timestamp generateDatetime() {
+        Random random = new Random();
+        long nowTime = System.nanoTime();
+        long randTime = random.nextLong();
+        return new Timestamp(randTime%nowTime);
+    }
+
+    protected Long generateId() {
+        return Math.abs(new Random().nextLong());
+    }
+
 
 
 

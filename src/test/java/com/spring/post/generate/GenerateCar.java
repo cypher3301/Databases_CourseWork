@@ -17,11 +17,11 @@ public class GenerateCar extends Generator {
 
 
 
-    private Double generateWeight(double start, double end) {
+    protected Double generateWeight(double start, double end) {
         return new Random().nextDouble() * Math.pow(10, start) % end;
     }
 
-    private Double generateVolume(double start, double end) {
+    protected Double generateVolume(double start, double end) {
         return generateWeight(start, end);
     }
 

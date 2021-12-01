@@ -16,7 +16,7 @@ import java.util.Date;
 
 
 @Entity(name = "invoice")
-@Table(name = "invoice", catalog = "postOffice", schema = "public", indexes = {
+@Table(name = "invoice",  schema = "public", indexes = {
         @Index(name = "invoice_type", columnList = "type"),
         @Index(name = "invoice_datetime", columnList = "datetime")
 })
@@ -36,7 +36,7 @@ public class Invoice {
     @DecimalMax( message = "Invoice quantity is more than necessary", value = "255")
     @Digits(     message = "Invoice quantity can be up to 255", integer = 3, fraction = 0 )
     @Positive(   message = "Invoice must have quantity greater than or equal 1")
-    private double quantity;
+    private int quantity;
 
     @Column(name = "delivery_type",     nullable = false, length = 128)
     @NotNull(message = "Invoice type cannot be null")
@@ -90,7 +90,7 @@ public class Invoice {
     private Station stationRecipient;
 
 
-    public Invoice(long id, double quantity, @NotBlank(message = "Package type is null or empty") PackageType[] type,
+    public Invoice(long id, int quantity, @NotBlank(message = "Package type is null or empty") PackageType[] type,
                    Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
         this.id = id;
         this.quantity = quantity;
@@ -101,7 +101,7 @@ public class Invoice {
         this.stationRecipient = stationRecipient;
     }
 
-    public Invoice(double quantity, @NotBlank(message = "Package type is null or empty") PackageType[] type,
+    public Invoice(int quantity, @NotBlank(message = "Package type is null or empty") PackageType[] type,
                    Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
         this.quantity = quantity;
         this.type = type;
@@ -151,5 +151,22 @@ public class Invoice {
         result = 31 * result + (getClientRecipient() != null ? getClientRecipient().hashCode() : 0);
         result = 31 * result + (getStationRecipient() != null ? getStationRecipient().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", deliveryType=" + deliveryType +
+                ", type=" + Arrays.toString(type) +
+                ", datetime=" + datetime +
+                ", packages=" + packages +
+                ", timeline=" + timeline +
+                ", operator=" + operator +
+                ", clientSender=" + clientSender +
+                ", clientRecipient=" + clientRecipient +
+                ", stationRecipient=" + stationRecipient +
+                '}';
     }
 }

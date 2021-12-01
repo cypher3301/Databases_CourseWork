@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Operator id</th>
+            <th>Operator firstname</th>
+            <th>Operator patronymic</th>
+            <th>Operator surname</th>
+            <th>Operator phone</th>
+        </tr>
+        <tr th:each="operator : ${operators}">
+            <td th:text="${operator.id}"></td>
+            <td th:text="${operator.firstname}"></td>
+            <td th:text="${operator.patronymic}"></td>
+            <td th:text="${operator.surname}"></td>
+            <td th:text="${operator.phone}"></td>
+        </tr>
+    </table>
+</body>
+</html>

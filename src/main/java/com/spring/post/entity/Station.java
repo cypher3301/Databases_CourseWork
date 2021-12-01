@@ -7,10 +7,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity(name = "station")
-@Table(name = "station", schema = "public", catalog = "postOffice",
+@Table(name = "station", schema = "public", 
         indexes = @Index(name = "city", columnList = "city"),
         uniqueConstraints = @UniqueConstraint(name = "region_city_street_building",
                 columnNames = {
@@ -20,7 +21,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Station {
+public class Station  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -80,5 +81,17 @@ public class Station {
         int result = getAddress() != null ? getAddress().hashCode() : 0;
         result = 31 * result + (int) getNumber();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Station{" +
+                "id=" + id +
+                ", address=" + address +
+                ", number=" + number +
+                ", employees=" + employees +
+                ", workShifts=" + workShifts +
+                ", invoices=" + invoices +
+                '}';
     }
 }

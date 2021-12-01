@@ -9,16 +9,17 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity(name = "position")
-@Table(name = "position", catalog = "postOffice", schema = "public",
+@Table(name = "position",  schema = "public",
         uniqueConstraints = @UniqueConstraint(name = "uk_position_name", columnNames = "name")
 )
 @NoArgsConstructor
 @Getter
 @Setter
-public class Position {
+public class Position implements Serializable {
 
     private static final String defaultPrice = "4250.0";
     private static final String maxPrice = "100000";
@@ -73,6 +74,16 @@ public class Position {
     @Override
     public int hashCode() {
         return getName() != null ? getName().hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", employees=" + employees +
+                '}';
     }
 }
 

@@ -1,10 +1,9 @@
 package com.spring.post.test;
 
 
-import com.spring.post.generate.GenerateCar;
-import com.spring.post.generate.GenerateClient;
-import com.spring.post.generate.GenerateDriver;
-import com.spring.post.generate.GenerateOperator;
+import com.spring.post.entity.Operator;
+import com.spring.post.entity.Station;
+import com.spring.post.generate.*;
 import org.junit.jupiter.api.Test;
 
 public class TestGenerators {
@@ -27,5 +26,21 @@ public class TestGenerators {
     @Test
     void testOperatorGenerator() {
         System.out.println(GenerateOperator.getNewOperator().toString());
+    }
+
+
+    @Test
+    void testStationGenerator() {
+        System.out.println(GenerateStation.getNewStation().toString());
+    }
+
+
+    @Test
+    void testWorkShiftGenerator() {
+//        System.out.println(GenerateWorkShift.getNewWorkShift().toString());
+//        System.out.println(GenerateWorkShift.getNewWorkShift(GenerateOperator.getNewOperator()).toString());
+        Station newBaseStation = GenerateStation.getNewBaseStation();
+        Operator newOperator = GenerateOperator.getNewOperator(newBaseStation);
+        System.out.println(GenerateWorkShift.getNewWorkShift(newOperator).toString());
     }
 }
