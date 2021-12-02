@@ -1,10 +1,9 @@
 package com.spring.post.generate;
 
-import com.spring.post.entity.Car;
-//import org.jetbrains.annotations.NotNull;
-
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 
 public class Generator {
 
