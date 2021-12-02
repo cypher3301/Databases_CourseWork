@@ -1,11 +1,6 @@
 package com.spring.post.generate;
 
-import com.spring.post.entity.Car;
-import com.spring.post.entity.Driver;
-import com.spring.post.entity.Position;
-import com.spring.post.repository.kotlin.DriverRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
