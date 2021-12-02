@@ -20,13 +20,13 @@ public class LoginController {
         this.authenticateService = authenticateService;
     }
 
-    @GetMapping("/login")
+    @GetMapping("/")
     public String loginForm(Model model) {
         model.addAttribute("user", new Users());
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/")
     public String loginSubmit(@ModelAttribute Users user, Model model) {
         if (authenticateService.authorize(user)) {
             EmptyWorkShiftController.setUser(user);
