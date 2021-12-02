@@ -24,7 +24,7 @@ public class OperatorController {
 
     @GetMapping("/")
     public String index() {
-        return "panel";
+        return "login";
     }
 
     @GetMapping("/operators")
