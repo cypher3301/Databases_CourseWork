@@ -9,15 +9,14 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import static com.spring.post.entity.ancestor.Util.regExpEmail;
-
 
 @Entity(name = "employee")
+//@MappedSuperclass
 @Table(schema = "public", indexes = {
         @Index(name = "_city", columnList = "city"),
         @Index(name = "_phone", columnList = "phone")
 })
-@Inheritance
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @Getter
 @Setter
@@ -31,7 +30,7 @@ public abstract class Employee extends Person {
     @NotBlank(message = "Employee email is illegal or empty")
     @Min(value = 5, message = "Email is too less")
     @Email(message = "Email is not valid",
-            regexp = regExpEmail)
+            regexp = Util.regExpEmail)
     protected String email;
 
     @Column(name = "price_card_number", nullable = nullableFalse, length = 16)

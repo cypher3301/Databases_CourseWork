@@ -61,4 +61,13 @@ public class Users {
         result = 31 * result + (enabled != null ? enabled.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

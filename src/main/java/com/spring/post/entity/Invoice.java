@@ -40,9 +40,9 @@ public class Invoice {
 
     @Column(name = "delivery_type",     nullable = false, length = 128)
     @NotNull(message = "Invoice type cannot be null")
-    private InvoiceType deliveryType;
+    private String deliveryType;
 
-//    @Type(type = "com.example.demo.dao.convertor.InvoiceTypeArrayOfEnumToStringConvertor")
+    //    @Type(type = "com.example.demo.dao.convertor.InvoiceTypeArrayOfEnumToStringConvertor")
     @Convert(converter = PackageTypeArrayOfEnumToStringConvertor.class)
     @Column(name = "type", nullable = false, length = 16)
     @NotBlank(message = "Package type is null or empty")
@@ -111,6 +111,112 @@ public class Invoice {
         this.stationRecipient = stationRecipient;
     }
 
+    public String completeName(Client client) {
+        return client.getFirstname() + " " + client.getPatronymic() + " " + client.getSurname();
+    }
+
+    public double wight() {
+        return getPackages().stream().map(Package::getWeight).reduce(Double::sum).orElse(0.0);
+    }
+    public double volume() {
+        return getPackages().stream().map(Package::getVolume).reduce(Double::sum).orElse(0.0);
+    }
+
+    public double insurance() {
+        return getPackages().stream().map(Package::getInsurance).reduce(Double::sum).orElse(0.0);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String deliveryType() {
+        return deliveryType.toString();
+    }
+
+    public void setDeliveryType(InvoiceType deliveryType) {
+        this.deliveryType = deliveryType.toString();
+    }
+
+    public PackageType[] getType() {
+        return type;
+    }
+
+    public String types() {
+        return new PackageTypeArrayOfEnumToStringConvertor().convertToDatabaseColumn(type);
+    }
+
+    public void setType(PackageType[] type) {
+        this.type = type;
+    }
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
+    }
+
+    public Collection<Package> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Collection<Package> packages) {
+        this.packages = packages;
+    }
+
+    public Collection<InvoiceTimeline> getTimeline() {
+        return timeline;
+    }
+
+    public void setTimeline(Collection<InvoiceTimeline> timeline) {
+        this.timeline = timeline;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
+
+    public void setOperator(Operator operator) {
+        this.operator = operator;
+    }
+
+    public Client getClientSender() {
+        return clientSender;
+    }
+
+    public void setClientSender(Client clientSender) {
+        this.clientSender = clientSender;
+    }
+
+    public Client getClientRecipient() {
+        return clientRecipient;
+    }
+
+    public void setClientRecipient(Client clientRecipient) {
+        this.clientRecipient = clientRecipient;
+    }
+
+    public Station getStationRecipient() {
+        return stationRecipient;
+    }
+
+    public void setStationRecipient(Station stationRecipient) {
+        this.stationRecipient = stationRecipient;
+    }
 
     @Override
     public boolean equals(Object o) {

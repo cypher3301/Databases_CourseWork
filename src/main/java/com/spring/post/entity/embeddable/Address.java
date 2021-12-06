@@ -60,8 +60,8 @@ public class Address {
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
         result = 31 * result + getStreet().hashCode();
         result = 31 * result + (getBuilding() != null ? getBuilding().hashCode() : 0);
-        result = 31 * result + getCampus().hashCode();
-        result = 31 * result + getApartment().hashCode();
+        result = 31 * result + (getCampus() != null ? getCampus().hashCode() : 0);
+        result = 31 * result + (getApartment() != null ? getApartment().hashCode() : 0);
         return result;
     }
 

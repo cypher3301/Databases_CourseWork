@@ -1,32 +1,27 @@
 package com.spring.post.entity;
 
-import com.spring.post.entity.ancestor.Employee;
-import com.spring.post.entity.embeddable.Address;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 
-@Entity(name = "driver")
-@Table(name = "driver",  schema = "public", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_driver_car_number", columnNames = "car_number"),
-        @UniqueConstraint(name = "uk_driver_email", columnNames = "email"),
-        @UniqueConstraint(name = "uk_driver_identification_code", columnNames = "identification_code"),
-        @UniqueConstraint(name = "uk_driver_price_card_number", columnNames = "price_card_number")
-})
-@NoArgsConstructor
-@Getter
-@Setter
-public class Driver extends Employee {
+@Entity
+public class Driver {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id", nullable = false)
+    private long id;
 
 
     @OneToOne(optional = false, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_employee"))
+    @NotNull(message = "Driver car cannot be null")
+    private Employee employee;
+
+    @OneToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "car_number", nullable = false, referencedColumnName = "car_number",
-            foreignKey = @ForeignKey(name = "driver_car"))
+            foreignKey = @ForeignKey(name = "fk_driver_car"))
     @NotNull(message = "Driver car cannot be null")
     private Car car;
 
@@ -35,37 +30,50 @@ public class Driver extends Employee {
     @NotNull(message = "Driver waybills cannot be null")
     private Collection<Waybill> waybills;
 
-    public Driver(Long id, String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Car car) {
-        super(id, firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
         this.car = car;
     }
 
-    public Driver(String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Car car) {
-        super(firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
-        this.car = car;
+    public Collection<Waybill> getWaybills() {
+        return waybills;
     }
 
-
-    /*
-     * Equals and HashCode override in Employee basic class
-     * */
-
+    public void setWaybills(Collection<Waybill> waybills) {
+        this.waybills = waybills;
+    }
 
     @Override
-    public String toString() {
-        return "Driver{" +
-                "car=" + car +
-                ", waybills=" + waybills +
-                ", email='" + email + '\'' +
-                ", priceCardNumber='" + priceCardNumber + '\'' +
-                ", address=" + address +
-                ", identificationCode='" + identificationCode + '\'' +
-                ", position=" + position +
-                ", id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", surname='" + surname + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Driver)) return false;
+
+        Driver driver = (Driver) o;
+
+        if (getId() != driver.getId()) return false;
+        if (employee != null ? !employee.equals(driver.employee) : driver.employee != null) return false;
+        if (getCar() != null ? !getCar().equals(driver.getCar()) : driver.getCar() != null) return false;
+        return getWaybills() != null ? getWaybills().equals(driver.getWaybills()) : driver.getWaybills() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (employee != null ? employee.hashCode() : 0);
+        result = 31 * result + (getCar() != null ? getCar().hashCode() : 0);
+        result = 31 * result + (getWaybills() != null ? getWaybills().hashCode() : 0);
+        return result;
     }
 }

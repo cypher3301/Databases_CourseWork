@@ -10,12 +10,16 @@ import java.util.List;
 @Repository
 public interface OperatorRepository extends JpaRepository<Operator, Long> {
 
+    @Query(nativeQuery = true, value = "select * from operator where login=?")
     Operator findOperatorByLogin(String login);
+
+//    Operator findOperatorByLogin(@Param("login") String login);
 
     @Query(nativeQuery = true, value = "select exists(select 1 from public.operator where login=:login)")
     Boolean existsOperatorByLogin(String login);
 
     @Query(nativeQuery = true, value = "select * from operator")
     List<Operator> findAll();
+
 
 }

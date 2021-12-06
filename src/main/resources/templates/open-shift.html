@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -105,92 +105,62 @@
 </head>
 
 <body>
-<header class="third-header">
+<header class="second-header">
     <div class="wrapper">
         <div class="header-menu">
             <div class="header-menu__container menu-parcels">
                 <ul class="menu__container">
-                    <li class="parcels"><a href="#">
-                        <button class="button-parcels">Посылки
-                            <div class="circles">
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                            </div>
-                        </button>
-                    </a>
+                    <li class="parcels"><a href="#"><button disabled class="button-parcels">Посылки
+                        <div class="circles">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </button></a>
                         <ul>
-                            <li><a href="#">
-                                <button>Возврат посылки</button>
-                            </a></li>
-                            <li><a href="#">
-                                <button>Закрыие посылок</button>
-                            </a></li>
-                            <li><a href="#">
-                                <button>Оформить накладную</button>
-                            </a></li>
+                            <li><a href="#"><button disabled>Возврат посылки</button></a></li>
+                            <li><a href="#"><button disabled>Закрыие посылок</button></a></li>
+                            <li><a href="#"><button disabled>Оформить накладную</button></a></li>
                         </ul>
                     </li>
-                    <li class="menu-button parcels-stock"><a href="packages-on-storage.html">
-                        <button>Посылки на
-                            складе
-                        </button>
-                    </a></li>
-                    <li class="menu-button create-invoice"><a href="create-invoice.html">
-                        <button>Создать
-                            накладную
-                        </button>
-                    </a></li>
+                    <li class="menu-button"><a href="#"><button disabled>Посылки на складе</button></a></li>
+                    <li class="menu-button"><a href="#"><button disabled>Создать накладную</button></a></li>
                 </ul>
             </div>
             <div class="header-menu__container menu-delivery">
                 <ul class="menu__container">
-                    <li class="parcels"><a href="#">
-                        <button class="button-parcels">Доставка
-                            <div class="circles">
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                            </div>
-                        </button>
-                    </a>
+                    <li class="parcels"><a href="#"><button disabled class="button-parcels">Доставка
+                        <div class="circles">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </button></a>
                         <ul>
                             <!-- <li><a href="#"><button>Возврат посылки</button></a></li>
-                        <li class="menu-button"><a href="#"><button>Закрыие посылок</button></a></li>
-                        <li class="menu-button"><a href="#"><button>Оформить накладную</button></a></li> -->
+                        <li><a href="#"><button>Закрыие посылок</button></a></li>
+                        <li><a href="#"><button>Оформить накладную</button></a></li> -->
                         </ul>
                     </li>
-                    <li class="menu-button arrival"><a href="arrival.html">
-                        <button>Прибытие</button>
-                    </a></li>
-                    <li class="menu-button leaving"><a href="departure.html">
-                        <button>Отьезд</button>
-                    </a></li>
+                    <li class="menu-button"><a href="#"><button disabled>Прибытие</button></a></li>
+                    <li class="menu-button"><a href="#"><button disabled>Отьезд</button></a></li>
                 </ul>
             </div>
             <div class="header-menu__container menu-username">
                 <ul class="menu__container">
-                    <li class="parcels"><a href="#">
-                        <button class="button-parcels">
-                            <div class="username">Username</div>
-                            <div class="username-img"></div>
-                            <div class="circles">
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                                <div class="circle"></div>
-                            </div>
-                        </button>
-                    </a>
+                    <li class="parcels"><a href="#"><button class="button-parcels">
+                        <div class="username" th:text="${user.getUsername()}"></div>
+                        <div class="username-img"></div>
+                        <div class="circles">
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                            <div class="circle"></div>
+                        </div>
+                    </button></a>
                         <ul>
-                            <li class="open"><a href="open-shift.html">
-                                <button>Открыть смену</button>
-                            </a></li>
-                            <li class="close"><a href="close-shift.html">
-                                <button>Закрыть смену</button>
-                            </a></li>
-                            <li class="exit"><a href="login.html">
-                                <button class="red-button">Выйти</button>
-                            </a></li>
+                            <li class="open"><a th:href="@{/empty/go}"><button disabled>Открыть смену</button></a></li>
+                            <li class="close"><a href="close-shift.html"><button disabled>Закрыть смену</button></a></li>
+                            <li><a th:href="@{/login}" href="login.html"><button class="red-button">Выйти</button></a></li>
                         </ul>
                     </li>
                 </ul>

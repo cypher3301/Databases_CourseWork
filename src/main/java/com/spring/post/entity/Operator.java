@@ -1,28 +1,19 @@
 package com.spring.post.entity;
 
-import com.spring.post.entity.ancestor.Employee;
-import com.spring.post.entity.embeddable.Address;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
-@Entity(name = "operator")
-@Table(name = "operator", schema = "public",
-        uniqueConstraints = @UniqueConstraint(name = "uk_operator_login", columnNames = "login")
-)
-@NoArgsConstructor
-@Getter
-@Setter
-public class Operator extends Employee {
+@Entity
+public class Operator {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id", nullable = false)
+    private long id;
 
 
     @Column(name = "login", nullable = false, unique = true)
     private String login;
-
 
     @OneToMany(mappedBy = "operator")
     private Collection<Invoice> invoices;
@@ -39,39 +30,97 @@ public class Operator extends Employee {
     @NotNull(message = "Operator station cannot be null")
     private Station station;
 
-    public Operator(Long id, String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Station station) {
-        super(id, firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
-        this.station = station;
+    @ManyToOne
+    @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
+    private Employee employeeByEmployeeId;
+
+    public Long getId() {
+        return id;
     }
 
-    public Operator(String firstname, String patronymic, String surname, String phone, String email, String priceCardNumber, Address address, String identificationCode, Position position, Station station) {
-        super(firstname, patronymic, surname, phone, email, priceCardNumber, address, identificationCode, position);
-        this.station = station;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    /*
-     * Equals and HashCode override in Employee basic class
-     * */
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station stationByStationId) {
+        this.station = stationByStationId;
+    }
+
+    public Employee getEmployeeByEmployeeId() {
+        return employeeByEmployeeId;
+    }
+
+    public void setEmployeeByEmployeeId(Employee employeeByEmployeeId) {
+        this.employeeByEmployeeId = employeeByEmployeeId;
+    }
+
+    public Collection<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(Collection<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+    public Collection<Waybill> getWaybills() {
+        return waybills;
+    }
+
+    public void setWaybills(Collection<Waybill> waybills) {
+        this.waybills = waybills;
+    }
+
+    public Collection<WorkShift> getWorkShifts() {
+        return workShifts;
+    }
+
+    public void setWorkShifts(Collection<WorkShift> workShifts) {
+        this.workShifts = workShifts;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Operator)) return false;
+
+        Operator operator = (Operator) o;
+
+        if (getLogin() != null ? !getLogin().equals(operator.getLogin()) : operator.getLogin() != null) return false;
+        if (getStation() != null ? !getStation().equals(operator.getStation()) : operator.getStation() != null)
+            return false;
+        return getEmployeeByEmployeeId() != null ? getEmployeeByEmployeeId().equals(operator.getEmployeeByEmployeeId()) : operator.getEmployeeByEmployeeId() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getLogin() != null ? getLogin().hashCode() : 0;
+        result = 31 * result + (getStation() != null ? getStation().hashCode() : 0);
+        result = 31 * result + (getEmployeeByEmployeeId() != null ? getEmployeeByEmployeeId().hashCode() : 0);
+        return result;
+    }
 
     @Override
     public String toString() {
         return "Operator{" +
-                "login='" + login + '\'' +
+                "id=" + id +
+                ", login='" + login + '\'' +
                 ", invoices=" + invoices +
                 ", waybills=" + waybills +
                 ", workShifts=" + workShifts +
                 ", station=" + station +
-                ", email='" + email + '\'' +
-                ", priceCardNumber='" + priceCardNumber + '\'' +
-                ", address=" + address +
-                ", identificationCode='" + identificationCode + '\'' +
-                ", position=" + position +
-                ", id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", surname='" + surname + '\'' +
-                ", phone='" + phone + '\'' +
+                ", employeeByEmployeeId=" + employeeByEmployeeId +
                 '}';
     }
 }
-

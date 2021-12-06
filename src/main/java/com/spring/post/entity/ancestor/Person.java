@@ -1,14 +1,11 @@
 package com.spring.post.entity.ancestor;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-
-import static com.spring.post.entity.ancestor.Util.regExpPhone;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -61,7 +58,7 @@ public abstract class Person implements BaseEntity {
     @Column(name = columnPhone, nullable = nullableFalse, length = lengthPhone)
     @NotBlank(message = className + columnPhone + messageIsIllegalOrEmpty)
     @Digits(message = className + columnPhone + " illegal", integer = lengthPhone, fraction = 0)
-    @Pattern(message = className + columnPhone + " number is illegal", regexp = regExpPhone)
+    @Pattern(message = className + columnPhone + " number is illegal", regexp = Util.regExpPhone)
     protected String phone;
 
 

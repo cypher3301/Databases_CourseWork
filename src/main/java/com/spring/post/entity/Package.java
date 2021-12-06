@@ -43,12 +43,12 @@ public class Package {
     @Positive(                         message = "Package insurance cannot be less 0")
     private double insurance;
 
-    @Column(name = "number", nullable = false)
-    @ColumnDefault(value = "1")
-    @DecimalMin(value = "1",         message = "Package number is less than required")
-    @DecimalMax(value = "255",      message = "Package number is more than necessary")
-    @Positive(                         message = "Package number cannot be less 0")
-    private int number;
+//    @Column(name = "number", nullable = false)
+//    @ColumnDefault(value = "1")
+//    @DecimalMin(value = "1",         message = "Package number is less than required")
+//    @DecimalMax(value = "255",      message = "Package number is more than necessary")
+//    @Positive(                         message = "Package number cannot be less 0")
+//    private int number;
 
 
     @ManyToOne(cascade = CascadeType.MERGE)

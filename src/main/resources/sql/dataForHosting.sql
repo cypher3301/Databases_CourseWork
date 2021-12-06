@@ -358,10 +358,10 @@ VALUES (1 ,'AM7362AS',1 , 1),
 
 insert into work_shift(id, datetime, type, operator_id, station_id)
 VALUES (1, '08-08-2021', 'STARTED', 1, 1),
-       (2, '05-03-2020', 'STARTED', 2, 2),
-       (3, '11-03-2020', 'STARTED', 3, 3),
-       (4, '17-06-2021', 'STARTED', 4, 4),
-       (5, '21-06-2021', 'STARTED', 5, 5);
+       (2, '03-05-2020', 'STARTED', 2, 2),
+       (3, '03-11-2020', 'STARTED', 3, 3),
+       (4, '06-17-2021', 'STARTED', 4, 4),
+       (5, '06-21-2021', 'STARTED', 5, 5);
 
 insert into client(id, firstname, patronymic, surname, phone)
 VALUES (1, 'Антон', 'Дмитриевич', 'Кузнецов', '+380974718361'),
@@ -373,10 +373,10 @@ VALUES (1, 'Антон', 'Дмитриевич', 'Кузнецов', '+380974718
 insert into invoice(id, datetime, delivery_type, quantity, type, sender_id, recipient_id, operator_id,
                     station_recipient_id)
 VALUES (1, '08-08-2021', 'DELIVERY', 1, 'ELECTRONICS', 1, 2, 1, 2),
-       (2, '05-03-2020', 'DELIVERY', 1, 'PRODUCTS', 2, 3, 2, 3),
-       (3, '11-03-2020', 'DELIVERY', 3, 'CHEMISTRY', 3, 4, 3, 4),
-       (4, '17-06-2021', 'DELIVERY', 1, 'FURNITURE', 4, 5, 4, 5),
-       (5, '21-06-2021', 'DELIVERY', 2, 'CLOTHES', 5, 1, 5, 1);
+       (2, '03-05-2020', 'DELIVERY', 1, 'PRODUCTS', 2, 3, 2, 3),
+       (3, '03-11-2020', 'DELIVERY', 3, 'CHEMISTRY', 3, 4, 3, 4),
+       (4, '06-17-2021', 'DELIVERY', 1, 'FURNITURE', 4, 5, 4, 5),
+       (5, '06-21-2021', 'DELIVERY', 2, 'CLOTHES', 5, 1, 5, 1);
 
 insert into package(id, insurance_uah, volume_m3, weight_kg, invoice_id)
 VALUES (1, 1200, 0.2, 0.4, 1),
@@ -390,31 +390,31 @@ VALUES (1, 1200, 0.2, 0.4, 1),
 
 insert into invoice_timeline(id, datetime, status, actual_station_id, invoice_id)
 VALUES (1, '08-08-2021', 'AWAITING_DISPATCH', 1, 1),
-       (2, '05-03-2020', 'AWAITING_DISPATCH', 2, 2),
-       (3, '11-03-2020', 'AWAITING_DISPATCH', 3, 3),
-       (4, '17-06-2021', 'AWAITING_DISPATCH', 4, 4),
-       (5, '21-06-2021', 'AWAITING_DISPATCH', 5, 5);
+       (2, '03-05-2020', 'AWAITING_DISPATCH', 2, 2),
+       (3, '03-11-2020', 'AWAITING_DISPATCH', 3, 3),
+       (4, '06-17-2021', 'AWAITING_DISPATCH', 4, 4),
+       (5, '06-21-2021', 'AWAITING_DISPATCH', 5, 5);
 
 insert into waybill(id, datetime, quantity, type, driver_id, operator_id, station_recipient_id, station_sender_id)
 VALUES (1, '08-08-2021', 0, 'LEAVING', 1, 1, 2, 1),
-       (2, '05-03-2020', 0, 'LEAVING', 2, 2, 3, 2),
-       (3, '11-03-2020', 0, 'LEAVING', 3, 3, 4, 3),
-       (4, '17-06-2021', 0, 'LEAVING', 4, 4, 5, 4),
-       (5, '21-06-2021', 0, 'LEAVING', 5, 5, 1, 5);
+       (2, '03-05-2020', 0, 'LEAVING', 2, 2, 3, 2),
+       (3, '03-11-2020', 0, 'LEAVING', 3, 3, 4, 3),
+       (4, '06-17-2021', 0, 'LEAVING', 4, 4, 5, 4),
+       (5, '06-21-2021', 0, 'LEAVING', 5, 5, 1, 5);
 
 insert into waybill(id, datetime, quantity, type, driver_id, operator_id, station_recipient_id, station_sender_id)
 VALUES (6, '08-08-2021', 0, 'COMING', 1, 1, 1, 2),
-       (7, '05-03-2020', 0, 'COMING', 2, 2, 2, 3),
-       (8, '11-03-2020', 0, 'COMING', 3, 3, 3, 4),
-       (9, '17-06-2021', 0, 'COMING', 4, 4, 4, 5),
-       (10, '21-06-2021', 0, 'COMING', 5, 5, 5, 1);
+       (7, '03-05-2020', 0, 'COMING', 2, 2, 2, 3),
+       (8, '03-11-2020', 0, 'COMING', 3, 3, 3, 4),
+       (9, '06-17-2021', 0, 'COMING', 4, 4, 4, 5),
+       (10, '06-21-2021', 0, 'COMING', 5, 5, 5, 1);
 
 insert into waybill(id, datetime, quantity, type, driver_id, operator_id, station_recipient_id, station_sender_id)
 VALUES (11, '08-08-2021', 1, 'LEAVING', 1, 1, 2, 1),
-       (12, '05-03-2020', 1, 'LEAVING', 2, 2, 3, 2),
-       (13, '11-03-2020', 1, 'LEAVING', 3, 3, 4, 3),
-       (14, '17-06-2021', 1, 'LEAVING', 4, 4, 5, 4),
-       (15, '21-06-2021', 1, 'LEAVING', 5, 5, 1, 5);
+       (12, '03-05-2020', 1, 'LEAVING', 2, 2, 3, 2),
+       (13, '03-11-2020', 1, 'LEAVING', 3, 3, 4, 3),
+       (14, '06-17-2021', 1, 'LEAVING', 4, 4, 5, 4),
+       (15, '06-21-2021', 1, 'LEAVING', 5, 5, 1, 5);
 
 insert into waybill_invoices(waybill_id, invoices_id)
 VALUES (11, 1),
@@ -425,17 +425,17 @@ VALUES (11, 1),
 
 insert into invoice_timeline(id, datetime, status, actual_station_id, invoice_id)
 VALUES (6, '08-08-2021', 'IN_TRANSIT', 1, 1),
-       (7, '05-03-2020', 'IN_TRANSIT', 2, 2),
-       (8, '11-03-2020', 'IN_TRANSIT', 3, 3),
-       (9, '17-06-2021', 'IN_TRANSIT', 4, 4),
-       (10, '21-06-2021', 'IN_TRANSIT', 5, 5);
+       (7, '03-05-2020', 'IN_TRANSIT', 2, 2),
+       (8, '03-11-2020', 'IN_TRANSIT', 3, 3),
+       (9, '06-17-2021', 'IN_TRANSIT', 4, 4),
+       (10, '06-21-2021', 'IN_TRANSIT', 5, 5);
 
 insert into waybill(id, datetime, quantity, type, driver_id, operator_id, station_recipient_id, station_sender_id)
 VALUES (16, '08-08-2021', 1, 'COMING', 1, 1, 2, 1),
-       (17, '05-03-2020', 1, 'COMING', 2, 2, 3, 2),
-       (18, '11-03-2020', 1, 'COMING', 3, 3, 4, 3),
-       (19, '17-06-2021', 1, 'COMING', 4, 4, 5, 4),
-       (20, '21-06-2021', 1, 'COMING', 5, 5, 1, 5);
+       (17, '03-05-2020', 1, 'COMING', 2, 2, 3, 2),
+       (18, '03-11-2020', 1, 'COMING', 3, 3, 4, 3),
+       (19, '06-17-2021', 1, 'COMING', 4, 4, 5, 4),
+       (20, '06-21-2021', 1, 'COMING', 5, 5, 1, 5);
 
 insert into waybill_invoices(waybill_id, invoices_id)
 VALUES (16, 1),
@@ -446,35 +446,35 @@ VALUES (16, 1),
 
 insert into invoice_timeline(id, datetime, status, actual_station_id, invoice_id)
 VALUES (11, '08-08-2021', 'ARRIVED', 2, 1),
-       (12, '05-03-2020', 'ARRIVED', 3, 2),
-       (13, '11-03-2020', 'ARRIVED', 4, 3),
-       (14, '17-06-2021', 'ARRIVED', 5, 4),
-       (15, '21-06-2021', 'ARRIVED', 1, 5);
+       (12, '03-05-2020', 'ARRIVED', 3, 2),
+       (13, '03-11-2020', 'ARRIVED', 4, 3),
+       (14, '06-17-2021', 'ARRIVED', 5, 4),
+       (15, '06-21-2021', 'ARRIVED', 1, 5);
 
 insert into work_shift(id, datetime, type, operator_id, station_id)
 VALUES (6, '08-08-2021', 'COMPLETED', 1, 1),
-       (7, '05-03-2020', 'COMPLETED', 2, 2),
-       (8, '11-03-2020', 'COMPLETED', 3, 3),
-       (9, '17-06-2021', 'COMPLETED', 4, 4),
-       (10, '21-06-2021', 'COMPLETED', 5, 5);
+       (7, '03-05-2020', 'COMPLETED', 2, 2),
+       (8, '03-11-2020', 'COMPLETED', 3, 3),
+       (9, '06-17-2021', 'COMPLETED', 4, 4),
+       (10, '06-21-2021', 'COMPLETED', 5, 5);
 
 insert into work_shift(id, datetime, type, operator_id, station_id)
-VALUES (11, '09-08-2021', 'STARTED', 1, 1),
-       (12, '06-03-2020', 'STARTED', 2, 2),
-       (13, '12-03-2020', 'STARTED', 3, 3),
-       (14, '18-06-2021', 'STARTED', 4, 4),
-       (15, '22-06-2021', 'STARTED', 5, 5);
+VALUES (11, '08-09-2021', 'STARTED', 1, 1),
+       (12, '03-06-2020', 'STARTED', 2, 2),
+       (13, '03-12-2020', 'STARTED', 3, 3),
+       (14, '06-18-2021', 'STARTED', 4, 4),
+       (15, '06-22-2021', 'STARTED', 5, 5);
 
 insert into invoice_timeline(id, datetime, status, actual_station_id, invoice_id)
-VALUES (16, '09-08-2021', 'ARRIVED', 2, 1),
-       (17, '06-03-2020', 'ARRIVED', 3, 2),
-       (18, '12-03-2020', 'ARRIVED', 4, 3),
-       (19, '18-06-2021', 'ARRIVED', 5, 4),
-       (20, '22-06-2021', 'ARRIVED', 1, 5);
+VALUES (16, '08-09-2021', 'ARRIVED', 2, 1),
+       (17, '03-06-2020', 'ARRIVED', 3, 2),
+       (18, '03-12-2020', 'ARRIVED', 4, 3),
+       (19, '06-18-2021', 'ARRIVED', 5, 4),
+       (20, '06-22-2021', 'ARRIVED', 1, 5);
 
 insert into invoice_timeline(id, datetime, status, actual_station_id, invoice_id)
-VALUES (21, '09-08-2021', 'RECEIVED', 2, 1),
-       (22, '06-03-2020', 'RECEIVED', 3, 2),
-       (23, '12-03-2020', 'RECEIVED', 4, 3),
-       (24, '18-06-2021', 'RECEIVED', 5, 4),
-       (25, '22-06-2021', 'RECEIVED', 1, 5);
+VALUES (21, '08-09-2021', 'RECEIVED', 2, 1),
+       (22, '03-06-2020', 'RECEIVED', 3, 2),
+       (23, '03-12-2020', 'RECEIVED', 4, 3),
+       (24, '06-18-2021', 'RECEIVED', 5, 4),
+       (25, '06-22-2021', 'RECEIVED', 1, 5);

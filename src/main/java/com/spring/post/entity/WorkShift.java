@@ -1,6 +1,7 @@
 package com.spring.post.entity;
 
 import com.spring.post.entity.status.WorkShiftType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class WorkShift {
 
     @Id
@@ -62,6 +64,22 @@ public class WorkShift {
             uniqueConstraints = @UniqueConstraint(name = "uk_work_shift_invoices_id", columnNames = "invoices_id"))
     private Collection<Invoice> invoices;
 
+    public WorkShift(WorkShiftType type, Date datetime, Operator operator, Station station, Collection<Invoice> invoices) {
+        this.type = type;
+        this.datetime = datetime;
+        this.operator = operator;
+        this.station = station;
+        this.invoices = invoices;
+    }
+
+    public WorkShift(long id, WorkShiftType type, Date datetime, Operator operator, Station station, Collection<Invoice> invoices) {
+        this.id = id;
+        this.type = type;
+        this.datetime = datetime;
+        this.operator = operator;
+        this.station = station;
+        this.invoices = invoices;
+    }
 
     public WorkShift(long id, WorkShiftType type, Operator operator, Station station) {
         this.id = id;

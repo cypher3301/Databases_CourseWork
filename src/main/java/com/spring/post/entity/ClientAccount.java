@@ -1,5 +1,6 @@
 package com.spring.post.entity;
 
+import com.spring.post.entity.ancestor.Util;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,9 +11,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import static com.spring.post.entity.ancestor.Util.regExpEmail;
-
 
 @Entity(name = "clientAccount")
 @Table(name = "client_account",  schema = "public",
@@ -29,7 +27,7 @@ public class ClientAccount {
     @NotBlank(      message = "Employee email is illegal or empty")
     @Min(value = 5, message = "Email is too less")
     @Email(         message = "Email is not valid",
-            regexp = regExpEmail)
+            regexp = Util.regExpEmail)
     private String email;
 
     @Column(name = "password", nullable = false)

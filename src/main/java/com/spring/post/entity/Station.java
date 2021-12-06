@@ -7,11 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Collection;
 
 @Entity(name = "station")
-@Table(name = "station", schema = "public", 
+@Table(name = "station", schema = "public",
         indexes = @Index(name = "city", columnList = "city"),
         uniqueConstraints = @UniqueConstraint(name = "region_city_street_building",
                 columnNames = {
