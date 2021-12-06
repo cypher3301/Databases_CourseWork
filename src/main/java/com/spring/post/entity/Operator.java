@@ -32,7 +32,7 @@ public class Operator {
 
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false)
-    private Employee employeeByEmployeeId;
+    private Employee employee;
 
     public Long getId() {
         return id;
@@ -58,12 +58,12 @@ public class Operator {
         this.station = stationByStationId;
     }
 
-    public Employee getEmployeeByEmployeeId() {
-        return employeeByEmployeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeByEmployeeId(Employee employeeByEmployeeId) {
-        this.employeeByEmployeeId = employeeByEmployeeId;
+    public void setEmployee(Employee employeeByEmployeeId) {
+        this.employee = employeeByEmployeeId;
     }
 
     public Collection<Invoice> getInvoices() {
@@ -100,14 +100,14 @@ public class Operator {
         if (getLogin() != null ? !getLogin().equals(operator.getLogin()) : operator.getLogin() != null) return false;
         if (getStation() != null ? !getStation().equals(operator.getStation()) : operator.getStation() != null)
             return false;
-        return getEmployeeByEmployeeId() != null ? getEmployeeByEmployeeId().equals(operator.getEmployeeByEmployeeId()) : operator.getEmployeeByEmployeeId() == null;
+        return getEmployee() != null ? getEmployee().equals(operator.getEmployee()) : operator.getEmployee() == null;
     }
 
     @Override
     public int hashCode() {
         int result = getLogin() != null ? getLogin().hashCode() : 0;
         result = 31 * result + (getStation() != null ? getStation().hashCode() : 0);
-        result = 31 * result + (getEmployeeByEmployeeId() != null ? getEmployeeByEmployeeId().hashCode() : 0);
+        result = 31 * result + (getEmployee() != null ? getEmployee().hashCode() : 0);
         return result;
     }
 
@@ -120,7 +120,7 @@ public class Operator {
                 ", waybills=" + waybills +
                 ", workShifts=" + workShifts +
                 ", station=" + station +
-                ", employeeByEmployeeId=" + employeeByEmployeeId +
+                ", employeeByEmployeeId=" + employee +
                 '}';
     }
 }
