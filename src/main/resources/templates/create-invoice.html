@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!--<link rel="stylesheet" href="css/style.css">-->
+    <link rel="stylesheet" href="../static/style.css">
     <link th:href="@{/style.css}" rel="stylesheet">
 
     <!-- МЕТА -->
@@ -198,59 +198,61 @@
             <div class="eighth-screen__sidebar">
             </div>
             <div class="eighth-screen__content">
+                <form action="#" th:action="@{/login/send}" th:object="${clientRecipient}, ${clientSender}, ${invoice}, ${package}" method="post" >
                 <div class="block__form">
                     <div class="form-container">
                         <div class="form-container__title">Данные отправителя</div>
-                        <form action="">
+                        <div>
                             <input type="text" placeholder="Имя">
                             <input type="text" placeholder="Фамилия">
                             <input type="text" placeholder="Отчество">
                             <input type="tel" placeholder="№ тел">
-                        </form>
+                        </div>
                     </div>
                     <div class="form-container">
                         <div class="form-container__title">Данные получателя</div>
-                        <form action="">
+                        <div>
                             <input type="text" placeholder="Имя">
                             <input type="text" placeholder="Фамилия">
                             <input type="text" placeholder="Отчество">
                             <input type="tel" placeholder="№ тел">
                             <input type="text" placeholder="Отделение получателя">
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="block__form">
                     <div class="form-container">
                         <div class="form-container__title">Данные посылки</div>
-                        <form action="" class="data-form">
+                        <div class="data-form">
                             <input type="text" placeholder="Тип посылки">
                             <input type="text" placeholder="Вес">
                             <input type="text" placeholder="Объем">
                             <input type="text" placeholder="Страховка">
                             <input type="text" placeholder="Колличество">
                             <input type="text" placeholder="Описание">
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <div class="block__form">
                     <div class="form-container">
                         <div class="form-container__title">Данные доставки</div>
-                        <form action="">
+                        <div>
                             <input type="text" placeholder="Плательщик">
                             <input type="text" placeholder="Стоимость">
                             <input type="text" placeholder="Форма расчета">
-                        </form>
+                        </div>
                         <div class="form-container__title">Дополнительные услуги</div>
-                        <form action="" class="additional-services">
+                        <div class="additional-services">
                             <input type="text" placeholder="Срок хранения">
                             <input type="text" placeholder="Доставка в руки">
-                        </form>
+                        </div>
                     </div>
                     <div class="sing-in__buttons">
                         <button class="sing-in__button_reset" type="reset">Отмена</button>
                         <button class="sing-in__button_submit" type="submit">Подтвертить</button>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </section>

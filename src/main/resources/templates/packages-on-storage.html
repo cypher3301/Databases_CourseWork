@@ -245,7 +245,7 @@
                                 <th>Тип доставки</th>
                                 <th class="border-right"></th>
                             </tr>
-                            <tr th:each="invoice : ${invoices}">
+                            <tr th:each="invoice : ${invoices}" class="user-data">
                                 <td class="border-left" th:text="${invoice.getId()}">026382648274684</td>
                                 <td th:text="${invoice.completeName(invoice.getClientRecipient())}">Иванов Иван Иванович</td>
 <!--                                <td>Получатель</td>-->

@@ -1,13 +1,15 @@
 package com.spring.post.entity;
 
-import com.spring.post.entity.status.PackageType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 
 @Entity(name = "package")
@@ -58,14 +60,14 @@ public class Package {
     private Invoice invoice;
 
 
-    public Package(long id, double weight, double volume, double insurance, @NotBlank(message = "Package type is null or empty") PackageType[] type) {
+    public Package(long id, double weight, double volume, double insurance) {
         this.id = id;
         this.weight = weight;
         this.volume = volume;
         this.insurance = insurance;
     }
 
-    public Package(double weight, double volume, double insurance, @NotBlank(message = "Package type is null or empty") PackageType[] type) {
+    public Package(double weight, double volume, double insurance) {
         this.weight = weight;
         this.volume = volume;
         this.insurance = insurance;

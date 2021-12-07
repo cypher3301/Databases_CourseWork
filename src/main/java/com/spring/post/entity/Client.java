@@ -1,11 +1,16 @@
 package com.spring.post.entity;
 
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Entity
+@Builder
+@NoArgsConstructor
 public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -41,6 +46,42 @@ public class Client {
 
     @OneToMany(mappedBy = "clientRecipient")
     private Collection<Invoice> recipes;
+
+    public Client(String firstname, String patronymic, String phone, String surname) {
+        this.firstname = firstname;
+        this.patronymic = patronymic;
+        this.phone = phone;
+        this.surname = surname;
+    }
+
+    public Client(long id, String firstname, String patronymic, String phone, String surname) {
+        this.id = id;
+        this.firstname = firstname;
+        this.patronymic = patronymic;
+        this.phone = phone;
+        this.surname = surname;
+    }
+
+    public Client(long id, String firstname, String patronymic, String phone, String surname, Collection<Station> stations, Collection<Invoice> sends, Collection<Invoice> recipes) {
+        this.id = id;
+        this.firstname = firstname;
+        this.patronymic = patronymic;
+        this.phone = phone;
+        this.surname = surname;
+        this.stations = stations;
+        this.sends = sends;
+        this.recipes = recipes;
+    }
+
+    public Client(String firstname, String patronymic, String phone, String surname, Collection<Station> stations, Collection<Invoice> sends, Collection<Invoice> recipes) {
+        this.firstname = firstname;
+        this.patronymic = patronymic;
+        this.phone = phone;
+        this.surname = surname;
+        this.stations = stations;
+        this.sends = sends;
+        this.recipes = recipes;
+    }
 
     public long getId() {
         return id;

@@ -3,6 +3,7 @@ package com.spring.post.entity;
 import com.spring.post.convertor.PackageTypeArrayOfEnumToStringConvertor;
 import com.spring.post.entity.status.InvoiceType;
 import com.spring.post.entity.status.PackageType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Invoice {
 
     @Id
@@ -110,6 +112,35 @@ public class Invoice {
         this.clientRecipient = clientRecipient;
         this.stationRecipient = stationRecipient;
     }
+
+    public Invoice(long id, int quantity, String deliveryType, @NotBlank(message = "Package type is null or empty") PackageType[] type, Date datetime, Collection<Package> packages, Collection<InvoiceTimeline> timeline, Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
+        this.id = id;
+        this.quantity = quantity;
+        this.deliveryType = deliveryType;
+        this.type = type;
+        this.datetime = datetime;
+        this.packages = packages;
+        this.timeline = timeline;
+        this.operator = operator;
+        this.clientSender = clientSender;
+        this.clientRecipient = clientRecipient;
+        this.stationRecipient = stationRecipient;
+    }
+
+    public Invoice(int quantity, String deliveryType, @NotBlank(message = "Package type is null or empty") PackageType[] type, Date datetime, Collection<Package> packages, Collection<InvoiceTimeline> timeline, Operator operator, Client clientSender, Client clientRecipient, Station stationRecipient) {
+        this.quantity = quantity;
+        this.deliveryType = deliveryType;
+        this.type = type;
+        this.datetime = datetime;
+        this.packages = packages;
+        this.timeline = timeline;
+        this.operator = operator;
+        this.clientSender = clientSender;
+        this.clientRecipient = clientRecipient;
+        this.stationRecipient = stationRecipient;
+    }
+
+
 
     public String completeName(Client client) {
         return client.getFirstname() + " " + client.getPatronymic() + " " + client.getSurname();

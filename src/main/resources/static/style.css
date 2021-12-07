@@ -2440,3 +2440,7 @@ body main .eighth-screen .wrapper .eighth-screen__content .block__form .sing-in_
     padding: 0;
   }
 }
+
+.user-data:hover{
+  background-color: #d4d4d4;
+}
