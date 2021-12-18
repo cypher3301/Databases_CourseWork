@@ -1,16 +1,19 @@
 package com.spring.post.entity;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
 @Builder
 @NoArgsConstructor
+@Data
 public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -39,13 +42,13 @@ public class Client {
                             foreignKey = @ForeignKey(name = "fk_client_stations_station_id"))},
             uniqueConstraints = @UniqueConstraint(name = "uk_client_stations_id", columnNames = "stations_id"))
     @NotNull(message = "Client stations cannot be null")
-    @Size(message = "Maximum 5 stations", min = 1, max = 5)
-    private Collection<Station> stations;
+    @Size(message = "Maximum 5 stations", min = 0, max = 255)
+    private Collection<Station> stations = new ArrayList<>();
     @OneToMany(mappedBy = "clientSender")
-    private Collection<Invoice> sends;
+    private Collection<Invoice> sends = new ArrayList<>();
 
     @OneToMany(mappedBy = "clientRecipient")
-    private Collection<Invoice> recipes;
+    private Collection<Invoice> recipes = new ArrayList<>();
 
     public Client(String firstname, String patronymic, String phone, String surname) {
         this.firstname = firstname;

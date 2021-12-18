@@ -38,6 +38,11 @@ public class Address {
         this.building = building;
     }
 
+    public Address(String region, String city) {
+        this.region = region;
+        this.city = city;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,7 +63,7 @@ public class Address {
     public int hashCode() {
         int result = getRegion() != null ? getRegion().hashCode() : 0;
         result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
-        result = 31 * result + getStreet().hashCode();
+        result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
         result = 31 * result + (getBuilding() != null ? getBuilding().hashCode() : 0);
         result = 31 * result + (getCampus() != null ? getCampus().hashCode() : 0);
         result = 31 * result + (getApartment() != null ? getApartment().hashCode() : 0);

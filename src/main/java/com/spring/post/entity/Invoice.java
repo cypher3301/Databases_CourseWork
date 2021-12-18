@@ -3,10 +3,7 @@ package com.spring.post.entity;
 import com.spring.post.convertor.PackageTypeArrayOfEnumToStringConvertor;
 import com.spring.post.entity.status.InvoiceType;
 import com.spring.post.entity.status.PackageType;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -25,6 +22,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@Data
 public class Invoice {
 
     @Id
@@ -47,45 +45,45 @@ public class Invoice {
     //    @Type(type = "com.example.demo.dao.convertor.InvoiceTypeArrayOfEnumToStringConvertor")
     @Convert(converter = PackageTypeArrayOfEnumToStringConvertor.class)
     @Column(name = "type", nullable = false, length = 16)
-    @NotBlank(message = "Package type is null or empty")
+//    @NotBlank(message = "Package type is null or empty")
     private PackageType[] type;
 
     @Column(name = "datetime", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull(       message = "Invoice datetime cannot be null")
-    @PastOrPresent( message = "Invoice datetime must be past or current time")
+//    @PastOrPresent( message = "Invoice datetime must be past or current time")
     private Date datetime;
 
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "invoice")
     @Size(    message = "Invoice can have from 1 to 255 packages", min = 1, max = 255)
     @NotNull( message = "Invoice must have greater than or equal 1 package")
     private Collection<Package> packages;
 
-    @OneToMany(mappedBy = "invoice", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "invoice")
     @Size(    message = "Invoice datetime must be greater than 0", min = 1, max = 60)
-    @NotNull( message = "Invoice timeline cannot be null")
+//    @NotNull( message = "Invoice timeline cannot be null")
     private Collection<InvoiceTimeline> timeline;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "operator_id",  nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "invoices_operator"))
-    @NotNull(message = "Invoice operator cannot be null")
+//    @NotNull(message = "Invoice operator cannot be null")
     private Operator operator;
 
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "sender_id",    nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "invoices_client_sender"))
     @NotNull(message = "Invoice client sender cannot be null")
     private Client clientSender;
 
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "recipient_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "invoices_client_recipient"))
     @NotNull(message = "Invoice client recipient cannot be null")
     private Client clientRecipient;
 
-    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "station_recipient_id", nullable = false, referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "invoice_station"))
     @NotNull(message = "Invoice recipient station cannot be null")
@@ -296,14 +294,14 @@ public class Invoice {
                 "id=" + id +
                 ", quantity=" + quantity +
                 ", deliveryType=" + deliveryType +
-                ", type=" + Arrays.toString(type) +
+//                ", type=" + Arrays.toString(type) +
                 ", datetime=" + datetime +
-                ", packages=" + packages +
-                ", timeline=" + timeline +
+//                ", packages=" + packages +
+//                ", timeline=" + timeline +
                 ", operator=" + operator +
-                ", clientSender=" + clientSender +
-                ", clientRecipient=" + clientRecipient +
-                ", stationRecipient=" + stationRecipient +
+//                ", clientSender=" + clientSender +
+//                ", clientRecipient=" + clientRecipient +
+//                ", stationRecipient=" + stationRecipient +
                 '}';
     }
 }

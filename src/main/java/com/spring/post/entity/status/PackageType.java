@@ -1,6 +1,7 @@
 package com.spring.post.entity.status;
 
 public enum PackageType {
+    OTHER("OTHER"),
     PRODUCTS("PRODUCTS"),
     ELECTRONICS("ELECTRONICS"),
     CLOTHES("CLOTHES"),

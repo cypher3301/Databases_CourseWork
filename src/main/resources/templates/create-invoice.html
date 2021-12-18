@@ -198,25 +198,27 @@
             <div class="eighth-screen__sidebar">
             </div>
             <div class="eighth-screen__content">
-                <form action="#" th:action="@{/login/send}" th:object="${clientRecipient}, ${clientSender}, ${invoice}, ${package}" method="post" >
+                <form action="#" th:action="@{/invoice/create}" th:object="${invoice}" method="post" >
                 <div class="block__form">
                     <div class="form-container">
                         <div class="form-container__title">Данные отправителя</div>
                         <div>
-                            <input type="text" placeholder="Имя">
-                            <input type="text" placeholder="Фамилия">
-                            <input type="text" placeholder="Отчество">
-                            <input type="tel" placeholder="№ тел">
+                            <input type="text" placeholder="Имя" th:field="*{senderFirstname}" required value="Владислав" th:value="Владислав">
+                            <input type="text" placeholder="Фамилия" th:field="*{senderSurname}" required value="ЙОЙОЙОй" th:value="ЙОЙОЙОй">
+                            <input type="text" placeholder="Отчество" th:field="*{senderPatronymic}" required value="Неякйоготама" th:value="Неякйоготама">
+                            <input type="tel" placeholder="№ тел" th:field="*{senderPhone}" required value="380974728267" th:value="380974728267">
                         </div>
                     </div>
                     <div class="form-container">
                         <div class="form-container__title">Данные получателя</div>
                         <div>
-                            <input type="text" placeholder="Имя">
-                            <input type="text" placeholder="Фамилия">
-                            <input type="text" placeholder="Отчество">
-                            <input type="tel" placeholder="№ тел">
-                            <input type="text" placeholder="Отделение получателя">
+                            <input type="text" placeholder="Имя" th:field="*{recipientFirstname}" required value="Владос" th:value="Владос">
+                            <input type="text" placeholder="Фамилия" th:field="*{recipientSurname}" required value="ЯЯЯЯЯЯ" th:value="ЯЯЯЯЯЯ">
+                            <input type="text" placeholder="Отчество" th:field="*{recipientPatronymic}" required value="Якйоготама" th:value="Якйоготама">
+                            <input type="tel" placeholder="№ тел" th:field="*{recipientPhone}" required value="380974728267" th:value="380974728267">
+                            <input type="text" placeholder="Регион" th:field="*{region}" value="Николаевская" th:value="Николаевская">
+                            <input type="text" placeholder="Город/Населенный пункт" th:field="*{city}" value="Николаев" th:value="Николаев">
+                            <input type="text" placeholder="№ Отделения" th:field="*{stationNumber}" value="12" th:value="12">
                         </div>
                     </div>
                 </div>
@@ -224,12 +226,12 @@
                     <div class="form-container">
                         <div class="form-container__title">Данные посылки</div>
                         <div class="data-form">
-                            <input type="text" placeholder="Тип посылки">
-                            <input type="text" placeholder="Вес">
-                            <input type="text" placeholder="Объем">
-                            <input type="text" placeholder="Страховка">
-                            <input type="text" placeholder="Колличество">
-                            <input type="text" placeholder="Описание">
+                            <input type="text" placeholder="Тип посылки" th:field="*{type}" value="OTHER"  th:value="OTHER" >
+                            <input type="text" placeholder="Вес" th:field="*{weight}" value="3.14" th:value="3.14">
+                            <input type="text" placeholder="Объем" th:field="*{volume}" value="2.7" th:value="2.7">
+                            <input type="text" placeholder="Страховка" th:field="*{insurance}" value="1984" th:value="1984">
+                            <input type="text" placeholder="Колличество" th:field="*{count}" value="1" th:value="1">
+<!--                            <input type="text" placeholder="Описание" th:text="*{description}" value="Титулки для курсовых проектов" th:value="Титулки для курсовых проектов">-->
                         </div>
                     </div>
                 </div>
@@ -252,6 +254,10 @@
                         <button class="sing-in__button_submit" type="submit">Подтвертить</button>
                     </div>
                 </div>
+<!--                    <div class="sing-in__buttons">-->
+<!--                        <button class="sing-in__button_reset" type="reset">Отмена</button>-->
+<!--                        <button class="sing-in__button_submit" type="submit">Подтвертить</button>-->
+<!--                    </div>-->
                 </form>
             </div>
         </div>

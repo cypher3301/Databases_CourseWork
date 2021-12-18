@@ -8,7 +8,6 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 
@@ -27,14 +26,14 @@ public class Package {
     protected long id;
 
     @Column(name = "weight_kg",    nullable = false)
-    @DecimalMin(value = "0",           message = "Package weight is less than required")
-    @DecimalMax(value = "3000",        message = "Package weight is more than necessary")
+//    @DecimalMin(value = "0",           message = "Package weight is less than required")
+//    @DecimalMax(value = "3000",        message = "Package weight is more than necessary")
     @Positive(                         message = "Package must have weight greater than 0")
     private double weight;
 
     @Column(name = "volume_m3",    nullable = false)
-    @DecimalMin(value = "0",           message = "Package volume is less than required")
-    @DecimalMax(value = "50",          message = "Package volume is more than necessary")
+//    @DecimalMin(value = "0",           message = "Package volume is less than required")
+//    @DecimalMax(value = "50",          message = "Package volume is more than necessary")
     @Positive(                         message = "Package must have volume greater than 0")
     private double volume;
 
@@ -56,7 +55,7 @@ public class Package {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "invoice_id", referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "package_invoice"))
-    @NotNull(message = "Package invoice cannot be null")
+//    @NotNull(message = "Package invoice cannot be null")
     private Invoice invoice;
 
 
@@ -99,5 +98,16 @@ public class Package {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (getInvoice() != null ? getInvoice().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Package{" +
+                "id=" + id +
+                ", weight=" + weight +
+                ", volume=" + volume +
+                ", insurance=" + insurance +
+//                ", invoice=" + invoice +
+                '}';
     }
 }

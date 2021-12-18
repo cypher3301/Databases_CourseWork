@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PastOrPresent;
 import java.util.Date;
 
 @Entity
@@ -27,7 +26,7 @@ public class InvoiceTimeline {
 
     @Column(name = "datetime")
     @Temporal(TemporalType.TIMESTAMP)
-    @PastOrPresent(message = "Invoice timeline only present time")
+//    @PastOrPresent(message = "Invoice timeline only present time")
     @NotNull(message = "Invoice datetime cannot be null")
     private Date datetime;
 

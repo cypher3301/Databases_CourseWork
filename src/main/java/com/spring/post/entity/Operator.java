@@ -2,6 +2,7 @@ package com.spring.post.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -67,6 +68,7 @@ public class Operator {
     }
 
     public Collection<Invoice> getInvoices() {
+        if (invoices==null) return new ArrayList<>();
         return invoices;
     }
 
@@ -116,11 +118,11 @@ public class Operator {
         return "Operator{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
-                ", invoices=" + invoices +
-                ", waybills=" + waybills +
-                ", workShifts=" + workShifts +
-                ", station=" + station +
-                ", employeeByEmployeeId=" + employee +
+//                ", invoices=" + invoices +
+//                ", waybills=" + waybills +
+//                ", workShifts=" + workShifts +
+//                ", station=" + station +
+//                ", employeeByEmployeeId=" + employee +
                 '}';
     }
 }

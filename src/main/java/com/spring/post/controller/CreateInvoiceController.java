@@ -1,30 +1,64 @@
 package com.spring.post.controller;
 
-import com.spring.post.entity.Client;
-import com.spring.post.entity.Invoice;
-import com.spring.post.entity.Package;
+import com.spring.post.entity.Operator;
+import com.spring.post.entity.Users;
+import com.spring.post.repository.ClientRepository;
+import com.spring.post.repository.InvoiceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @CrossOrigin
-@RequestMapping("/invoice")
+@RequestMapping("/")
 public class CreateInvoiceController {
+    private static Users user;
+    private static Operator operator;
 
-    @GetMapping("/form")
-    public String getForm(Model model) {
-        model.addAttribute("package", new Package());
-        model.addAttribute("invoice", new Invoice());
-        model.addAttribute("clientRecipient", new Client());
-        model.addAttribute("clientSender", new Client());
-        return "create-invoice";
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+
+    public static void setUser(Users user) {
+        CreateInvoiceController.user = user;
     }
 
-    @PostMapping
-    public String createInvoice(@ModelAttribute Client sender, @ModelAttribute Client recipient, @ModelAttribute Invoice invoice, @ModelAttribute Package pack, Model model) {
-
-
-        return "redirect:/storage";
+    public static void setOperator(Operator operator) {
+        CreateInvoiceController.operator = operator;
     }
+
+
+
+//    @PostMapping("/invoice/create")
+//    public String createInvoice(@ModelAttribute CreateInvoice invoice, Model model) {
+//        System.out.println(user);
+//        System.out.println(operator);
+//        final Client sender = new Client(invoice.getSenderFirstname(),invoice.getSenderPatronymic(), invoice.getSenderPhone(), invoice.getSenderSurname());
+//        final Client recipient = new Client(invoice.getRecipientFirstname(),invoice.getRecipientPatronymic(), invoice.getRecipientPhone(), invoice.getRecipientSurname());
+//        Invoice invoice2 = Invoice.builder()
+//                .id(invoice.hashCode())
+//                .datetime(new Date(System.nanoTime()))
+//                .deliveryType(InvoiceType.DELIVERY.name())
+//                .quantity(invoice.getCount())
+//                .type(new PackageType[]{PackageType.OTHER})
+//                .clientRecipient(recipient)
+//                .clientSender(sender)
+//                .operator(operator)
+//                .stationRecipient(new Station(new Address(invoice.getRegion(),invoice.getCity()),(short)invoice.getStationNumber()))
+//                .build();
+//        invoice2.setPackages(new ArrayList<Package>(){{
+//            add(new Package(invoice.hashCode(), invoice.getWeight(), invoice.getVolume(), invoice.getInsurance()));
+//        }});
+//        System.out.println(sender);
+//        System.out.println(recipient);
+//        System.out.println(invoice);
+//        System.out.println(invoice2);
+//        invoice2.getPackages().forEach(System.out::println);
+//        clientRepository.save(sender);
+//        clientRepository.save(recipient);
+//        invoiceRepository.save(invoice2);
+//        return "redirect:/storage";
+//    }
 }
