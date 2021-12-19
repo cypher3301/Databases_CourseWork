@@ -50,23 +50,16 @@ public class Address {
 
         Address address = (Address) o;
 
-        if (getRegion() != null ? !getRegion().equals(address.getRegion()) : address.getRegion() != null) return false;
-        if (getCity() != null ? !getCity().equals(address.getCity()) : address.getCity() != null) return false;
-        if (!getStreet().equals(address.getStreet())) return false;
-        if (getBuilding() != null ? !getBuilding().equals(address.getBuilding()) : address.getBuilding() != null)
-            return false;
-        if (!getCampus().equals(address.getCampus())) return false;
-        return getApartment().equals(address.getApartment());
+        if (!getRegion().equals(address.getRegion())) return false;
+        if (!getCity().equals(address.getCity())) return false;
+        return getBuilding() != null ? getBuilding().equals(address.getBuilding()) : address.getBuilding() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = getRegion() != null ? getRegion().hashCode() : 0;
-        result = 31 * result + (getCity() != null ? getCity().hashCode() : 0);
-        result = 31 * result + (getStreet() != null ? getStreet().hashCode() : 0);
+        int result = getRegion().hashCode();
+        result = 31 * result + getCity().hashCode();
         result = 31 * result + (getBuilding() != null ? getBuilding().hashCode() : 0);
-        result = 31 * result + (getCampus() != null ? getCampus().hashCode() : 0);
-        result = 31 * result + (getApartment() != null ? getApartment().hashCode() : 0);
         return result;
     }
 
