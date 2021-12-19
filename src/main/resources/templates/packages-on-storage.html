@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!--    <link rel="stylesheet" href="css/style.css">-->
+    <link rel="stylesheet" href="../static/style.css">
     <link th:href="@{/style.css}" rel="stylesheet">
 
     <!-- МЕТА -->
@@ -257,26 +257,19 @@
                                 <td th:text="${invoice.insurance()}">450.00</td>
                                 <td th:text="${invoice.deliveryType()}">Доставка</td>
                                 <td class="border-right">
-                                    <ul class="table-menu">
-                                        <li>
-                                            <button>
-                                                <div class="circles">
-                                                    <div class="circle"></div>
-                                                    <div class="circle"></div>
-                                                    <div class="circle"></div>
-                                                </div>
-                                            </button>
-                                            <ul>
-                                                <li>
-                                                    <button class="table-menu__buttons">Закрытие</button>
-                                                </li>
-                                                <li>
-                                                    <button class="table-menu__buttons">Возврат</button>
-                                                </li>
-                                            </ul>
-                                        </li>
-
-                                    </ul>
+                                    <div class="dropdown">
+                                        <button onclick="myFunction()" class="dropbtn">
+                                            <div class="circles">
+                                                <div class="circle"></div>
+                                                <div class="circle"></div>
+                                                <div class="circle"></div>
+                                            </div>
+                                        </button>
+                                        <div id="myDropdown" class="dropdown-content">
+                                            <a href="#">Закрытие</a>
+                                            <a href="#">Возврат</a>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -291,7 +284,25 @@
 
     </div>
 </footer>
-<script src="js/script.min.js"></script>
+<!-- <script src="js/script.min.js"></script> -->
+<script>
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn, .circles, .circle')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
 </body>
 
 </html>
