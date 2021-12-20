@@ -2321,23 +2321,67 @@ body main .eighth-screen .wrapper .eighth-screen__sidebar .sidebar__block .data_
 .eighth-screen__content form {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 10px;
 }
 
 .eighth-screen__content form .block__form .form-container {
-  margin: 5px 15px;
-  max-width: 310px;
+  margin: 5px 15px 35px 15px;
+  /* max-width: 310px; */
   background: linear-gradient(0deg, #C2C2C2, #C2C2C2), #F4F4F4;
 }
 
 .eighth-screen__content form .block__form .form-container .form-container__title {
   margin-left: 40px;
+  margin-top: 3px;
+
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
 }
 
-.eighth-screen__content form .block__form .form-container .inputs {
-  padding: 7px;
+.eighth-screen__content form .block__form .form-container .form-container__title-margin {
+  margin-top: 25px;
+}
+
+.eighth-screen__content form .block__form .form-container{
+  padding: 3px 15px 13px 15px;
   box-sizing: border-box;
 }
 
-.eighth-screen__content form .block__form .form-container .inputs input {
+.eighth-screen__content form .block__form .form-container input {
   width: 100%;
+  height: 41px;
+  background: #E3E3E3;
+  margin-top: 7px;
+  padding: 0 25px;
+  box-sizing: border-box;
+
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
+  color: rgba(123, 123, 123, 1);
+}
+
+.eighth-screen__content form .block__form .sing-in__buttons {
+  margin: auto;
+}
+
+.eighth-screen__content form .block__form {
+  width: 90%;
+}
+
+.eighth-screen__content form .form-one .form-container {
+  height: 39%;
+}
+
+.eighth-screen__content form .form-one .container-two {
+height: 55.9%;
+}
+
+.eighth-screen__content form .form-two .form-container {
+  height: 100%;
+}
+
+.eighth-screen__content form .form-three .form-container {
+  height: 88.8%;
 }
