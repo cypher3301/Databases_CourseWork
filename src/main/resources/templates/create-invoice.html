@@ -199,8 +199,8 @@
             </div>
             <div class="eighth-screen__content">
                 <form action="#" th:action="@{/invoice/create}" th:object="${invoice}" method="post" >
-                <div class="block__form">
-                    <div class="form-container">
+                <div class="block__form form-one">
+                    <div class="form-container container-one">
                         <div class="form-container__title">Данные отправителя</div>
                         <div>
                             <input type="text" placeholder="Имя" th:field="*{senderFirstname}" required value="Владислав" th:value="Владислав">
@@ -209,7 +209,7 @@
                             <input type="tel" placeholder="№ тел" th:field="*{senderPhone}" required value="380974728267" th:value="380974728267">
                         </div>
                     </div>
-                    <div class="form-container">
+                    <div class="form-container container-two">
                         <div class="form-container__title">Данные получателя</div>
                         <div>
                             <input type="text" placeholder="Имя" th:field="*{recipientFirstname}" required value="Владос" th:value="Владос">
@@ -222,7 +222,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="block__form">
+                <div class="block__form form-two">
                     <div class="form-container">
                         <div class="form-container__title">Данные посылки</div>
                         <div class="data-form">
@@ -235,7 +235,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="block__form">
+                <div class="block__form form-three">
                     <div class="form-container">
                         <div class="form-container__title">Данные доставки</div>
                         <div>
@@ -243,7 +243,7 @@
                             <input type="text" placeholder="Стоимость">
                             <input type="text" placeholder="Форма расчета">
                         </div>
-                        <div class="form-container__title">Дополнительные услуги</div>
+                        <div class="form-container__title form-container__title-margin">Дополнительные услуги</div>
                         <div class="additional-services">
                             <input type="text" placeholder="Срок хранения">
                             <input type="text" placeholder="Доставка в руки">
@@ -254,10 +254,10 @@
                         <button class="sing-in__button_submit" type="submit">Подтвертить</button>
                     </div>
                 </div>
-<!--                    <div class="sing-in__buttons">-->
-<!--                        <button class="sing-in__button_reset" type="reset">Отмена</button>-->
-<!--                        <button class="sing-in__button_submit" type="submit">Подтвертить</button>-->
-<!--                    </div>-->
+                   <!-- <div class="sing-in__buttons">
+                       <button class="sing-in__button_reset" type="reset">Отмена</button>
+                       <button class="sing-in__button_submit" type="submit">Подтвертить</button>
+                   </div> -->
                 </form>
             </div>
         </div>
